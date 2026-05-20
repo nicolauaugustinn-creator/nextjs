@@ -1,0 +1,145 @@
+"use client"
+
+import Link from "next/link"
+import Image from "next/image"
+import { Clock, BookOpen, Users, ChevronRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { GlassCard } from "./glass-card"
+import { cn } from "@/lib/utils"
+import type { Course } from "@/data/courses"
+
+interface CourseCardProps {
+  course: Course
+  variant?: "default" | "featured"
+}
+
+export function CourseCard({ course, variant = "default" }: CourseCardProps) {
+  const levelLabels = {
+    beginner: "Начальный",
+    intermediate: "Средний",
+    advanced: "Продвинутый"
+  }
+
+  const levelColors = {
+    beginner: "bg-green-500/10 text-green-400 border-green-500/30",
+    intermediate: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30",
+    advanced: "bg-purple-500/10 text-purple-400 border-purple-500/30"
+  }
+
+  return (
+    <GlassCard
+      variant="gold"
+      className={cn(
+        "group overflow-hidden",
+        variant === "featured" && "lg:flex lg:gap-6"
+      )}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Image */}
+      <div className={cn(
+        "relative overflow-hidden rounded-lg mb-4",
+        variant === "featured" ? "lg:mb-0 lg:w-1/2 aspect-video lg:aspect-auto" : "aspect-video"
+      )}>
+        <div className="absolute inset-0 bg-gradient-to-br from-violet/20 to-gold/20" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
+            <BookOpen className="w-8 h-8 text-gold" />
+          </div>
+        </div>
+        {/* Placeholder for actual image */}
+        {/* <Image
+          src={course.coverImage}
+          alt={course.title}
+          fill
+          className="object-cover transition-transform group-hover:scale-105"
+        /> */}
+        
+        {/* Status badge */}
+        {course.status === "coming_soon" && (
+          <Badge className="absolute top-3 right-3 bg-violet text-white">
+            Скоро
+          </Badge>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className={cn(
+        "flex flex-col",
+        variant === "featured" && "lg:w-1/2 lg:py-2"
+      )}>
+        {/* Badges */}
+        <div className="flex flex-wrap gap-2 mb-3">
+          <Badge variant="outline" className={levelColors[course.level]}>
+            {levelLabels[course.level]}
+          </Badge>
+          {course.featured && (
+            <Badge className="bg-gold/10 text-gold border-gold/30">
+              Популярный
+            </Badge>
+          )}
+        </div>
+
+        {/* Title */}
+        <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground mb-2 group-hover:text-gold transition-colors">
+          {course.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+          {course.shortDescription}
+        </p>
+
+        {/* Meta */}
+        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4">
+          <div className="flex items-center gap-1">
+            <Clock className="w-4 h-4" />
+            <span>{course.duration}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <BookOpen className="w-4 h-4" />
+            <span>{course.format}</span>
+          </div>
+        </div>
+
+        {/* Benefits preview */}
+        {variant === "featured" && course.benefits.length > 0 && (
+          <ul className="mb-4 space-y-1">
+            {course.benefits.slice(0, 3).map((benefit, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                <span className="text-gold mt-0.5">+</span>
+                <span>{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {/* Actions */}
+        <div className="flex flex-col sm:flex-row gap-2 mt-auto">
+          <Link href={`/courses/${course.slug}`} className="flex-1">
+            <Button
+              variant="outline"
+              className="w-full border-gold/30 text-gold hover:bg-gold/10 group/btn"
+            >
+              Подробнее
+              <ChevronRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+          <a
+            href="https://t.me/karmanumbers"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1"
+          >
+            <Button className="w-full bg-gold hover:bg-gold-light text-background">
+              Получить доступ
+            </Button>
+          </a>
+        </div>
+      </div>
+    </GlassCard>
+  )
+}
