@@ -1,0 +1,190 @@
+"use client"
+
+import { motion } from "framer-motion"
+import { BookOpen, Headphones, Calendar, Clock, Play, ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+
+const stats = [
+  { label: "Курсов в процессе", value: "2", icon: BookOpen, color: "text-gold" },
+  { label: "Завершено уроков", value: "24", icon: Clock, color: "text-emerald-400" },
+  { label: "Часов медитаций", value: "8.5", icon: Headphones, color: "text-purple-400" },
+  { label: "Консультаций", value: "1", icon: Calendar, color: "text-blue-400" },
+]
+
+const recentCourses = [
+  {
+    id: "1",
+    title: "Основы кармической нумерологии",
+    progress: 65,
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5359532012299032187-7NAPoNjvAGv9GRBUIrNFmCPOMd45Fk.jpg",
+    lastLesson: "Урок 8: Число Судьбы"
+  },
+  {
+    id: "2",
+    title: "Медитации для начинающих",
+    progress: 30,
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5359532012299032199-sbZIsnBv7mcOYB11Z7nBG74tGJrbdW.jpg",
+    lastLesson: "Урок 3: Дыхательные техники"
+  }
+]
+
+const upcomingEvents = [
+  {
+    title: "Консультация с Валентиной",
+    date: "25 апреля, 15:00",
+    type: "consultation"
+  },
+  {
+    title: "Групповая медитация",
+    date: "27 апреля, 19:00",
+    type: "meditation"
+  }
+]
+
+export default function DashboardPage() {
+  return (
+    <div className="space-y-8">
+      {/* Welcome section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <h1 className="font-serif text-3xl text-cream mb-2">
+          Добро пожаловать, Анна!
+        </h1>
+        <p className="text-cream/60">
+          Продолжайте изучение нумерологии и практикуйте медитации
+        </p>
+      </motion.div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {stats.map((stat, index) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="glass-card p-6"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className={`w-10 h-10 rounded-full bg-white/5 flex items-center justify-center ${stat.color}`}>
+                <stat.icon className="w-5 h-5" />
+              </div>
+            </div>
+            <p className="font-serif text-3xl text-cream mb-1">{stat.value}</p>
+            <p className="text-cream/50 text-sm">{stat.label}</p>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="grid lg:grid-cols-3 gap-8">
+        {/* Recent courses */}
+        <div className="lg:col-span-2">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-serif text-xl text-cream">Продолжить обучение</h2>
+            <Link href="/dashboard/courses">
+              <Button variant="ghost" size="sm" className="text-gold hover:text-gold-light">
+                Все курсы
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </Link>
+          </div>
+
+          <div className="space-y-4">
+            {recentCourses.map((course, index) => (
+              <motion.div
+                key={course.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="glass-card p-4 flex gap-4"
+              >
+                <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-serif text-lg text-cream mb-1 truncate">
+                    {course.title}
+                  </h3>
+                  <p className="text-cream/50 text-sm mb-3">{course.lastLesson}</p>
+                  <div className="flex items-center gap-4">
+                    <div className="flex-1">
+                      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gold rounded-full"
+                          style={{ width: `${course.progress}%` }}
+                        />
+                      </div>
+                    </div>
+                    <span className="text-gold text-sm font-medium">
+                      {course.progress}%
+                    </span>
+                  </div>
+                </div>
+                <Button
+                  size="icon"
+                  className="bg-gold/10 text-gold hover:bg-gold/20 flex-shrink-0"
+                >
+                  <Play className="w-5 h-5" />
+                </Button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Upcoming events */}
+        <div>
+          <h2 className="font-serif text-xl text-cream mb-6">Предстоящие события</h2>
+          <div className="space-y-4">
+            {upcomingEvents.map((event, index) => (
+              <motion.div
+                key={event.title}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="glass-card p-4"
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    event.type === "consultation" ? "bg-blue-500/20 text-blue-400" : "bg-purple-500/20 text-purple-400"
+                  }`}>
+                    {event.type === "consultation" ? (
+                      <Calendar className="w-5 h-5" />
+                    ) : (
+                      <Headphones className="w-5 h-5" />
+                    )}
+                  </div>
+                  <div>
+                    <h4 className="text-cream font-medium">{event.title}</h4>
+                    <p className="text-cream/50 text-sm">{event.date}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-6">
+            <h2 className="font-serif text-xl text-cream mb-4">Быстрая медитация</h2>
+            <div className="glass-card p-6 text-center">
+              <div className="w-20 h-20 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-4">
+                <Headphones className="w-10 h-10 text-gold" />
+              </div>
+              <h4 className="text-cream font-medium mb-2">Утренняя практика</h4>
+              <p className="text-cream/50 text-sm mb-4">10 минут</p>
+              <Button className="bg-gold text-charcoal hover:bg-gold-light">
+                <Play className="w-4 h-4 mr-2" />
+                Начать
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
