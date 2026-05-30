@@ -6,11 +6,11 @@ import { Home, BookOpen, Headphones, Send, User } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navItems = [
-  { label: "Главная", href: "/", icon: Home },
-  { label: "Курсы", href: "/courses", icon: BookOpen },
-  { label: "Медитации", href: "/meditations", icon: Headphones },
+  { label: "Acasa", href: "/", icon: Home },
+  { label: "Cursuri", href: "/courses", icon: BookOpen },
+  { label: "Meditatii", href: "/meditations", icon: Headphones },
   { label: "Telegram", href: "https://t.me/karmanumbers", icon: Send, external: true },
-  { label: "Профиль", href: "/dashboard", icon: User }
+  { label: "Profil", href: "/dashboard", icon: User }
 ]
 
 export function MobileBottomNav() {
