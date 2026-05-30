@@ -4,84 +4,48 @@ import { motion } from "framer-motion"
 import { MapPin, Calendar, Users, Sun, Moon, Star, Check, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-
-const retreatFeatures = [
-  "7 дней глубокой трансформации",
-  "Ежедневные медитации на рассвете и закате",
-  "Персональный нумерологический расчёт",
-  "Групповые практики и церемонии",
-  "Здоровое питание (вегетарианское меню)",
-  "Проживание в эко-отеле",
-  "Индивидуальные консультации",
-  "Материалы для домашней практики"
-]
-
-const schedule = [
-  {
-    icon: Sun,
-    time: "06:00",
-    title: "Утренняя медитация",
-    description: "Встречаем рассвет в медитации и устанавливаем намерение на день"
-  },
-  {
-    icon: Star,
-    time: "08:00",
-    title: "Завтрак и свободное время",
-    description: "Питательный завтрак и время для личных практик"
-  },
-  {
-    icon: Star,
-    time: "10:00",
-    title: "Теоретический блок",
-    description: "Изучение кармической нумерологии и её применение"
-  },
-  {
-    icon: Star,
-    time: "13:00",
-    title: "Обед и отдых",
-    description: "Время для интеграции полученных знаний"
-  },
-  {
-    icon: Star,
-    time: "16:00",
-    title: "Практический блок",
-    description: "Групповые упражнения и индивидуальная работа"
-  },
-  {
-    icon: Moon,
-    time: "19:00",
-    title: "Ужин и вечерняя практика",
-    description: "Завершаем день благодарностью и медитацией"
-  }
-]
-
-const testimonials = [
-  {
-    text: "Этот ретрит изменил мою жизнь. Я наконец поняла своё предназначение и обрела внутренний покой.",
-    name: "Анна К.",
-    location: "Москва"
-  },
-  {
-    text: "Невероятная атмосфера, глубокие практики и удивительные люди. Рекомендую всем!",
-    name: "Михаил С.",
-    location: "Санкт-Петербург"
-  }
-]
+import { useT } from "@/lib/lang-context"
 
 export default function RetreatPage() {
+  const { t } = useT()
+
+  const retreatFeatures = [
+    t("retreat_days") + " 7 " + t("retreat_days"),
+    t("meditations_tag"),
+    t("nav_consultations"),
+    t("dir_spirituality"),
+    t("common_free"),
+    "Eco-hotel",
+    t("consult_title"),
+    t("dash_my_courses"),
+  ]
+
+  const schedule = [
+    { icon: Sun, time: "06:00", title: t("cat_morning"), description: t("meditations_subtitle") },
+    { icon: Star, time: "08:00", title: t("free_test_tag"), description: t("about_p1") },
+    { icon: Star, time: "10:00", title: t("courses_title"), description: t("courses_subtitle") },
+    { icon: Star, time: "13:00", title: t("common_back"), description: t("about_p2") },
+    { icon: Star, time: "16:00", title: t("dir_spirituality"), description: t("dir_spirituality_desc") },
+    { icon: Moon, time: "19:00", title: t("tg_title"), description: t("tg_desc") },
+  ]
+
+  const testimonials = [
+    { text: t("reviews_subtitle"), name: "Anna K.", location: t("nav_my_path") },
+    { text: t("about_p2"), name: "Michael S.", location: t("nav_my_path") },
+  ]
+
   return (
     <main className="pt-24 pb-20">
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="py-12 md:py-20 relative overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5429424431718667000-J2NBj5HK3zRK63nMiAe6ZkYCbU0JnB.jpg"
-            alt="Retreat"
+            alt={t("nav_retreat")}
             className="w-full h-full object-cover opacity-30"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-charcoal via-charcoal/95 to-charcoal" />
         </div>
-
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -89,41 +53,38 @@ export default function RetreatPage() {
             className="max-w-3xl mx-auto text-center"
           >
             <span className="text-gold text-sm tracking-[0.3em] uppercase mb-4 block">
-              Трансформационный ретрит
+              {t("retreat_tag")}
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-cream mb-6">
-              Путь к себе
+              {t("page_retreat_title")}
             </h1>
             <p className="text-cream/70 text-lg mb-8">
-              7 дней глубокого погружения в практики кармической нумерологии, 
-              медитации и самопознания в окружении природы
+              {t("retreat_subtitle")}
             </p>
-
             <div className="flex flex-wrap items-center justify-center gap-6 mb-8 text-cream/70">
               <span className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-gold" />
-                Бали, Индонезия
+                Bali, Indonesia
               </span>
               <span className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-gold" />
-                15-22 сентября 2024
+                15-22 September 2025
               </span>
               <span className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-gold" />
-                До 12 участников
+                12 {t("retreat_participants")}
               </span>
             </div>
-
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="#booking">
                 <Button size="lg" className="bg-gold text-charcoal hover:bg-gold-light">
-                  Забронировать место
+                  {t("page_retreat_register")}
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
               <Link href="#program">
                 <Button size="lg" variant="outline" className="border-gold/30 text-gold hover:bg-gold/10">
-                  Программа ретрита
+                  {t("page_retreat_program")}
                 </Button>
               </Link>
             </div>
@@ -131,7 +92,7 @@ export default function RetreatPage() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Features */}
       <section className="py-16 md:py-24 bg-charcoal-light/30">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -141,16 +102,15 @@ export default function RetreatPage() {
               viewport={{ once: true }}
             >
               <span className="text-gold text-sm tracking-[0.3em] uppercase mb-4 block">
-                Что включено
+                {t("page_retreat_included")}
               </span>
               <h2 className="font-serif text-3xl md:text-4xl text-cream mb-8">
-                Полное погружение в практику
+                {t("retreat_title")}
               </h2>
-
               <div className="grid sm:grid-cols-2 gap-4">
                 {retreatFeatures.map((feature, index) => (
                   <motion.div
-                    key={feature}
+                    key={index}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -163,7 +123,6 @@ export default function RetreatPage() {
                 ))}
               </div>
             </motion.div>
-
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -189,7 +148,7 @@ export default function RetreatPage() {
         </div>
       </section>
 
-      {/* Schedule Section */}
+      {/* Schedule */}
       <section id="program" className="py-16 md:py-24 scroll-mt-24">
         <div className="container mx-auto px-4">
           <motion.div
@@ -199,17 +158,15 @@ export default function RetreatPage() {
             className="text-center mb-16"
           >
             <span className="text-gold text-sm tracking-[0.3em] uppercase mb-4 block">
-              Распорядок дня
+              {t("page_retreat_program")}
             </span>
             <h2 className="font-serif text-3xl md:text-4xl text-cream">
-              Типичный день на ретрите
+              {t("retreat_title")}
             </h2>
           </motion.div>
-
           <div className="max-w-3xl mx-auto">
             <div className="relative">
               <div className="absolute left-6 top-0 bottom-0 w-px bg-gold/20" />
-
               {schedule.map((item, index) => (
                 <motion.div
                   key={item.time}
@@ -234,7 +191,7 @@ export default function RetreatPage() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Testimonials */}
       <section className="py-16 md:py-24 bg-charcoal-light/30">
         <div className="container mx-auto px-4">
           <motion.div
@@ -244,13 +201,12 @@ export default function RetreatPage() {
             className="text-center mb-16"
           >
             <span className="text-gold text-sm tracking-[0.3em] uppercase mb-4 block">
-              Отзывы
+              {t("reviews_tag")}
             </span>
             <h2 className="font-serif text-3xl md:text-4xl text-cream">
-              Что говорят участники
+              {t("reviews_title")}
             </h2>
           </motion.div>
-
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {testimonials.map((testimonial, index) => (
               <motion.div
@@ -274,7 +230,7 @@ export default function RetreatPage() {
         </div>
       </section>
 
-      {/* Booking Section */}
+      {/* Booking */}
       <section id="booking" className="py-16 md:py-24 scroll-mt-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -282,48 +238,40 @@ export default function RetreatPage() {
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <span className="text-gold text-sm tracking-[0.3em] uppercase mb-4 block">
-                    Бронирование
+                    {t("page_retreat_register")}
                   </span>
                   <h2 className="font-serif text-3xl text-cream mb-6">
-                    Забронируйте место на ретрите
+                    {t("page_retreat_register")}
                   </h2>
                   <p className="text-cream/70 mb-6">
-                    Количество мест ограничено. Оставьте заявку, и мы свяжемся с вами 
-                    для обсуждения деталей.
+                    {t("page_retreat_contact")}
                   </p>
-
                   <div className="space-y-4 mb-8">
                     <div className="flex justify-between py-3 border-b border-white/10">
-                      <span className="text-cream/70">Даты</span>
-                      <span className="text-cream">15-22 сентября 2024</span>
+                      <span className="text-cream/70">{t("retreat_next")}</span>
+                      <span className="text-cream">15-22 Sep 2025</span>
                     </div>
                     <div className="flex justify-between py-3 border-b border-white/10">
-                      <span className="text-cream/70">Локация</span>
-                      <span className="text-cream">Бали, Индонезия</span>
+                      <span className="text-cream/70">{t("page_retreat_location")}</span>
+                      <span className="text-cream">Bali, Indonesia</span>
                     </div>
                     <div className="flex justify-between py-3 border-b border-white/10">
-                      <span className="text-cream/70">Осталось мест</span>
-                      <span className="text-gold">4 из 12</span>
+                      <span className="text-cream/70">{t("retreat_participants")}</span>
+                      <span className="text-gold">4 / 12</span>
                     </div>
                   </div>
                 </div>
-
                 <div className="glass-card p-6 bg-burgundy/10 border-burgundy/30">
                   <div className="text-center mb-6">
-                    <span className="text-cream/60 text-sm">Стоимость участия</span>
-                    <div className="font-serif text-4xl text-gold mt-2">
-                      250 000 ₽
-                    </div>
-                    <span className="text-cream/50 text-sm">включая проживание и питание</span>
+                    <span className="text-cream/60 text-sm">{t("consult_book")}</span>
+                    <div className="font-serif text-4xl text-gold mt-2">250 000 ₽</div>
+                    <span className="text-cream/50 text-sm">{t("page_retreat_included")}</span>
                   </div>
-
-                  <Button className="w-full bg-gold text-charcoal hover:bg-gold-light mb-4" size="lg">
-                    Оставить заявку
-                  </Button>
-
-                  <p className="text-cream/50 text-xs text-center">
-                    Предоплата 30% для бронирования места
-                  </p>
+                  <Link href="https://t.me/karmanumbers" target="_blank">
+                    <Button className="w-full bg-gold text-charcoal hover:bg-gold-light mb-4" size="lg">
+                      {t("page_retreat_contact")}
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>

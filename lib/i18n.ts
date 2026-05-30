@@ -136,7 +136,7 @@ const translations = {
     faq_tag: "FAQ",
     faq_title: "Часто задаваемые вопросы",
     faq_q1: "Что такое нумерология?",
-    faq_a1: "Нумерология — это древняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
+    faq_a1: "Нумерология — это д��евняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
     faq_q2: "С чего начать?",
     faq_a2: "Лучший старт — бесплатный тест или консультация. Это позволит понять ваш уровень и подобрать оптимальный формат работы.",
     faq_q3: "Как проходят консультации?",
@@ -325,6 +325,26 @@ const translations = {
     notfound_desc: "Страница, которую вы ищете, не существует или была перемещена",
     notfound_back: "На главную",
     notfound_check: "Или проверьте эти страницы:",
+
+    // Level labels
+    level_beginner: "Начальный",
+    level_intermediate: "Средний",
+    level_advanced: "Продвинутый",
+
+    // Category labels (meditations)
+    cat_morning: "Утренние",
+    cat_energy: "Энергия",
+    cat_healing: "Исцеление",
+    cat_deep: "Глубокие практики",
+
+    // Shared
+    coming_soon: "Скоро",
+    listen: "Слушать",
+
+    // Review media labels
+    review_video: "Видео-отзыв",
+    review_audio: "Голосовой отзыв",
+    review_screenshot: "Скриншот отзыва",
 
     // Common
     common_loading: "Загрузка...",
@@ -624,6 +644,26 @@ const translations = {
     notfound_back: "Acasa",
     notfound_check: "Sau verifica aceste pagini:",
 
+    // Level labels
+    level_beginner: "Incepator",
+    level_intermediate: "Mediu",
+    level_advanced: "Avansat",
+
+    // Category labels (meditations)
+    cat_morning: "Dimineata",
+    cat_energy: "Energie",
+    cat_healing: "Vindecare",
+    cat_deep: "Practici profunde",
+
+    // Shared
+    coming_soon: "In curand",
+    listen: "Asculta",
+
+    // Review media labels
+    review_video: "Video recenzie",
+    review_audio: "Recenzie audio",
+    review_screenshot: "Screenshot recenzie",
+
     common_loading: "Se incarca...",
     common_error: "A aparut o eroare",
     common_close: "Inchide",
@@ -921,6 +961,26 @@ const translations = {
     notfound_back: "Back to home",
     notfound_check: "Or check out these pages:",
 
+    // Level labels
+    level_beginner: "Beginner",
+    level_intermediate: "Intermediate",
+    level_advanced: "Advanced",
+
+    // Category labels (meditations)
+    cat_morning: "Morning",
+    cat_energy: "Energy",
+    cat_healing: "Healing",
+    cat_deep: "Deep practices",
+
+    // Shared
+    coming_soon: "Coming soon",
+    listen: "Listen",
+
+    // Review media labels
+    review_video: "Video review",
+    review_audio: "Audio review",
+    review_screenshot: "Screenshot review",
+
     common_loading: "Loading...",
     common_error: "An error occurred",
     common_close: "Close",
@@ -1037,7 +1097,7 @@ const translations = {
     consult_tag: "КОНСУЛЬТАЦІЇ",
     consult_title: "Особиста робота зі мною",
     consult_subtitle: "Індивідуальний розбір вашої нумерологічної карти та стратегія трансформації",
-    consult_book: "Записатися на консультацію",
+    consult_book: "Записати��я на консультацію",
     consult_learn: "Дізнатися детальніше",
 
     blog_tag: "БЛОГ",
@@ -1217,6 +1277,26 @@ const translations = {
     notfound_desc: "Сторінка, яку ви шукаєте, не існує або була переміщена",
     notfound_back: "На головну",
     notfound_check: "Або перевірте ці сторінки:",
+
+    // Level labels
+    level_beginner: "Початковий",
+    level_intermediate: "Середній",
+    level_advanced: "Просунутий",
+
+    // Category labels (meditations)
+    cat_morning: "Ранкові",
+    cat_energy: "Енергія",
+    cat_healing: "Зцілення",
+    cat_deep: "Глибокі практики",
+
+    // Shared
+    coming_soon: "Незабаром",
+    listen: "Слухати",
+
+    // Review media labels
+    review_video: "Відео-відгук",
+    review_audio: "Голосовий відгук",
+    review_screenshot: "Скріншот відгуку",
 
     common_loading: "Завантаження...",
     common_error: "Сталася помилка",

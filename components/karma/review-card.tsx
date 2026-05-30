@@ -4,6 +4,7 @@ import { Star, Play, Volume2, Image as ImageIcon } from "lucide-react"
 import { GlassCard } from "./glass-card"
 import { cn } from "@/lib/utils"
 import type { Review } from "@/data/reviews"
+import { useT } from "@/lib/lang-context"
 
 interface ReviewCardProps {
   review: Review
@@ -11,11 +12,13 @@ interface ReviewCardProps {
 }
 
 export function ReviewCard({ review, variant = "default" }: ReviewCardProps) {
+  const { t, lang } = useT()
+
   const categoryLabels: Record<string, string> = {
-    course: "Curs",
-    consultation: "Consultatie",
-    meditation: "Meditatie",
-    retreat: "Retreat"
+    course: t("nav_courses"),
+    consultation: t("nav_consultations"),
+    meditation: t("nav_meditations"),
+    retreat: t("nav_retreat")
   }
 
   // Determine review type
@@ -92,7 +95,7 @@ export function ReviewCard({ review, variant = "default" }: ReviewCardProps) {
             <Play className="w-6 h-6 text-gold ml-1" />
           </div>
           <span className="absolute bottom-2 left-2 text-xs text-gold/70">
-            Video recenzie
+            {t("review_video")}
           </span>
         </div>
       )}
@@ -107,7 +110,7 @@ export function ReviewCard({ review, variant = "default" }: ReviewCardProps) {
             <div className="h-2 bg-gold/10 rounded-full overflow-hidden">
               <div className="h-full w-1/3 bg-gold/40 rounded-full" />
             </div>
-            <span className="text-xs text-muted-foreground mt-1">Recenzie audio</span>
+            <span className="text-xs text-muted-foreground mt-1">{t("review_audio")}</span>
           </div>
         </div>
       )}
@@ -119,14 +122,14 @@ export function ReviewCard({ review, variant = "default" }: ReviewCardProps) {
             <ImageIcon className="w-8 h-8 text-muted-foreground" />
           </div>
           <span className="absolute bottom-2 left-2 text-xs text-muted-foreground">
-            Screenshot recenzie
+            {t("review_screenshot")}
           </span>
         </div>
       )}
 
       {/* Date */}
       <p className="text-xs text-muted-foreground mt-4">
-        {new Date(review.date).toLocaleDateString("ro-RO", {
+        {new Date(review.date).toLocaleDateString(lang === "ru" ? "ru-RU" : lang === "ua" ? "uk-UA" : lang === "ro" ? "ro-RO" : "en-GB", {
           year: "numeric",
           month: "long",
           day: "numeric"
