@@ -4,19 +4,21 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Home, BookOpen, Headphones, Send, User } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useT } from "@/lib/lang-context"
+import type { TranslationKey } from "@/lib/i18n"
 
-const navItems = [
-  { label: "Acasa", href: "/", icon: Home },
-  { label: "Cursuri", href: "/courses", icon: BookOpen },
-  { label: "Meditatii", href: "/meditations", icon: Headphones },
-  { label: "Telegram", href: "https://t.me/karmanumbers", icon: Send, external: true },
-  { label: "Profil", href: "/dashboard", icon: User }
+const navItems: { labelKey: TranslationKey; href: string; icon: React.ElementType; external?: boolean }[] = [
+  { labelKey: "mobile_home", href: "/", icon: Home },
+  { labelKey: "mobile_courses", href: "/courses", icon: BookOpen },
+  { labelKey: "mobile_meditations", href: "/meditations", icon: Headphones },
+  { labelKey: "mobile_telegram", href: "https://t.me/karmanumbers", icon: Send, external: true },
+  { labelKey: "mobile_profile", href: "/dashboard", icon: User },
 ]
 
 export function MobileBottomNav() {
   const pathname = usePathname()
+  const { t } = useT()
 
-  // Hide on admin pages
   if (pathname.startsWith("/admin")) return null
 
   return (
@@ -24,10 +26,8 @@ export function MobileBottomNav() {
       <div className="flex items-center justify-around h-16">
         {navItems.map((item) => {
           const Icon = item.icon
-          const isActive = item.href === "/" 
-            ? pathname === "/" 
-            : pathname.startsWith(item.href)
-          
+          const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+
           if (item.external) {
             return (
               <a
@@ -41,7 +41,7 @@ export function MobileBottomNav() {
                   <div className="absolute inset-0 bg-gold/20 rounded-full blur-md animate-pulse-glow" />
                   <Icon className="relative w-5 h-5" />
                 </div>
-                <span className="text-[10px] font-medium">{item.label}</span>
+                <span className="text-[10px] font-medium">{t(item.labelKey)}</span>
               </a>
             )
           }
@@ -56,7 +56,7 @@ export function MobileBottomNav() {
               )}
             >
               <Icon className="w-5 h-5" />
-              <span className="text-[10px] font-medium">{item.label}</span>
+              <span className="text-[10px] font-medium">{t(item.labelKey)}</span>
             </Link>
           )
         })}

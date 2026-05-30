@@ -13,44 +13,37 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
-
-const navigation = [
-  { label: "Acasa", href: "/" },
-  { label: "Povestea mea", href: "/my-path" },
-  {
-    label: "Invatare",
-    href: "/courses",
-    children: [
-      { label: "Cursuri", href: "/courses" },
-      { label: "Mini-cursuri", href: "/courses?category=mini" },
-      { label: "Practici", href: "/practices" },
-      { label: "Programe avansate", href: "/courses?category=advanced" }
-    ]
-  },
-  { label: "Meditatii", href: "/meditations" },
-  { label: "Retreat", href: "/retreat" },
-  { label: "Consultatii", href: "/consultations" },
-  { label: "Recenzii", href: "/reviews" },
-  { label: "Blog", href: "/blog" }
-]
-
-const languages = [
-  { code: "ru", label: "RU" },
-  { code: "ro", label: "RO" },
-  { code: "en", label: "EN" },
-  { code: "ua", label: "UA" }
-]
+import { useT } from "@/lib/lang-context"
+import { LANGS } from "@/lib/i18n"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [currentLang, setCurrentLang] = useState("ru")
   const pathname = usePathname()
+  const { t, lang, setLang } = useT()
+
+  const navigation = [
+    { labelKey: "nav_home", href: "/" },
+    { labelKey: "nav_my_path", href: "/my-path" },
+    {
+      labelKey: "nav_learning",
+      href: "/courses",
+      children: [
+        { labelKey: "nav_courses", href: "/courses" },
+        { labelKey: "nav_mini_courses", href: "/courses?category=mini" },
+        { labelKey: "nav_practices", href: "/practices" },
+        { labelKey: "nav_advanced", href: "/courses?category=advanced" },
+      ],
+    },
+    { labelKey: "nav_meditations", href: "/meditations" },
+    { labelKey: "nav_retreat", href: "/retreat" },
+    { labelKey: "nav_consultations", href: "/consultations" },
+    { labelKey: "nav_reviews", href: "/reviews" },
+    { labelKey: "nav_blog", href: "/blog" },
+  ] as const
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-    }
+    const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -87,17 +80,17 @@ export function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
-              {navigation.map((item) => (
-                item.children ? (
+              {navigation.map((item) =>
+                "children" in item ? (
                   <DropdownMenu key={item.href}>
                     <DropdownMenuTrigger asChild>
-                      <button className={cn(
-                        "px-3 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-1 hover-underline",
-                        pathname.startsWith(item.href)
-                          ? "text-gold"
-                          : "text-foreground/80 hover:text-gold"
-                      )}>
-                        {item.label}
+                      <button
+                        className={cn(
+                          "px-3 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-1 hover-underline",
+                          pathname.startsWith(item.href) ? "text-gold" : "text-foreground/80 hover:text-gold"
+                        )}
+                      >
+                        {t(item.labelKey)}
                         <ChevronDown className="w-4 h-4" />
                       </button>
                     </DropdownMenuTrigger>
@@ -106,12 +99,9 @@ export function Navbar() {
                         <DropdownMenuItem key={child.href} asChild>
                           <Link
                             href={child.href}
-                            className={cn(
-                              "w-full cursor-pointer",
-                              pathname === child.href && "text-gold"
-                            )}
+                            className={cn("w-full cursor-pointer", pathname === child.href && "text-gold")}
                           >
-                            {child.label}
+                            {t(child.labelKey)}
                           </Link>
                         </DropdownMenuItem>
                       ))}
@@ -123,15 +113,13 @@ export function Navbar() {
                     href={item.href}
                     className={cn(
                       "px-3 py-2 text-sm font-medium rounded-lg transition-colors hover-underline",
-                      pathname === item.href
-                        ? "text-gold"
-                        : "text-foreground/80 hover:text-gold"
+                      pathname === item.href ? "text-gold" : "text-foreground/80 hover:text-gold"
                     )}
                   >
-                    {item.label}
+                    {t(item.labelKey)}
                   </Link>
                 )
-              ))}
+              )}
             </div>
 
             {/* Right Side */}
@@ -139,28 +127,30 @@ export function Navbar() {
               {/* Language Selector */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="hidden sm:flex items-center gap-1 text-foreground/70 hover:text-gold">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="hidden sm:flex items-center gap-1 text-foreground/70 hover:text-gold"
+                  >
                     <Globe className="w-4 h-4" />
-                    <span className="text-xs font-medium">{currentLang.toUpperCase()}</span>
+                    <span className="text-xs font-medium">{lang.toUpperCase()}</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="glass-card border-gold/20">
-                  {languages.map((lang) => (
+                  {LANGS.map((l) => (
                     <DropdownMenuItem
-                      key={lang.code}
-                      onClick={() => setCurrentLang(lang.code)}
-                      className={cn(
-                        "cursor-pointer",
-                        currentLang === lang.code && "text-gold"
-                      )}
+                      key={l.code}
+                      onClick={() => setLang(l.code)}
+                      className={cn("cursor-pointer gap-2", lang === l.code && "text-gold")}
                     >
-                      {lang.label}
+                      <span>{l.flag}</span>
+                      {l.label}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Login Button */}
+              {/* Login */}
               <Link href="/login">
                 <Button
                   variant="ghost"
@@ -168,17 +158,14 @@ export function Navbar() {
                   className="hidden sm:flex items-center gap-2 text-foreground/70 hover:text-gold"
                 >
                   <User className="w-4 h-4" />
-                  <span className="text-sm">Autentificare</span>
+                  <span className="text-sm">{t("nav_login")}</span>
                 </Button>
               </Link>
 
-              {/* CTA Button */}
+              {/* CTA */}
               <Link href="/consultations" className="hidden md:block">
-                <Button
-                  size="sm"
-                  className="bg-gold hover:bg-gold-light text-background font-medium"
-                >
-                  Consultatie
+                <Button size="sm" className="bg-gold hover:bg-gold-light text-background font-medium">
+                  {t("nav_consultation_btn")}
                 </Button>
               </Link>
 
@@ -188,7 +175,7 @@ export function Navbar() {
                 size="icon"
                 className="lg:hidden"
                 onClick={() => setIsOpen(!isOpen)}
-                aria-label={isOpen ? "Inchide meniu" : "Deschide meniu"}
+                aria-label={isOpen ? t("nav_close_menu") : t("nav_open_menu")}
               >
                 {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </Button>
@@ -212,10 +199,10 @@ export function Navbar() {
               <div className="flex flex-col gap-2">
                 {navigation.map((item) => (
                   <div key={item.href}>
-                    {item.children ? (
+                    {"children" in item ? (
                       <div className="space-y-1">
                         <span className="block px-4 py-2 text-sm font-semibold text-gold">
-                          {item.label}
+                          {t(item.labelKey)}
                         </span>
                         {item.children.map((child) => (
                           <Link
@@ -228,7 +215,7 @@ export function Navbar() {
                                 : "text-foreground/70 hover:text-gold hover:bg-gold/5"
                             )}
                           >
-                            {child.label}
+                            {t(child.labelKey)}
                           </Link>
                         ))}
                       </div>
@@ -242,7 +229,7 @@ export function Navbar() {
                             : "text-foreground/80 hover:text-gold hover:bg-gold/5"
                         )}
                       >
-                        {item.label}
+                        {t(item.labelKey)}
                       </Link>
                     )}
                   </div>
@@ -253,18 +240,16 @@ export function Navbar() {
                   <div className="flex items-center gap-2 px-4">
                     <Globe className="w-4 h-4 text-foreground/50" />
                     <div className="flex gap-2">
-                      {languages.map((lang) => (
+                      {LANGS.map((l) => (
                         <button
-                          key={lang.code}
-                          onClick={() => setCurrentLang(lang.code)}
+                          key={l.code}
+                          onClick={() => setLang(l.code)}
                           className={cn(
                             "px-2 py-1 text-xs rounded transition-colors",
-                            currentLang === lang.code
-                              ? "bg-gold text-background"
-                              : "text-foreground/50 hover:text-gold"
+                            lang === l.code ? "bg-gold text-background" : "text-foreground/50 hover:text-gold"
                           )}
                         >
-                          {lang.label}
+                          {l.label}
                         </button>
                       ))}
                     </div>
@@ -273,13 +258,13 @@ export function Navbar() {
                   <Link href="/login" className="block px-4">
                     <Button variant="outline" className="w-full border-gold/30 text-gold hover:bg-gold/10">
                       <User className="w-4 h-4 mr-2" />
-                      Autentificare
+                      {t("nav_login_cabinet")}
                     </Button>
                   </Link>
 
                   <Link href="/consultations" className="block px-4">
                     <Button className="w-full bg-gold hover:bg-gold-light text-background">
-                      Solicita consultatie
+                      {t("nav_get_consultation")}
                     </Button>
                   </Link>
                 </div>

@@ -5,6 +5,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { Send, MessageCircle, HelpCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useT } from "@/lib/lang-context"
 
 // Ethereal glowing tree (CSS/SVG - inspired by the luminous reference)
 function EtherealTree() {
@@ -371,6 +372,7 @@ function GoldenParticles() {
 }
 
 export function HeroSection() {
+  const { t } = useT()
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-purple-dark/10 to-background">
       {/* Background radial glow */}
@@ -410,7 +412,7 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg md:text-2xl lg:text-3xl text-foreground/90 font-serif mb-4 px-2"
           >
-            Descopera codul destinului, energiei si misiunii tale
+            {t("hero_subtitle")}
           </motion.p>
 
           {/* Description */}
@@ -420,7 +422,7 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 px-2"
           >
-            Cursuri, meditatii si consultatii de numerologie, relatii, energie, bani si transformare personala.
+            {t("hero_description")}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -436,7 +438,7 @@ export function HeroSection() {
                 className="bg-gold hover:bg-gold-light text-background font-medium px-6 md:px-8 glow-gold w-full sm:w-auto"
               >
                 <Send className="w-4 h-4 mr-2 shrink-0" />
-                Alatura-te pe Telegram
+                {t("hero_join_telegram")}
               </Button>
             </a>
 
@@ -447,7 +449,7 @@ export function HeroSection() {
                 className="border-gold/50 text-gold hover:bg-gold/10 px-6 md:px-8 w-full sm:w-auto"
               >
                 <MessageCircle className="w-4 h-4 mr-2 shrink-0" />
-                Solicita consultatie
+                {t("hero_get_consultation")}
               </Button>
             </Link>
 
@@ -458,7 +460,7 @@ export function HeroSection() {
                 className="text-foreground/70 hover:text-gold px-6 md:px-8 w-full sm:w-auto"
               >
                 <HelpCircle className="w-4 h-4 mr-2 shrink-0" />
-                De unde incep?
+                {t("hero_where_to_start")}
               </Button>
             </Link>
           </motion.div>
