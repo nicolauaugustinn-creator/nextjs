@@ -13,7 +13,8 @@ import {
   ArrowRight
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { adminStore, type Course, type Review } from "@/lib/admin-store"
+import { coursesStore, meditationsStore, blogStore, reviewsStore, type Course, type Review } from "@/lib/admin-store"
+import { practices as practicesData } from "@/data/practices"
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState({
@@ -33,11 +34,11 @@ export default function AdminDashboardPage() {
   }, [])
 
   const loadData = () => {
-    const courses = adminStore.getCourses()
-    const meditations = adminStore.getMeditations()
-    const blogs = adminStore.getBlogs()
-    const reviews = adminStore.getReviews()
-    const practices = adminStore.getPractices()
+    const courses = coursesStore.getAll()
+    const meditations = meditationsStore.getAll()
+    const blogs = blogStore.getAll()
+    const reviews = reviewsStore.getAll()
+    const practices = practicesData
 
     const pending = reviews.filter(r => r.status === "pending")
 
