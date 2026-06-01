@@ -6,54 +6,7 @@ import { Calculator, Sparkles, ArrowRight, RotateCcw, Share2 } from "lucide-reac
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-
-const destinyNumbers: Record<number, { title: string; description: string; traits: string[] }> = {
-  1: {
-    title: "Лидер",
-    description: "Вы рождены вести за собой. Независимость, амбиции и оригинальность — ваши главные черты. Вы способны начинать новые дела и вдохновлять других.",
-    traits: ["Независимость", "Амбициозность", "Оригинальность", "Решительность"]
-  },
-  2: {
-    title: "Дипломат",
-    description: "Гармония и партнерство — ваш путь. Вы обладаете интуицией, чувствительностью и способностью находить баланс в любой ситуации.",
-    traits: ["Дипломатичность", "Интуиция", "Чувствительность", "Сотрудничество"]
-  },
-  3: {
-    title: "Творец",
-    description: "Самовыражение и творчество — ваша суть. Вы способны вдохновлять других своим оптимизмом, талантами и радостью жизни.",
-    traits: ["Творчество", "Оптимизм", "Коммуникабельность", "Артистизм"]
-  },
-  4: {
-    title: "Строитель",
-    description: "Стабильность и порядок — ваш фундамент. Вы создаете прочные основы для себя и других благодаря дисциплине и практичности.",
-    traits: ["Практичность", "Дисциплина", "Надежность", "Трудолюбие"]
-  },
-  5: {
-    title: "Искатель",
-    description: "Свобода и перемены — ваш девиз. Вы жаждете приключений, новых опытов и расширения горизонтов.",
-    traits: ["Свободолюбие", "Адаптивность", "Любознательность", "Харизма"]
-  },
-  6: {
-    title: "Хранитель",
-    description: "Любовь и ответственность — ваше призвание. Вы создаете гармонию в семье и заботитесь о близких.",
-    traits: ["Заботливость", "Ответственность", "Гармония", "Любовь"]
-  },
-  7: {
-    title: "Мудрец",
-    description: "Поиск истины и духовность — ваш путь. Вы обладаете глубоким умом, интуицией и стремлением к познанию.",
-    traits: ["Мудрость", "Духовность", "Аналитичность", "Интроспекция"]
-  },
-  8: {
-    title: "Достигатор",
-    description: "Власть и изобилие — ваша сфера. Вы способны достигать материального успеха и влиять на мир.",
-    traits: ["Амбициозность", "Власть", "Материальность", "Управление"]
-  },
-  9: {
-    title: "Гуманист",
-    description: "Служение и мудрость — ваше предназначение. Вы несете свет в мир, помогая другим и делясь мудростью.",
-    traits: ["Сострадание", "Мудрость", "Альтруизм", "Универсальность"]
-  }
-}
+import { useT } from "@/lib/lang-context"
 
 function calculateDestinyNumber(date: string): number {
   const digits = date.replace(/\D/g, "").split("").map(Number)
@@ -67,9 +20,58 @@ function calculateDestinyNumber(date: string): number {
 }
 
 export default function FreeTestPage() {
+  const { t } = useT()
   const [birthDate, setBirthDate] = useState("")
   const [result, setResult] = useState<number | null>(null)
   const [isCalculating, setIsCalculating] = useState(false)
+
+  const destinyNumbers: Record<number, { title: string; description: string; traits: string[] }> = {
+    1: {
+      title: t("destiny_1_title"),
+      description: t("destiny_1_desc"),
+      traits: t("destiny_1_traits").split(", ")
+    },
+    2: {
+      title: t("destiny_2_title"),
+      description: t("destiny_2_desc"),
+      traits: t("destiny_2_traits").split(", ")
+    },
+    3: {
+      title: t("destiny_3_title"),
+      description: t("destiny_3_desc"),
+      traits: t("destiny_3_traits").split(", ")
+    },
+    4: {
+      title: t("destiny_4_title"),
+      description: t("destiny_4_desc"),
+      traits: t("destiny_4_traits").split(", ")
+    },
+    5: {
+      title: t("destiny_5_title"),
+      description: t("destiny_5_desc"),
+      traits: t("destiny_5_traits").split(", ")
+    },
+    6: {
+      title: t("destiny_6_title"),
+      description: t("destiny_6_desc"),
+      traits: t("destiny_6_traits").split(", ")
+    },
+    7: {
+      title: t("destiny_7_title"),
+      description: t("destiny_7_desc"),
+      traits: t("destiny_7_traits").split(", ")
+    },
+    8: {
+      title: t("destiny_8_title"),
+      description: t("destiny_8_desc"),
+      traits: t("destiny_8_traits").split(", ")
+    },
+    9: {
+      title: t("destiny_9_title"),
+      description: t("destiny_9_desc"),
+      traits: t("destiny_9_traits").split(", ")
+    }
+  }
 
   const handleCalculate = async () => {
     if (!birthDate) return
@@ -111,11 +113,10 @@ export default function FreeTestPage() {
                   <Calculator className="w-10 h-10 text-gold" />
                 </motion.div>
                 <h1 className="font-serif text-3xl md:text-5xl text-cream mb-4">
-                  Узнайте своё Число Судьбы
+                  {t("free_test_title")}
                 </h1>
                 <p className="text-cream/70">
-                  Введите дату рождения и получите краткую характеристику 
-                  вашего жизненного пути
+                  {t("free_test_subtitle")}
                 </p>
               </div>
 
@@ -123,7 +124,7 @@ export default function FreeTestPage() {
                 <div className="space-y-6">
                   <div>
                     <label className="text-cream/80 text-sm mb-2 block">
-                      Дата рождения
+                      {t("free_test_birthdate")}
                     </label>
                     <Input
                       type="date"
@@ -141,11 +142,11 @@ export default function FreeTestPage() {
                     {isCalculating ? (
                       <>
                         <Sparkles className="w-5 h-5 mr-2 animate-pulse" />
-                        Рассчитываю...
+                        {t("free_test_calculating")}
                       </>
                     ) : (
                       <>
-                        Рассчитать
+                        {t("free_test_calculate")}
                         <ArrowRight className="w-5 h-5 ml-2" />
                       </>
                     )}
@@ -154,7 +155,7 @@ export default function FreeTestPage() {
               </div>
 
               <p className="text-center text-cream/40 text-sm mt-6">
-                Это бесплатный мини-расчёт. Для полного анализа запишитесь на консультацию.
+                {t("free_test_disclaimer")}
               </p>
             </motion.div>
           ) : (
@@ -175,7 +176,7 @@ export default function FreeTestPage() {
                   <span className="font-serif text-6xl text-cream">{result}</span>
                 </motion.div>
                 <h2 className="font-serif text-3xl md:text-4xl text-cream mb-2">
-                  Ваше Число Судьбы
+                  {t("free_test_your_number")}
                 </h2>
                 <p className="text-gold text-xl">{resultData?.title}</p>
               </div>
@@ -186,7 +187,7 @@ export default function FreeTestPage() {
                 </p>
 
                 <h4 className="text-gold text-sm tracking-wider uppercase mb-4">
-                  Ключевые качества
+                  {t("free_test_key_traits")}
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {resultData?.traits.map((trait) => (
@@ -202,16 +203,14 @@ export default function FreeTestPage() {
 
               <div className="glass-card p-8 bg-burgundy/10 border-burgundy/30 mb-8">
                 <h3 className="font-serif text-xl text-cream mb-4">
-                  Хотите узнать больше?
+                  {t("free_test_want_more")}
                 </h3>
                 <p className="text-cream/70 mb-6">
-                  Это лишь малая часть того, что можно узнать из вашей даты рождения. 
-                  Полный нумерологический расклад раскроет кармические задачи, 
-                  благоприятные периоды и глубинное предназначение.
+                  {t("free_test_want_more_desc")}
                 </p>
                 <Link href="/consultations">
                   <Button className="bg-gold text-charcoal hover:bg-gold-light">
-                    Записаться на консультацию
+                    {t("free_test_book_consultation")}
                   </Button>
                 </Link>
               </div>
@@ -223,14 +222,14 @@ export default function FreeTestPage() {
                   className="border-gold/30 text-gold hover:bg-gold/10"
                 >
                   <RotateCcw className="w-4 h-4 mr-2" />
-                  Рассчитать ещё раз
+                  {t("free_test_calculate_again")}
                 </Button>
                 <Button
                   variant="outline"
                   className="border-gold/30 text-gold hover:bg-gold/10"
                 >
                   <Share2 className="w-4 h-4 mr-2" />
-                  Поделиться
+                  {t("free_test_share")}
                 </Button>
               </div>
             </motion.div>

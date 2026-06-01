@@ -6,8 +6,10 @@ import { Mail, ArrowLeft, CheckCircle } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { useT } from "@/lib/lang-context"
 
 export default function ForgotPasswordPage() {
+  const { t } = useT()
   const [isLoading, setIsLoading] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -30,15 +32,14 @@ export default function ForgotPasswordPage() {
           <CheckCircle className="w-8 h-8 text-gold" />
         </div>
         <h1 className="font-serif text-3xl text-cream mb-4">
-          Письмо отправлено
+          {t("forgot_email_sent")}
         </h1>
         <p className="text-cream/60 mb-8">
-          Мы отправили инструкции по восстановлению пароля на вашу почту. 
-          Проверьте папку &ldquo;Спам&rdquo;, если письмо не пришло.
+          {t("forgot_email_sent_desc")}
         </p>
         <Link href="/login">
           <Button className="bg-gold text-charcoal hover:bg-gold-light">
-            Вернуться к входу
+            {t("forgot_back_to_login")}
           </Button>
         </Link>
       </motion.div>
@@ -56,14 +57,14 @@ export default function ForgotPasswordPage() {
         className="inline-flex items-center text-cream/60 hover:text-cream mb-8"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
-        Назад к входу
+        {t("forgot_back_to_login")}
       </Link>
 
       <h1 className="font-serif text-3xl text-cream mb-2">
-        Восстановление пароля
+        {t("forgot_title")}
       </h1>
       <p className="text-cream/60 mb-8">
-        Введите email, и мы отправим вам ссылку для сброса пароля
+        {t("forgot_subtitle")}
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -85,7 +86,7 @@ export default function ForgotPasswordPage() {
           disabled={isLoading}
           className="w-full bg-gold text-charcoal hover:bg-gold-light h-12"
         >
-          {isLoading ? "Отправка..." : "Отправить ссылку"}
+          {isLoading ? t("forgot_sending") : t("forgot_send_link")}
         </Button>
       </form>
     </motion.div>

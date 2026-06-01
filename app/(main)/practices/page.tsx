@@ -3,32 +3,34 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Clock, Sparkles, Filter, Search, ArrowRight, Lock } from "lucide-react"
+import { Clock, Sparkles, Search, ArrowRight, Lock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { practices } from "@/data/practices"
-
-const categories = [
-  { id: "all", label: "Toate" },
-  { id: "ritualuri", label: "Ritualuri" },
-  { id: "afirmatii", label: "Afirmatii" },
-  { id: "vizualizari", label: "Vizualizari" },
-  { id: "respiratie", label: "Respiratie" },
-  { id: "jurnal", label: "Jurnal" },
-]
-
-const levels = [
-  { id: "all", label: "Toate nivelurile" },
-  { id: "incepator", label: "Incepator" },
-  { id: "intermediar", label: "Intermediar" },
-  { id: "avansat", label: "Avansat" },
-]
+import { useT } from "@/lib/lang-context"
 
 export default function PracticesPage() {
+  const { t } = useT()
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedLevel, setSelectedLevel] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
+
+  const categories = [
+    { id: "all", label: t("filter_all") },
+    { id: "ritualuri", label: t("practices_rituals") },
+    { id: "afirmatii", label: t("practices_affirmations") },
+    { id: "vizualizari", label: t("practices_visualizations") },
+    { id: "respiratie", label: t("practices_breathing") },
+    { id: "jurnal", label: t("practices_journal") },
+  ]
+
+  const levels = [
+    { id: "all", label: t("filter_all_levels") },
+    { id: "incepator", label: t("level_beginner") },
+    { id: "intermediar", label: t("level_intermediate") },
+    { id: "avansat", label: t("level_advanced") },
+  ]
 
   const filteredPractices = practices.filter((practice) => {
     const matchesCategory = selectedCategory === "all" || practice.category === selectedCategory
@@ -51,15 +53,14 @@ export default function PracticesPage() {
           >
             <Badge className="mb-4 bg-gold/20 text-gold border-gold/30">
               <Sparkles className="w-3 h-3 mr-1" />
-              Practici Spirituale
+              {t("practices_spiritual")}
             </Badge>
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-cream mb-6">
-              Transforma-ti viata <br />
-              <span className="text-gold">pas cu pas</span>
+              {t("practices_title")} <br />
+              <span className="text-gold">{t("practices_step_by_step")}</span>
             </h1>
             <p className="text-xl text-cream/70 mb-8">
-              Ritualuri, afirmatii, vizualizari si tehnici de respiratie 
-              pentru a-ti echilibra energia si a manifesta abundenta.
+              {t("practices_subtitle")}
             </p>
           </motion.div>
         </div>
@@ -74,7 +75,7 @@ export default function PracticesPage() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-cream/40" />
               <Input
                 type="text"
-                placeholder="Cauta practici..."
+                placeholder={t("practices_search")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-12 bg-charcoal-light/50 border-white/10 text-cream placeholder:text-cream/40"
@@ -123,7 +124,7 @@ export default function PracticesPage() {
         <div className="container mx-auto px-4">
           {filteredPractices.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-cream/50 text-lg">Nu am gasit practici care sa corespunda cautarii tale.</p>
+              <p className="text-cream/50 text-lg">{t("practices_no_results")}</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -175,7 +176,7 @@ export default function PracticesPage() {
                       <div className="flex items-center justify-between">
                         <span className="flex items-center gap-1 text-sm text-cream/50">
                           <Clock className="w-4 h-4" />
-                          {practice.duration} min
+                          {practice.duration} {t("practices_min")}
                         </span>
 
                         <Button
@@ -183,7 +184,7 @@ export default function PracticesPage() {
                           size="sm"
                           className="text-gold hover:text-gold hover:bg-gold/10"
                         >
-                          Incepe
+                          {t("practices_start")}
                           <ArrowRight className="w-4 h-4 ml-1" />
                         </Button>
                       </div>
@@ -201,22 +202,21 @@ export default function PracticesPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="font-serif text-3xl text-cream mb-4">
-              Vrei acces la toate practicile?
+              {t("practices_want_all")}
             </h2>
             <p className="text-cream/70 mb-8">
-              Aboneaza-te la pachetul Premium si obtine acces nelimitat 
-              la toate practicile, meditatiile si cursurile.
+              {t("practices_subscribe")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild className="bg-gold hover:bg-gold/90 text-charcoal">
                 <Link href="/courses">
-                  Vezi Cursurile
+                  {t("practices_view_courses")}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
               <Button asChild variant="outline" className="border-gold/50 text-gold hover:bg-gold/10">
                 <Link href="/consultations">
-                  Programeaza Consultatie
+                  {t("practices_schedule_consultation")}
                 </Link>
               </Button>
             </div>
