@@ -4,79 +4,41 @@ import { motion } from "framer-motion"
 import { Award, BookOpen, Heart, Star, Sparkles, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-
-const timeline = [
-  {
-    year: "2015",
-    title: "Начало пути",
-    description: "Первое знакомство с нумерологией и эзотерическими практиками. Осознание своего призвания помогать людям через числа."
-  },
-  {
-    year: "2017",
-    title: "Глубокое обучение",
-    description: "Прохождение сертифицированных курсов по кармической нумерологии у ведущих мастеров. Изучение древних систем и современных методик."
-  },
-  {
-    year: "2019",
-    title: "Первые консультации",
-    description: "Начало практики. Первые клиенты и удивительные трансформации. Понимание силы и ответственности этого знания."
-  },
-  {
-    year: "2021",
-    title: "Создание школы",
-    description: "Открытие онлайн-школы KARMANUMBERS. Разработка авторских методик и курсов для передачи знаний."
-  },
-  {
-    year: "2023",
-    title: "Международное признание",
-    description: "Выступления на конференциях, обучение студентов из разных стран. Более 5000 консультаций и сотни благодарных учеников."
-  },
-  {
-    year: "Сегодня",
-    title: "Миссия продолжается",
-    description: "Развитие проекта, создание новых курсов, ретриты и глубокая трансформационная работа с людьми по всему миру."
-  }
-]
-
-const certifications = [
-  "Сертифицированный нумеролог (Школа КОД)",
-  "Мастер кармической астрологии",
-  "Практик медитативных техник",
-  "Коуч трансформационных изменений"
-]
-
-const values = [
-  {
-    icon: Heart,
-    title: "Любовь",
-    description: "Каждая консультация наполнена искренней заботой о вашем благополучии"
-  },
-  {
-    icon: BookOpen,
-    title: "Знания",
-    description: "Глубокое понимание древних систем и современных подходов"
-  },
-  {
-    icon: Star,
-    title: "Честность",
-    description: "Только правда и конструктивные рекомендации для вашего развития"
-  },
-  {
-    icon: Sparkles,
-    title: "Трансформация",
-    description: "Фокус на реальных изменениях и практических результатах"
-  }
-]
+import { useT } from "@/lib/lang-context"
 
 export default function MyPathPage() {
+  const { t } = useT()
+
+  const timeline = [
+    { year: "2015", title: t("hero_subtitle"), description: t("about_p1") },
+    { year: "2017", title: t("path_education"), description: t("about_p2") },
+    { year: "2019", title: t("consult_title"), description: t("consult_subtitle") },
+    { year: "2021", title: t("courses_title"), description: t("courses_subtitle") },
+    { year: "2023", title: t("reviews_title"), description: t("reviews_subtitle") },
+    { year: t("retreat_next"), title: t("retreat_tag"), description: t("retreat_subtitle") },
+  ]
+
+  const certifications = [
+    t("path_education"),
+    t("dir_spirituality"),
+    t("meditations_tag"),
+    t("consult_title"),
+  ]
+
+  const values = [
+    { icon: Heart, title: t("dir_relations"), description: t("dir_relations_desc") },
+    { icon: BookOpen, title: t("nav_learning"), description: t("courses_subtitle") },
+    { icon: Star, title: t("reviews_tag"), description: t("reviews_subtitle") },
+    { icon: Sparkles, title: t("dir_spirituality"), description: t("dir_spirituality_desc") },
+  ]
+
   return (
     <main className="pt-24 pb-20">
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="py-16 md:py-24 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-gold blur-3xl" />
         </div>
-
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -85,31 +47,27 @@ export default function MyPathPage() {
               transition={{ duration: 0.6 }}
             >
               <span className="text-gold text-sm tracking-[0.3em] uppercase mb-4 block">
-                Мой путь
+                {t("path_tag")}
               </span>
               <h1 className="font-serif text-4xl md:text-6xl text-cream mb-6 leading-tight">
-                Валентина{" "}
-                <span className="text-gold">Черняк</span>
+                {t("about_title")}
               </h1>
               <p className="text-cream/70 text-lg mb-8 leading-relaxed">
-                Нумеролог, практик кармической астрологии и наставник на пути 
-                самопознания. Моя миссия — помочь вам раскрыть свой истинный потенциал 
-                через понимание энергии чисел.
+                {t("about_p1")}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/consultations">
                   <Button className="bg-gold text-charcoal hover:bg-gold-light">
-                    Записаться на консультацию
+                    {t("path_cta_consult")}
                   </Button>
                 </Link>
                 <Link href="https://t.me/karmanumbers" target="_blank">
                   <Button variant="outline" className="border-gold/30 text-gold hover:bg-gold/10">
-                    Связаться в Telegram
+                    Telegram
                   </Button>
                 </Link>
               </div>
             </motion.div>
-
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -119,7 +77,7 @@ export default function MyPathPage() {
               <div className="aspect-[3/4] rounded-2xl overflow-hidden border border-gold/20">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5391083623739495321-KGl47fLM4bM3P1E6FkJFtLB7HR9VBV.jpg"
-                  alt="Валентина Черняк"
+                  alt={t("about_title")}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -130,7 +88,7 @@ export default function MyPathPage() {
                   </div>
                   <div>
                     <p className="text-gold font-medium">5000+</p>
-                    <p className="text-cream/60 text-sm">консультаций</p>
+                    <p className="text-cream/60 text-sm">{t("about_stat_consult")}</p>
                   </div>
                 </div>
               </div>
@@ -139,7 +97,7 @@ export default function MyPathPage() {
         </div>
       </section>
 
-      {/* Values Section */}
+      {/* Values */}
       <section className="py-16 md:py-24 bg-charcoal-light/30">
         <div className="container mx-auto px-4">
           <motion.div
@@ -149,13 +107,10 @@ export default function MyPathPage() {
             className="text-center mb-16"
           >
             <h2 className="font-serif text-3xl md:text-4xl text-cream mb-4">
-              Мои ценности
+              {t("path_values")}
             </h2>
-            <p className="text-cream/60 max-w-2xl mx-auto">
-              Принципы, которыми я руководствуюсь в работе с каждым человеком
-            </p>
+            <p className="text-cream/60 max-w-2xl mx-auto">{t("about_p2")}</p>
           </motion.div>
-
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => (
               <motion.div
@@ -177,7 +132,7 @@ export default function MyPathPage() {
         </div>
       </section>
 
-      {/* Timeline Section */}
+      {/* Timeline */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <motion.div
@@ -187,17 +142,15 @@ export default function MyPathPage() {
             className="text-center mb-16"
           >
             <span className="text-gold text-sm tracking-[0.3em] uppercase mb-4 block">
-              История
+              {t("path_tag")}
             </span>
             <h2 className="font-serif text-3xl md:text-4xl text-cream">
-              Мой путь к нумерологии
+              {t("path_title")}
             </h2>
           </motion.div>
-
           <div className="max-w-3xl mx-auto">
             <div className="relative">
               <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gold/20 md:-translate-x-px" />
-              
               {timeline.map((item, index) => (
                 <motion.div
                   key={item.year}
@@ -205,9 +158,7 @@ export default function MyPathPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className={`relative flex items-start gap-8 mb-12 ${
-                    index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                  }`}
+                  className={`relative flex items-start gap-8 mb-12 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
                 >
                   <div className={`flex-1 ${index % 2 === 0 ? "md:text-right" : "md:text-left"} hidden md:block`}>
                     {index % 2 === 0 && (
@@ -218,9 +169,7 @@ export default function MyPathPage() {
                       </div>
                     )}
                   </div>
-                  
                   <div className="absolute left-4 md:left-1/2 w-3 h-3 rounded-full bg-gold -translate-x-1/2 mt-2" />
-                  
                   <div className={`flex-1 pl-12 md:pl-0 ${index % 2 === 0 ? "md:text-left" : "md:text-right"}`}>
                     {index % 2 !== 0 ? (
                       <div className="glass-card p-6">
@@ -243,7 +192,7 @@ export default function MyPathPage() {
         </div>
       </section>
 
-      {/* Certifications Section */}
+      {/* Certifications */}
       <section className="py-16 md:py-24 bg-charcoal-light/30">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -255,32 +204,27 @@ export default function MyPathPage() {
               <div className="aspect-square rounded-2xl overflow-hidden border border-gold/20">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5429424431718666999-Nn343XNRQwpx6HAmXJDJk63kRBZT57.jpg"
-                  alt="Сертификация"
+                  alt={t("path_education")}
                   className="w-full h-full object-cover"
                 />
               </div>
             </motion.div>
-
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
               <span className="text-gold text-sm tracking-[0.3em] uppercase mb-4 block">
-                Образование
+                {t("path_education")}
               </span>
               <h2 className="font-serif text-3xl md:text-4xl text-cream mb-6">
-                Сертификации и обучение
+                {t("path_education")}
               </h2>
-              <p className="text-cream/70 mb-8">
-                Мои знания основаны на глубоком изучении древних традиций и современных 
-                методик. Постоянное развитие и обучение — неотъемлемая часть моего пути.
-              </p>
-              
+              <p className="text-cream/70 mb-8">{t("about_p1")}</p>
               <div className="space-y-4">
                 {certifications.map((cert, index) => (
                   <motion.div
-                    key={cert}
+                    key={index}
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -299,12 +243,11 @@ export default function MyPathPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA */}
       <section className="py-20 md:py-28 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-gold/5 blur-3xl" />
         </div>
-
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -313,14 +256,12 @@ export default function MyPathPage() {
             className="max-w-2xl mx-auto text-center"
           >
             <h2 className="font-serif text-3xl md:text-4xl text-cream mb-6">
-              Готовы начать свой путь?
+              {t("path_cta_consult")}
             </h2>
-            <p className="text-cream/70 mb-8">
-              Запишитесь на консультацию и узнайте, что числа говорят о вашем предназначении
-            </p>
+            <p className="text-cream/70 mb-8">{t("consult_subtitle")}</p>
             <Link href="/consultations">
               <Button size="lg" className="bg-gold text-charcoal hover:bg-gold-light">
-                Записаться на консультацию
+                {t("path_cta_consult")}
               </Button>
             </Link>
           </motion.div>

@@ -4,8 +4,10 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Smartphone, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useT } from "@/lib/lang-context"
 
 export function PWABanner() {
+  const { t } = useT()
   const [isVisible, setIsVisible] = useState(false)
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null)
 
@@ -21,7 +23,6 @@ export function PWABanner() {
 
     window.addEventListener("beforeinstallprompt", handler)
 
-    // Show banner after 10 seconds for mobile users even without prompt
     const timer = setTimeout(() => {
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         setIsVisible(true)
@@ -38,9 +39,7 @@ export function PWABanner() {
     if (deferredPrompt) {
       deferredPrompt.prompt()
       const { outcome } = await deferredPrompt.userChoice
-      if (outcome === "accepted") {
-        setIsVisible(false)
-      }
+      if (outcome === "accepted") setIsVisible(false)
       setDeferredPrompt(null)
     }
   }
@@ -61,31 +60,19 @@ export function PWABanner() {
           className="fixed bottom-20 md:bottom-6 left-4 right-4 z-40 md:left-auto md:right-6 md:max-w-sm"
         >
           <div className="glass-card p-4 border border-gold/20">
-            <button
-              onClick={handleDismiss}
-              className="absolute top-2 right-2 text-cream/40 hover:text-cream"
-            >
+            <button onClick={handleDismiss} className="absolute top-2 right-2 text-muted-foreground hover:text-foreground" aria-label={t("pwa_close")}>
               <X className="w-5 h-5" />
             </button>
-
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gold to-burgundy flex items-center justify-center flex-shrink-0">
-                <Smartphone className="w-6 h-6 text-cream" />
+                <Smartphone className="w-6 h-6 text-foreground" />
               </div>
               <div className="flex-1">
-                <h4 className="font-serif text-cream mb-1">
-                  Установите приложение
-                </h4>
-                <p className="text-cream/60 text-sm mb-3">
-                  Добавьте на главный экран для быстрого доступа
-                </p>
-                <Button
-                  size="sm"
-                  onClick={handleInstall}
-                  className="bg-gold text-charcoal hover:bg-gold-light"
-                >
+                <h4 className="font-serif text-foreground mb-1">{t("pwa_title")}</h4>
+                <p className="text-muted-foreground text-sm mb-3">{t("pwa_desc")}</p>
+                <Button size="sm" onClick={handleInstall} className="bg-gold text-background hover:bg-gold-light">
                   <Download className="w-4 h-4 mr-2" />
-                  Установить
+                  {t("pwa_install")}
                 </Button>
               </div>
             </div>

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { GlassCard } from "./glass-card"
 import { cn } from "@/lib/utils"
 import type { Meditation } from "@/data/meditations"
+import { useT } from "@/lib/lang-context"
 
 interface MeditationCardProps {
   meditation: Meditation
@@ -14,19 +15,21 @@ interface MeditationCardProps {
 }
 
 export function MeditationCard({ meditation, variant = "default" }: MeditationCardProps) {
-  const levelLabels = {
-    beginner: "Начальный",
-    intermediate: "Средний",
-    advanced: "Продвинутый"
+  const { t } = useT()
+
+  const levelLabels: Record<string, string> = {
+    beginner: t("level_beginner"),
+    intermediate: t("level_intermediate"),
+    advanced: t("level_advanced")
   }
 
   const categoryLabels: Record<string, string> = {
-    morning: "Утренние",
-    energy: "Энергия",
-    healing: "Исцеление",
-    deep: "Глубокие практики",
+    morning: t("cat_morning"),
+    energy: t("cat_energy"),
+    healing: t("cat_healing"),
+    deep: t("cat_deep"),
     black_white: "Black & White",
-    coming_soon: "Скоро"
+    coming_soon: t("coming_soon")
   }
 
   const isComingSoon = meditation.status === "coming_soon"
@@ -83,7 +86,7 @@ export function MeditationCard({ meditation, variant = "default" }: MeditationCa
         {/* Status badge */}
         {isComingSoon && (
           <Badge className="absolute top-2 right-2 bg-zinc-700 text-zinc-300">
-            Скоро
+            {t("coming_soon")}
           </Badge>
         )}
       </div>
@@ -139,7 +142,7 @@ export function MeditationCard({ meditation, variant = "default" }: MeditationCa
               )}
             >
               <Play className="w-4 h-4 mr-2" />
-              Слушать
+              {t("listen")}
             </Button>
           </Link>
         )}

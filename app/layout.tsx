@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
+import { LangProvider } from "@/lib/lang-context"
 import "./globals.css"
 
 const playfair = Playfair_Display({ 
@@ -105,9 +106,11 @@ export default function RootLayout({
         >
           Перейти к содержимому
         </a>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+        <LangProvider>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
+            {children}
+          </ThemeProvider>
+        </LangProvider>
       </body>
     </html>
   )

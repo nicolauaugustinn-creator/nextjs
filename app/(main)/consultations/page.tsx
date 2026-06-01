@@ -4,136 +4,139 @@ import { motion } from "framer-motion"
 import { Clock, Video, MessageCircle, Star, Check, ArrowRight, Calendar } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-
-const consultations = [
-  {
-    id: "numerology",
-    title: "Нумерологический расклад",
-    subtitle: "Базовая консультация",
-    description: "Полный анализ вашей кармической карты по дате рождения. Узнайте свое предназначение, сильные стороны, кармические задачи и благоприятные периоды.",
-    duration: "90 минут",
-    price: 15000,
-    features: [
-      "Расчёт числа судьбы и жизненного пути",
-      "Анализ кармических задач",
-      "Определение сильных и слабых сторон",
-      "Благоприятные периоды года",
-      "Рекомендации по развитию",
-      "Запись консультации"
-    ],
-    popular: true
-  },
-  {
-    id: "compatibility",
-    title: "Совместимость пары",
-    subtitle: "Консультация для двоих",
-    description: "Глубокий анализ кармической связи между партнерами. Понимание динамики отношений, общих задач и путей гармонизации союза.",
-    duration: "120 минут",
-    price: 25000,
-    features: [
-      "Анализ карт обоих партнёров",
-      "Карта совместимости",
-      "Кармические связи между партнёрами",
-      "Общие задачи и уроки",
-      "Точки роста и конфликтов",
-      "Практики для гармонизации"
-    ],
-    popular: false
-  },
-  {
-    id: "business",
-    title: "Бизнес-консультация",
-    subtitle: "Для предпринимателей",
-    description: "Нумерологический анализ для бизнеса: выбор благоприятных дат для важных решений, анализ партнёров, названий и стратегий развития.",
-    duration: "60 минут",
-    price: 20000,
-    features: [
-      "Анализ личных бизнес-энергий",
-      "Благоприятные периоды для решений",
-      "Совместимость с партнёрами",
-      "Анализ названия компании",
-      "Стратегия развития",
-      "Финансовые периоды года"
-    ],
-    popular: false
-  },
-  {
-    id: "year",
-    title: "Прогноз на год",
-    subtitle: "Детальный анализ",
-    description: "Подробный прогноз на предстоящий год: ключевые периоды, возможности, предостережения и рекомендации по месяцам.",
-    duration: "60 минут",
-    price: 12000,
-    features: [
-      "Общая энергия года",
-      "Помесячный прогноз",
-      "Благоприятные даты",
-      "Периоды для отдыха",
-      "Финансовые окна",
-      "Личные рекомендации"
-    ],
-    popular: false
-  },
-  {
-    id: "deep",
-    title: "Глубинная проработка",
-    subtitle: "Расширенная консультация",
-    description: "Максимально детальный анализ с проработкой всех аспектов: карма, предназначение, отношения, финансы, здоровье и духовный путь.",
-    duration: "180 минут",
-    price: 35000,
-    features: [
-      "Полный нумерологический расчёт",
-      "Карма рода и личная карма",
-      "Все сферы жизни детально",
-      "Кармические долги и задачи",
-      "Медитация и практики",
-      "Поддержка в течение месяца"
-    ],
-    popular: false
-  },
-  {
-    id: "vip",
-    title: "VIP-сопровождение",
-    subtitle: "Персональная работа",
-    description: "Месяц индивидуальной работы: еженедельные консультации, постоянная поддержка, практики и глубокая трансформация.",
-    duration: "1 месяц",
-    price: 100000,
-    features: [
-      "4 консультации по 90 минут",
-      "Чат-поддержка 24/7",
-      "Индивидуальные практики",
-      "Ежедневные рекомендации",
-      "Работа с запросами",
-      "Полная трансформация"
-    ],
-    popular: false
-  }
-]
-
-const process = [
-  {
-    step: 1,
-    title: "Выберите формат",
-    description: "Определитесь с типом консультации, которая подходит под ваш запрос"
-  },
-  {
-    step: 2,
-    title: "Оставьте заявку",
-    description: "Заполните форму или напишите в Telegram для записи на консультацию"
-  },
-  {
-    step: 3,
-    title: "Согласуем время",
-    description: "Я свяжусь с вами для выбора удобного времени и уточнения деталей"
-  },
-  {
-    step: 4,
-    title: "Консультация",
-    description: "Проводим встречу онлайн через Zoom, вы получаете запись и материалы"
-  }
-]
+import { useT } from "@/lib/lang-context"
 
 export default function ConsultationsPage() {
+  const { t } = useT()
+
+  const consultations = [
+    {
+      id: "numerology",
+      title: t("consult_numerology_title"),
+      subtitle: t("consult_basic"),
+      description: t("consult_numerology_desc"),
+      duration: t("consult_90min"),
+      price: 15000,
+      features: [
+        t("consult_feature_destiny"),
+        t("consult_feature_karma_tasks"),
+        t("consult_feature_strengths"),
+        t("consult_feature_periods"),
+        t("consult_feature_recommendations"),
+        t("consult_feature_recording")
+      ],
+      popular: true
+    },
+    {
+      id: "compatibility",
+      title: t("consult_compatibility_title"),
+      subtitle: t("consult_for_couples"),
+      description: t("consult_compatibility_desc"),
+      duration: t("consult_120min"),
+      price: 25000,
+      features: [
+        t("consult_feature_both_charts"),
+        t("consult_feature_compat_map"),
+        t("consult_feature_karmic_links"),
+        t("consult_feature_common_tasks"),
+        t("consult_feature_growth_points"),
+        t("consult_feature_harmony_practices")
+      ],
+      popular: false
+    },
+    {
+      id: "business",
+      title: t("consult_business_title"),
+      subtitle: t("consult_for_entrepreneurs"),
+      description: t("consult_business_desc"),
+      duration: t("consult_60min"),
+      price: 20000,
+      features: [
+        t("consult_feature_biz_energy"),
+        t("consult_feature_biz_periods"),
+        t("consult_feature_partner_compat"),
+        t("consult_feature_company_name"),
+        t("consult_feature_strategy"),
+        t("consult_feature_fin_periods")
+      ],
+      popular: false
+    },
+    {
+      id: "year",
+      title: t("consult_year_title"),
+      subtitle: t("consult_detailed_analysis"),
+      description: t("consult_year_desc"),
+      duration: t("consult_60min"),
+      price: 12000,
+      features: [
+        t("consult_feature_year_energy"),
+        t("consult_feature_monthly"),
+        t("consult_feature_good_dates"),
+        t("consult_feature_rest_periods"),
+        t("consult_feature_fin_windows"),
+        t("consult_feature_personal_recs")
+      ],
+      popular: false
+    },
+    {
+      id: "deep",
+      title: t("consult_deep_title"),
+      subtitle: t("consult_extended"),
+      description: t("consult_deep_desc"),
+      duration: t("consult_180min"),
+      price: 35000,
+      features: [
+        t("consult_feature_full_calc"),
+        t("consult_feature_family_karma"),
+        t("consult_feature_all_areas"),
+        t("consult_feature_karmic_debts"),
+        t("consult_feature_meditation"),
+        t("consult_feature_month_support")
+      ],
+      popular: false
+    },
+    {
+      id: "vip",
+      title: t("consult_vip_title"),
+      subtitle: t("consult_personal_work"),
+      description: t("consult_vip_desc"),
+      duration: t("consult_1month"),
+      price: 100000,
+      features: [
+        t("consult_feature_4sessions"),
+        t("consult_feature_chat_support"),
+        t("consult_feature_individual_practices"),
+        t("consult_feature_daily_recs"),
+        t("consult_feature_request_work"),
+        t("consult_feature_full_transform")
+      ],
+      popular: false
+    }
+  ]
+
+  const process = [
+    {
+      step: 1,
+      title: t("consult_step1_title"),
+      description: t("consult_step1_desc")
+    },
+    {
+      step: 2,
+      title: t("consult_step2_title"),
+      description: t("consult_step2_desc")
+    },
+    {
+      step: 3,
+      title: t("consult_step3_title"),
+      description: t("consult_step3_desc")
+    },
+    {
+      step: 4,
+      title: t("consult_step4_title"),
+      description: t("consult_step4_desc")
+    }
+  ]
+
   return (
     <main className="pt-24 pb-20">
       {/* Hero Section */}
@@ -149,24 +152,23 @@ export default function ConsultationsPage() {
             className="max-w-3xl mx-auto text-center"
           >
             <span className="text-gold text-sm tracking-[0.3em] uppercase mb-4 block">
-              Персональная работа
+              {t("consult_personal_work")}
             </span>
             <h1 className="font-serif text-4xl md:text-6xl text-cream mb-6">
-              Консультации
+              {t("nav_consultations")}
             </h1>
             <p className="text-cream/70 text-lg mb-8">
-              Индивидуальные сессии для глубокого понимания себя, своего предназначения 
-              и жизненного пути через призму кармической нумерологии
+              {t("consult_hero_desc")}
             </p>
 
             <div className="flex items-center justify-center gap-6 text-cream/60">
               <span className="flex items-center gap-2">
                 <Video className="w-5 h-5 text-gold" />
-                Онлайн через Zoom
+                {t("consult_online_zoom")}
               </span>
               <span className="flex items-center gap-2">
                 <MessageCircle className="w-5 h-5 text-gold" />
-                Поддержка в Telegram
+                {t("consult_telegram_support")}
               </span>
             </div>
           </motion.div>
@@ -191,7 +193,7 @@ export default function ConsultationsPage() {
                   <div className="absolute -top-3 left-6 z-10">
                     <span className="bg-gold text-charcoal text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
                       <Star className="w-3 h-3" />
-                      Популярное
+                      {t("consult_popular")}
                     </span>
                   </div>
                 )}
@@ -232,7 +234,7 @@ export default function ConsultationsPage() {
                     </div>
                     <Link href="https://t.me/karmanumbers" target="_blank">
                       <Button className="w-full bg-gold text-charcoal hover:bg-gold-light">
-                        Записаться
+                        {t("consult_book")}
                         <ArrowRight className="ml-2 w-4 h-4" />
                       </Button>
                     </Link>
@@ -254,10 +256,10 @@ export default function ConsultationsPage() {
             className="text-center mb-16"
           >
             <span className="text-gold text-sm tracking-[0.3em] uppercase mb-4 block">
-              Как это работает
+              {t("consult_how_it_works")}
             </span>
             <h2 className="font-serif text-3xl md:text-4xl text-cream">
-              Процесс записи
+              {t("consult_booking_process")}
             </h2>
           </motion.div>
 
@@ -297,15 +299,14 @@ export default function ConsultationsPage() {
           >
             <Calendar className="w-12 h-12 text-gold mx-auto mb-6" />
             <h2 className="font-serif text-2xl md:text-3xl text-cream mb-4">
-              Не уверены, какая консультация вам нужна?
+              {t("consult_not_sure")}
             </h2>
             <p className="text-cream/70 mb-8">
-              Напишите мне в Telegram, расскажите о вашем запросе, и я помогу 
-              подобрать подходящий формат работы
+              {t("consult_not_sure_desc")}
             </p>
             <Link href="https://t.me/karmanumbers" target="_blank">
               <Button size="lg" className="bg-gold text-charcoal hover:bg-gold-light">
-                Написать в Telegram
+                {t("consult_write_telegram")}
               </Button>
             </Link>
           </motion.div>
