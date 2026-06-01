@@ -1,570 +1,514 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { Plus, Pencil, Trash2, Eye, Search, Calendar, FileText, Loader2, Check, AlertCircle, X, Save, Star } from "lucide-react"
+import { Plus, Edit, Trash2, Eye, Search, FileText, MoreHorizontal, Star, Calendar } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-
-interface BlogPost {
-  id: string
-  slug: string
-  title: string
-  excerpt: string
-  content: string
-  coverImage: string
-  category: string
-  author: string
-  publishedAt: string
-  status: "draft" | "published"
-  featured: boolean
-}
-
-const initialBlogForm: Partial<BlogPost> = {
-  title: "",
-  slug: "",
-  excerpt: "",
-  content: "",
-  coverImage: "",
-  category: "Основы",
-  author: "Валентина Ведигора",
-  publishedAt: new Date().toISOString().split("T")[0],
-  status: "draft",
-  featured: false
-}
-
-const categories = ["Основы", "Практика", "Деньги", "Отношения", "Здоровье", "Предназначение"]
+import { blogStore, type BlogPost } from "@/lib/admin-store"
+import { toast } from "sonner"
 
 export default function AdminBlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
-  const [loading, setLoading] = useState(true)
-  const [saving, setSaving] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState<string | null>(null)
-  
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedStatus, setSelectedStatus] = useState<"all" | "published" | "draft">("all")
+  const [search, setSearch] = useState("")
+  const [statusFilter, setStatusFilter] = useState<string>("all")
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null)
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-  const [postToDelete, setPostToDelete] = useState<BlogPost | null>(null)
-  
-  const [formData, setFormData] = useState<Partial<BlogPost>>(initialBlogForm)
+  const [deletingPost, setDeletingPost] = useState<BlogPost | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
-  // Fetch posts
+  // Form state
+  const [formData, setFormData] = useState({
+    title: "",
+    slug: "",
+    excerpt: "",
+    content: "",
+    image: "/images/blog/default.jpg",
+    category: "basics",
+    author: "Мария Иванова",
+    status: "draft" as "published" | "draft",
+    featured: false,
+  })
+
   useEffect(() => {
-    fetchPosts()
+    loadPosts()
   }, [])
 
-  async function fetchPosts() {
-    try {
-      setLoading(true)
-      const response = await fetch("/api/admin/blog")
-      if (!response.ok) throw new Error("Failed to fetch posts")
-      const data = await response.json()
-      setPosts(data)
-    } catch (err) {
-      setError("Ошибка загрузки статей")
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
+  const loadPosts = () => {
+    const data = blogStore.getAll()
+    setPosts(data)
   }
 
-  // Handle form input change
-  function handleInputChange(field: keyof BlogPost, value: unknown) {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
-
-  // Open create dialog
-  function openCreateDialog() {
+  const resetForm = () => {
+    setFormData({
+      title: "",
+      slug: "",
+      excerpt: "",
+      content: "",
+      image: "/images/blog/default.jpg",
+      category: "basics",
+      author: "Мария Иванова",
+      status: "draft",
+      featured: false,
+    })
     setEditingPost(null)
-    setFormData(initialBlogForm)
+  }
+
+  const openCreateDialog = () => {
+    resetForm()
     setIsDialogOpen(true)
   }
 
-  // Open edit dialog
-  function openEditDialog(post: BlogPost) {
+  const openEditDialog = (post: BlogPost) => {
     setEditingPost(post)
-    setFormData(post)
+    setFormData({
+      title: post.title,
+      slug: post.slug,
+      excerpt: post.excerpt,
+      content: post.content,
+      image: post.image,
+      category: post.category,
+      author: post.author,
+      status: post.status,
+      featured: post.featured,
+    })
     setIsDialogOpen(true)
   }
 
-  // Save post
-  async function savePost() {
+  const handleSave = () => {
+    if (!formData.title.trim()) {
+      toast.error("Введите заголовок статьи")
+      return
+    }
+    if (!formData.slug.trim()) {
+      toast.error("Введите slug статьи")
+      return
+    }
+
+    setIsLoading(true)
+
     try {
-      setSaving(true)
-      setError(null)
-      
-      const method = editingPost ? "PUT" : "POST"
-      const body = editingPost ? { ...formData, id: editingPost.id } : formData
-      
-      const response = await fetch("/api/admin/blog", {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      })
-      
-      if (!response.ok) throw new Error("Failed to save post")
-      
-      setSuccess(editingPost ? "Статья обновлена!" : "Статья создана!")
+      if (editingPost) {
+        blogStore.update(editingPost.id, formData)
+        toast.success("Статья успешно обновлена!")
+      } else {
+        blogStore.create(formData)
+        toast.success("Статья успешно создана!")
+      }
+
+      loadPosts()
       setIsDialogOpen(false)
-      fetchPosts()
-      
-      setTimeout(() => setSuccess(null), 3000)
-    } catch (err) {
-      setError("Ошибка сохранения статьи")
-      console.error(err)
+      resetForm()
+    } catch (error) {
+      toast.error("Ошибка при сохранении статьи")
     } finally {
-      setSaving(false)
+      setIsLoading(false)
     }
   }
 
-  // Delete post
-  async function deletePost() {
-    if (!postToDelete) return
-    
+  const handleDelete = () => {
+    if (!deletingPost) return
+
+    setIsLoading(true)
     try {
-      setSaving(true)
-      const response = await fetch(`/api/admin/blog?id=${postToDelete.id}`, {
-        method: "DELETE"
-      })
-      
-      if (!response.ok) throw new Error("Failed to delete post")
-      
-      setSuccess("Статья удалена!")
-      setDeleteDialogOpen(false)
-      setPostToDelete(null)
-      fetchPosts()
-      
-      setTimeout(() => setSuccess(null), 3000)
-    } catch (err) {
-      setError("Ошибка удаления статьи")
-      console.error(err)
+      blogStore.delete(deletingPost.id)
+      toast.success("Статья успешно удалена!")
+      loadPosts()
+      setIsDeleteDialogOpen(false)
+      setDeletingPost(null)
+    } catch (error) {
+      toast.error("Ошибка при удалении статьи")
     } finally {
-      setSaving(false)
+      setIsLoading(false)
     }
   }
 
+  const openDeleteDialog = (post: BlogPost) => {
+    setDeletingPost(post)
+    setIsDeleteDialogOpen(true)
+  }
+
+  const toggleFeatured = (post: BlogPost) => {
+    blogStore.update(post.id, { featured: !post.featured })
+    loadPosts()
+    toast.success(post.featured ? "Статья убрана из избранных" : "Статья добавлена в избранные")
+  }
+
+  const togglePublished = (post: BlogPost) => {
+    const newStatus = post.status === "published" ? "draft" : "published"
+    blogStore.update(post.id, { status: newStatus })
+    loadPosts()
+    toast.success(newStatus === "published" ? "Статья опубликована" : "Статья снята с публикации")
+  }
+
+  // Filter posts
   const filteredPosts = posts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesStatus = selectedStatus === "all" || post.status === selectedStatus
+    const matchesSearch = post.title.toLowerCase().includes(search.toLowerCase()) ||
+                         post.excerpt.toLowerCase().includes(search.toLowerCase())
+    const matchesStatus = statusFilter === "all" || post.status === statusFilter
     return matchesSearch && matchesStatus
   })
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 text-gold animate-spin" />
-      </div>
-    )
+  // Stats
+  const stats = {
+    total: posts.length,
+    published: posts.filter(p => p.status === "published").length,
+    draft: posts.filter(p => p.status === "draft").length,
+  }
+
+  const statusColors: Record<string, string> = {
+    published: "bg-green-500/20 text-green-400 border-green-500/30",
+    draft: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+  }
+
+  const statusLabels: Record<string, string> = {
+    published: "Опубликована",
+    draft: "Черновик"
+  }
+
+  const categoryLabels: Record<string, string> = {
+    basics: "Основы",
+    numerology: "Нумерология",
+    karma: "Карма",
+    spiritual: "Духовность",
+    meditation: "Медитация"
   }
 
   return (
     <div className="space-y-6">
-      {/* Success/Error Messages */}
-      {success && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2 p-4 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400"
-        >
-          <Check className="w-5 h-5" />
-          {success}
-        </motion.div>
-      )}
-      
-      {error && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2 p-4 rounded-lg bg-red-500/20 border border-red-500/30 text-red-400"
-        >
-          <AlertCircle className="w-5 h-5" />
-          {error}
-          <button onClick={() => setError(null)} className="ml-auto">
-            <X className="w-4 h-4" />
-          </button>
-        </motion.div>
-      )}
-
       {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-serif text-2xl md:text-3xl text-cream">Блог</h1>
-          <p className="text-cream/60">Управление статьями блога</p>
+          <h1 className="text-3xl font-bold text-foreground">Блог</h1>
+          <p className="text-muted-foreground mt-1">Управление статьями и публикациями</p>
         </div>
-        <Button onClick={openCreateDialog} className="bg-gold hover:bg-gold/90 text-charcoal">
-          <Plus className="mr-2 h-4 w-4" />
-          Новая статья
+        <Button onClick={openCreateDialog} className="bg-gold hover:bg-gold/90 text-black">
+          <Plus className="w-4 h-4 mr-2" />
+          Написать статью
         </Button>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="glass-card p-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center">
-              <FileText className="w-5 h-5 text-gold" />
-            </div>
-            <div>
-              <p className="font-serif text-2xl text-cream">{posts.length}</p>
-              <p className="text-cream/50 text-sm">Всего статей</p>
-            </div>
-          </div>
-        </div>
-        <div className="glass-card p-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-              <Eye className="w-5 h-5 text-emerald-400" />
-            </div>
-            <div>
-              <p className="font-serif text-2xl text-cream">{posts.filter(p => p.status === "published").length}</p>
-              <p className="text-cream/50 text-sm">Опубликовано</p>
-            </div>
-          </div>
-        </div>
-        <div className="glass-card p-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center">
-              <FileText className="w-5 h-5 text-yellow-400" />
-            </div>
-            <div>
-              <p className="font-serif text-2xl text-cream">{posts.filter(p => p.status === "draft").length}</p>
-              <p className="text-cream/50 text-sm">Черновиков</p>
-            </div>
-          </div>
-        </div>
-        <div className="glass-card p-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-              <Star className="w-5 h-5 text-purple-400" />
-            </div>
-            <div>
-              <p className="font-serif text-2xl text-cream">{posts.filter(p => p.featured).length}</p>
-              <p className="text-cream/50 text-sm">Рекомендуемых</p>
-            </div>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card className="bg-card/50 border-border/50">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Всего статей</CardTitle>
+            <FileText className="w-4 h-4 text-gold" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.total}</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-card/50 border-border/50">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Опубликовано</CardTitle>
+            <Eye className="w-4 h-4 text-green-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-400">{stats.published}</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-card/50 border-border/50">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Черновиков</CardTitle>
+            <Edit className="w-4 h-4 text-yellow-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-yellow-400">{stats.draft}</div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-cream/40" />
+      <div className="flex gap-4 items-center">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder="Поиск статей..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-charcoal-light/50 border-white/10 text-cream"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9 bg-background/50"
           />
         </div>
-        <div className="flex gap-2">
-          {(["all", "published", "draft"] as const).map(status => (
-            <button
-              key={status}
-              onClick={() => setSelectedStatus(status)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                selectedStatus === status
-                  ? "bg-gold text-charcoal"
-                  : "bg-charcoal-light/50 text-cream/60 hover:text-cream border border-white/10"
-              }`}
-            >
-              {status === "all" ? "Все" : status === "published" ? "Опубликовано" : "Черновики"}
-            </button>
-          ))}
-        </div>
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger className="w-40 bg-background/50">
+            <SelectValue placeholder="Статус" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Все статусы</SelectItem>
+            <SelectItem value="published">Опубликованные</SelectItem>
+            <SelectItem value="draft">Черновики</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
-      {/* Posts Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredPosts.map((post, index) => (
-          <motion.div
-            key={post.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05 }}
-            className="glass-card overflow-hidden group"
-          >
-            {/* Cover Image */}
-            <div className="relative h-40 bg-charcoal-light overflow-hidden">
-              <img
-                src={post.coverImage || "/placeholder.svg"}
-                alt={post.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 to-transparent" />
-              
-              {/* Status Badge */}
-              <div className="absolute top-3 left-3">
-                <Badge className={`${
-                  post.status === "published" 
-                    ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
-                    : "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
-                }`}>
-                  {post.status === "published" ? "Опубликовано" : "Черновик"}
-                </Badge>
-              </div>
-
-              {/* Category Badge */}
-              <div className="absolute top-3 right-3">
-                <Badge variant="secondary" className="bg-charcoal/80 text-cream/70">
-                  {post.category}
-                </Badge>
-              </div>
-
-              {/* Featured Star */}
-              {post.featured && (
-                <div className="absolute bottom-3 left-3">
-                  <Star className="w-5 h-5 text-gold fill-gold" />
-                </div>
-              )}
-            </div>
-
-            {/* Content */}
-            <div className="p-4">
-              <h3 className="font-serif text-lg text-cream mb-2 line-clamp-2">{post.title}</h3>
-              <p className="text-cream/50 text-sm mb-4 line-clamp-2">{post.excerpt}</p>
-              
-              {/* Meta */}
-              <div className="flex items-center gap-4 text-sm text-cream/40 mb-4">
-                <span className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  {post.publishedAt}
-                </span>
-                <span>{post.author}</span>
-              </div>
-
-              {/* Actions */}
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 border-white/10 text-cream/70 hover:bg-white/5"
-                  onClick={() => openEditDialog(post)}
-                >
-                  <Pencil className="w-4 h-4 mr-1" />
-                  Редактировать
-                </Button>
-                <button className="p-2 text-cream/40 hover:text-cream hover:bg-white/5 rounded-lg">
-                  <Eye className="w-4 h-4" />
-                </button>
-                <button 
-                  onClick={() => {
-                    setPostToDelete(post)
-                    setDeleteDialogOpen(true)
-                  }}
-                  className="p-2 text-cream/40 hover:text-red-400 hover:bg-red-500/10 rounded-lg"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {filteredPosts.length === 0 && (
-        <div className="text-center py-12">
-          <FileText className="w-12 h-12 text-cream/20 mx-auto mb-3" />
-          <p className="text-cream/50">Статьи не найдены</p>
-        </div>
-      )}
+      {/* Table */}
+      <Card className="bg-card/50 border-border/50">
+        <Table>
+          <TableHeader>
+            <TableRow className="border-border/50 hover:bg-transparent">
+              <TableHead>Статья</TableHead>
+              <TableHead>Категория</TableHead>
+              <TableHead>Автор</TableHead>
+              <TableHead>Дата</TableHead>
+              <TableHead>Статус</TableHead>
+              <TableHead className="text-right">Действия</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredPosts.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  Статьи не найдены. Нажмите &quot;Написать статью&quot; чтобы создать первую.
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredPosts.map((post) => (
+                <TableRow key={post.id} className="border-border/50">
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                        <FileText className="w-6 h-6 text-blue-400" />
+                      </div>
+                      <div>
+                        <div className="font-medium flex items-center gap-2">
+                          {post.title}
+                          {post.featured && (
+                            <Star className="w-3 h-3 text-gold fill-gold" />
+                          )}
+                        </div>
+                        <div className="text-sm text-muted-foreground line-clamp-1">
+                          {post.excerpt}
+                        </div>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className="border-border/50">
+                      {categoryLabels[post.category] || post.category}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>{post.author}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1 text-muted-foreground">
+                      <Calendar className="w-4 h-4" />
+                      {new Date(post.createdAt).toLocaleDateString('ru-RU')}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge className={statusColors[post.status]}>
+                      {statusLabels[post.status]}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => openEditDialog(post)}>
+                          <Edit className="w-4 h-4 mr-2" />
+                          Редактировать
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toggleFeatured(post)}>
+                          <Star className="w-4 h-4 mr-2" />
+                          {post.featured ? "Убрать из избранных" : "В избранное"}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => togglePublished(post)}>
+                          <Eye className="w-4 h-4 mr-2" />
+                          {post.status === "published" ? "Снять с публикации" : "Опубликовать"}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          onClick={() => openDeleteDialog(post)}
+                          className="text-red-400 focus:text-red-400"
+                        >
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          Удалить
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </Card>
 
       {/* Create/Edit Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-charcoal border-white/10">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="font-serif text-2xl text-cream">
-              {editingPost ? "Редактирование статьи" : "Новая статья"}
-            </DialogTitle>
+            <DialogTitle>{editingPost ? "Редактировать статью" : "Создать статью"}</DialogTitle>
+            <DialogDescription>
+              {editingPost ? "Измените содержание статьи" : "Заполните информацию о новой статье"}
+            </DialogDescription>
           </DialogHeader>
-          
-          <div className="space-y-6 py-4">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label className="text-cream">Заголовок</Label>
-                <Input
-                  value={formData.title || ""}
-                  onChange={(e) => handleInputChange("title", e.target.value)}
-                  placeholder="Название статьи"
-                  className="bg-charcoal-light/50 border-white/10 text-cream"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-cream">Slug (URL)</Label>
-                <Input
-                  value={formData.slug || ""}
-                  onChange={(e) => handleInputChange("slug", e.target.value)}
-                  placeholder="article-name"
-                  className="bg-charcoal-light/50 border-white/10 text-cream"
-                />
-              </div>
-            </div>
 
+          <div className="space-y-4 mt-4">
             <div className="space-y-2">
-              <Label className="text-cream">Краткое описание</Label>
-              <Textarea
-                value={formData.excerpt || ""}
-                onChange={(e) => handleInputChange("excerpt", e.target.value)}
-                placeholder="Краткое описание для карточки статьи"
-                className="bg-charcoal-light/50 border-white/10 text-cream min-h-[80px]"
+              <Label>Заголовок *</Label>
+              <Input
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                placeholder="Заголовок статьи"
               />
             </div>
-
             <div className="space-y-2">
-              <Label className="text-cream">Содержание статьи</Label>
+              <Label>Slug (URL) *</Label>
+              <Input
+                value={formData.slug}
+                onChange={(e) => setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
+                placeholder="url-stati"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Краткое описание</Label>
               <Textarea
-                value={formData.content || ""}
-                onChange={(e) => handleInputChange("content", e.target.value)}
+                value={formData.excerpt}
+                onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+                placeholder="Краткое описание для превью"
+                rows={2}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Содержание</Label>
+              <Textarea
+                value={formData.content}
+                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                 placeholder="Полный текст статьи..."
-                className="bg-charcoal-light/50 border-white/10 text-cream min-h-[200px]"
+                rows={8}
               />
             </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-cream">Категория</Label>
-                <Select 
-                  value={formData.category || "Основы"}
-                  onValueChange={(value) => handleInputChange("category", value)}
-                >
-                  <SelectTrigger className="bg-charcoal-light/50 border-white/10 text-cream">
+                <Label>Категория</Label>
+                <Select value={formData.category} onValueChange={(v) => setFormData({ ...formData, category: v })}>
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.map(cat => (
-                      <SelectItem key={cat} value={cat}>{cat}</SelectItem>
-                    ))}
+                    <SelectItem value="basics">Основы</SelectItem>
+                    <SelectItem value="numerology">Нумерология</SelectItem>
+                    <SelectItem value="karma">Карма</SelectItem>
+                    <SelectItem value="spiritual">Духовность</SelectItem>
+                    <SelectItem value="meditation">Медитация</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label className="text-cream">Автор</Label>
-                <Input
-                  value={formData.author || ""}
-                  onChange={(e) => handleInputChange("author", e.target.value)}
-                  placeholder="Имя автора"
-                  className="bg-charcoal-light/50 border-white/10 text-cream"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-cream">Статус</Label>
-                <Select 
-                  value={formData.status || "draft"}
-                  onValueChange={(value) => handleInputChange("status", value)}
-                >
-                  <SelectTrigger className="bg-charcoal-light/50 border-white/10 text-cream">
+                <Label>Статус</Label>
+                <Select value={formData.status} onValueChange={(v: "published" | "draft") => setFormData({ ...formData, status: v })}>
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="draft">Черновик</SelectItem>
-                    <SelectItem value="published">Опубликовано</SelectItem>
+                    <SelectItem value="published">Опубликована</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label className="text-cream">URL обложки</Label>
-                <Input
-                  value={formData.coverImage || ""}
-                  onChange={(e) => handleInputChange("coverImage", e.target.value)}
-                  placeholder="/images/blog/..."
-                  className="bg-charcoal-light/50 border-white/10 text-cream"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-cream">Дата публикации</Label>
-                <Input
-                  type="date"
-                  value={formData.publishedAt || ""}
-                  onChange={(e) => handleInputChange("publishedAt", e.target.value)}
-                  className="bg-charcoal-light/50 border-white/10 text-cream"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between p-4 rounded-lg bg-charcoal-light/30 border border-white/5">
-              <div>
-                <p className="text-cream font-medium">Рекомендуемая статья</p>
-                <p className="text-cream/50 text-sm">Показывать на главной странице</p>
-              </div>
-              <Switch 
-                checked={formData.featured || false} 
-                onCheckedChange={(checked) => handleInputChange("featured", checked)}
+            <div className="space-y-2">
+              <Label>Автор</Label>
+              <Input
+                value={formData.author}
+                onChange={(e) => setFormData({ ...formData, author: e.target.value })}
               />
             </div>
+            <div className="space-y-2">
+              <Label>URL изображения</Label>
+              <Input
+                value={formData.image}
+                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                placeholder="/images/blog/cover.jpg"
+              />
+            </div>
+            <div className="flex items-center gap-2 p-4 rounded-lg bg-muted/50">
+              <input
+                type="checkbox"
+                id="featured"
+                checked={formData.featured}
+                onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                className="rounded border-border"
+              />
+              <Label htmlFor="featured" className="cursor-pointer">Избранная статья (показывать на главной)</Label>
+            </div>
           </div>
 
-          {/* Footer */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
-            <Button
-              variant="outline"
-              onClick={() => setIsDialogOpen(false)}
-              className="border-white/10 text-cream/70"
-            >
+          <DialogFooter className="mt-6">
+            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
               Отмена
             </Button>
-            <Button
-              onClick={savePost}
-              disabled={saving}
-              className="bg-gold text-charcoal hover:bg-gold-light"
+            <Button 
+              onClick={handleSave} 
+              disabled={isLoading || !formData.title || !formData.slug}
+              className="bg-gold hover:bg-gold/90 text-black"
             >
-              {saving ? (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              ) : (
-                <Save className="w-4 h-4 mr-2" />
-              )}
-              {editingPost ? "Сохранить" : "Создать"}
+              {isLoading ? "Сохранение..." : (editingPost ? "Сохранить" : "Создать")}
             </Button>
-          </div>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Delete Confirmation Dialog */}
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent className="bg-charcoal border-white/10">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-cream">Удалить статью?</AlertDialogTitle>
-            <AlertDialogDescription className="text-cream/60">
-              Вы уверены, что хотите удалить статью &quot;{postToDelete?.title}&quot;? 
-              Это действие нельзя отменить.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="border-white/10 text-cream/70">Отмена</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={deletePost}
-              className="bg-red-500 text-white hover:bg-red-600"
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Удалить статью?</DialogTitle>
+            <DialogDescription>
+              Вы уверены, что хотите удалить статью &quot;{deletingPost?.title}&quot;? Это действие нельзя отменить.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+              Отмена
+            </Button>
+            <Button 
+              variant="destructive" 
+              onClick={handleDelete}
+              disabled={isLoading}
             >
-              {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Удалить"}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+              {isLoading ? "Удаление..." : "Удалить"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
