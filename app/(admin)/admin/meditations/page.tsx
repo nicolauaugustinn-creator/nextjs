@@ -1,10 +1,19 @@
 "use client"
 
-import { useState } from "react"
-import { Plus, Pencil, Trash2, Play, Pause, Music, Clock, Search, Filter, MoreVertical } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Plus, Edit, Trash2, Play, Music, Clock, Search, MoreHorizontal, Star, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,190 +23,528 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { meditations } from "@/data/meditations"
+import { meditationsStore, type Meditation } from "@/lib/admin-store"
+import { toast } from "sonner"
 
 export default function AdminMeditationsPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("all")
+  const [meditations, setMeditations] = useState<Meditation[]>([])
+  const [search, setSearch] = useState("")
+  const [categoryFilter, setCategoryFilter] = useState<string>("all")
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [editingMeditation, setEditingMeditation] = useState<Meditation | null>(null)
+  const [deletingMeditation, setDeletingMeditation] = useState<Meditation | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const categories = ["all", "relaxare", "abundenta", "vindecare", "manifestare", "somn"]
+  // Form state
+  const [formData, setFormData] = useState({
+    title: "",
+    slug: "",
+    description: "",
+    duration: "15 мин",
+    image: "/images/meditations/default.jpg",
+    audioUrl: "",
+    category: "morning",
+    level: "beginner" as "beginner" | "intermediate" | "advanced",
+    instructor: "Мария Иванова",
+    status: "draft" as "active" | "draft" | "coming_soon",
+    featured: false,
+  })
 
-  const filteredMeditations = meditations.filter(m => {
-    const matchesSearch = m.title.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = selectedCategory === "all" || m.category === selectedCategory
+  useEffect(() => {
+    loadMeditations()
+  }, [])
+
+  const loadMeditations = () => {
+    const data = meditationsStore.getAll()
+    setMeditations(data)
+  }
+
+  const resetForm = () => {
+    setFormData({
+      title: "",
+      slug: "",
+      description: "",
+      duration: "15 мин",
+      image: "/images/meditations/default.jpg",
+      audioUrl: "",
+      category: "morning",
+      level: "beginner",
+      instructor: "Мария Иванова",
+      status: "draft",
+      featured: false,
+    })
+    setEditingMeditation(null)
+  }
+
+  const openCreateDialog = () => {
+    resetForm()
+    setIsDialogOpen(true)
+  }
+
+  const openEditDialog = (meditation: Meditation) => {
+    setEditingMeditation(meditation)
+    setFormData({
+      title: meditation.title,
+      slug: meditation.slug,
+      description: meditation.description,
+      duration: meditation.duration,
+      image: meditation.image,
+      audioUrl: meditation.audioUrl || "",
+      category: meditation.category,
+      level: meditation.level,
+      instructor: meditation.instructor,
+      status: meditation.status,
+      featured: meditation.featured,
+    })
+    setIsDialogOpen(true)
+  }
+
+  const handleSave = () => {
+    if (!formData.title.trim()) {
+      toast.error("Введите название медитации")
+      return
+    }
+    if (!formData.slug.trim()) {
+      toast.error("Введите slug медитации")
+      return
+    }
+
+    setIsLoading(true)
+
+    try {
+      if (editingMeditation) {
+        meditationsStore.update(editingMeditation.id, formData)
+        toast.success("Медитация успешно обновлена!")
+      } else {
+        meditationsStore.create(formData)
+        toast.success("Медитация успешно создана!")
+      }
+
+      loadMeditations()
+      setIsDialogOpen(false)
+      resetForm()
+    } catch (error) {
+      toast.error("Ошибка при сохранении медитации")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleDelete = () => {
+    if (!deletingMeditation) return
+
+    setIsLoading(true)
+    try {
+      meditationsStore.delete(deletingMeditation.id)
+      toast.success("Медитация успешно удалена!")
+      loadMeditations()
+      setIsDeleteDialogOpen(false)
+      setDeletingMeditation(null)
+    } catch (error) {
+      toast.error("Ошибка при удалении медитации")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const openDeleteDialog = (meditation: Meditation) => {
+    setDeletingMeditation(meditation)
+    setIsDeleteDialogOpen(true)
+  }
+
+  const toggleFeatured = (meditation: Meditation) => {
+    meditationsStore.update(meditation.id, { featured: !meditation.featured })
+    loadMeditations()
+    toast.success(meditation.featured ? "Медитация убрана из избранных" : "Медитация добавлена в избранные")
+  }
+
+  const changeStatus = (meditation: Meditation, status: "active" | "draft" | "coming_soon") => {
+    meditationsStore.update(meditation.id, { status })
+    loadMeditations()
+    toast.success("Статус медитации обновлен")
+  }
+
+  // Filter meditations
+  const filteredMeditations = meditations.filter(meditation => {
+    const matchesSearch = meditation.title.toLowerCase().includes(search.toLowerCase()) ||
+                         meditation.description.toLowerCase().includes(search.toLowerCase())
+    const matchesCategory = categoryFilter === "all" || meditation.category === categoryFilter
     return matchesSearch && matchesCategory
   })
 
+  // Stats
+  const stats = {
+    total: meditations.length,
+    active: meditations.filter(m => m.status === "active").length,
+    featured: meditations.filter(m => m.featured).length,
+  }
+
+  const statusColors: Record<string, string> = {
+    active: "bg-green-500/20 text-green-400 border-green-500/30",
+    draft: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+    coming_soon: "bg-blue-500/20 text-blue-400 border-blue-500/30"
+  }
+
+  const statusLabels: Record<string, string> = {
+    active: "Активная",
+    draft: "Черновик",
+    coming_soon: "Скоро"
+  }
+
+  const categoryLabels: Record<string, string> = {
+    morning: "Утренняя",
+    energy: "Энергия",
+    healing: "Исцеление",
+    deep: "Глубокая",
+    sleep: "Сон"
+  }
+
+  const levelLabels: Record<string, string> = {
+    beginner: "Начальный",
+    intermediate: "Средний",
+    advanced: "Продвинутый"
+  }
+
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      {/* Header */}
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-serif text-2xl font-bold text-foreground">Meditatii</h1>
-          <p className="text-muted-foreground">Gestioneaza biblioteca de meditatii audio</p>
+          <h1 className="text-3xl font-bold text-foreground">Медитации</h1>
+          <p className="text-muted-foreground mt-1">Управление аудио-медитациями</p>
         </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-gold hover:bg-gold/90 text-background">
-              <Plus className="mr-2 h-4 w-4" />
-              Adauga Meditatie
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl bg-card border-border">
-            <DialogHeader>
-              <DialogTitle className="font-serif text-foreground">Adauga Meditatie Noua</DialogTitle>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="title">Titlu</Label>
-                <Input id="title" placeholder="Numele meditatiei" className="bg-background border-border" />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="description">Descriere</Label>
-                <Textarea id="description" placeholder="Descrierea meditatiei..." className="bg-background border-border" />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label>Categorie</Label>
-                  <Select>
-                    <SelectTrigger className="bg-background border-border">
-                      <SelectValue placeholder="Selecteaza" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="relaxare">Relaxare</SelectItem>
-                      <SelectItem value="abundenta">Abundenta</SelectItem>
-                      <SelectItem value="vindecare">Vindecare</SelectItem>
-                      <SelectItem value="manifestare">Manifestare</SelectItem>
-                      <SelectItem value="somn">Somn</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="duration">Durata (minute)</Label>
-                  <Input id="duration" type="number" placeholder="15" className="bg-background border-border" />
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="audio">Fisier Audio</Label>
-                <Input id="audio" type="file" accept="audio/*" className="bg-background border-border" />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="image">Imagine Cover</Label>
-                <Input id="image" type="file" accept="image/*" className="bg-background border-border" />
-              </div>
-              <div className="grid gap-2">
-                <Label>Acces</Label>
-                <Select>
-                  <SelectTrigger className="bg-background border-border">
-                    <SelectValue placeholder="Selecteaza tipul de acces" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="free">Gratuit</SelectItem>
-                    <SelectItem value="premium">Premium</SelectItem>
-                    <SelectItem value="vip">VIP</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Anuleaza</Button>
-              <Button className="bg-gold hover:bg-gold/90 text-background">Salveaza</Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <Button onClick={openCreateDialog} className="bg-gold hover:bg-gold/90 text-black">
+          <Plus className="w-4 h-4 mr-2" />
+          Добавить медитацию
+        </Button>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card className="bg-card/50 border-border/50">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Всего медитаций</CardTitle>
+            <Music className="w-4 h-4 text-gold" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.total}</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-card/50 border-border/50">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Активных</CardTitle>
+            <Play className="w-4 h-4 text-green-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-400">{stats.active}</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-card/50 border-border/50">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Избранных</CardTitle>
+            <Star className="w-4 h-4 text-gold" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-gold">{stats.featured}</div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col gap-4 sm:flex-row">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <div className="flex gap-4 items-center">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
-            placeholder="Cauta meditatii..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-card border-border"
+            placeholder="Поиск медитаций..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9 bg-background/50"
           />
         </div>
-        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-full sm:w-48 bg-card border-border">
-            <Filter className="mr-2 h-4 w-4" />
-            <SelectValue />
+        <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+          <SelectTrigger className="w-40 bg-background/50">
+            <SelectValue placeholder="Категория" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Toate categoriile</SelectItem>
-            <SelectItem value="relaxare">Relaxare</SelectItem>
-            <SelectItem value="abundenta">Abundenta</SelectItem>
-            <SelectItem value="vindecare">Vindecare</SelectItem>
-            <SelectItem value="manifestare">Manifestare</SelectItem>
-            <SelectItem value="somn">Somn</SelectItem>
+            <SelectItem value="all">Все категории</SelectItem>
+            <SelectItem value="morning">Утренние</SelectItem>
+            <SelectItem value="energy">Энергия</SelectItem>
+            <SelectItem value="healing">Исцеление</SelectItem>
+            <SelectItem value="deep">Глубокие</SelectItem>
+            <SelectItem value="sleep">Сон</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-      {/* Meditations Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredMeditations.map((meditation) => (
-          <div
-            key={meditation.id}
-            className="group relative overflow-hidden rounded-xl border border-border bg-card p-4 transition-all hover:border-gold/50"
-          >
-            <div className="mb-4 aspect-video overflow-hidden rounded-lg bg-muted">
-              <img
-                src={meditation.imageUrl}
-                alt={meditation.title}
-                className="h-full w-full object-cover transition-transform group-hover:scale-105"
+      {/* Table */}
+      <Card className="bg-card/50 border-border/50">
+        <Table>
+          <TableHeader>
+            <TableRow className="border-border/50 hover:bg-transparent">
+              <TableHead>Медитация</TableHead>
+              <TableHead>Категория</TableHead>
+              <TableHead>Длительность</TableHead>
+              <TableHead>Уровень</TableHead>
+              <TableHead>Статус</TableHead>
+              <TableHead className="text-right">Действия</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredMeditations.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  Медитации не найдены. Нажмите &quot;Добавить медитацию&quot; чтобы создать первую.
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredMeditations.map((meditation) => (
+                <TableRow key={meditation.id} className="border-border/50">
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                        <Music className="w-6 h-6 text-purple-400" />
+                      </div>
+                      <div>
+                        <div className="font-medium flex items-center gap-2">
+                          {meditation.title}
+                          {meditation.featured && (
+                            <Star className="w-3 h-3 text-gold fill-gold" />
+                          )}
+                        </div>
+                        <div className="text-sm text-muted-foreground line-clamp-1">
+                          {meditation.description}
+                        </div>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className="border-border/50">
+                      {categoryLabels[meditation.category] || meditation.category}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <Clock className="w-4 h-4 text-muted-foreground" />
+                      {meditation.duration}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className="border-border/50">
+                      {levelLabels[meditation.level]}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge className={statusColors[meditation.status]}>
+                      {statusLabels[meditation.status]}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => openEditDialog(meditation)}>
+                          <Edit className="w-4 h-4 mr-2" />
+                          Редактировать
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toggleFeatured(meditation)}>
+                          <Star className="w-4 h-4 mr-2" />
+                          {meditation.featured ? "Убрать из избранных" : "В избранное"}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => changeStatus(meditation, meditation.status === "active" ? "draft" : "active")}>
+                          <Eye className="w-4 h-4 mr-2" />
+                          {meditation.status === "active" ? "В черновики" : "Опубликовать"}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          onClick={() => openDeleteDialog(meditation)}
+                          className="text-red-400 focus:text-red-400"
+                        >
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          Удалить
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </Card>
+
+      {/* Create/Edit Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{editingMeditation ? "Редактировать медитацию" : "Создать медитацию"}</DialogTitle>
+            <DialogDescription>
+              {editingMeditation ? "Измените информацию о медитации" : "Заполните информацию о новой медитации"}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <Label>Название *</Label>
+              <Input
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                placeholder="Утренняя медитация"
               />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                <button className="rounded-full bg-gold p-3 text-background">
-                  <Play className="h-6 w-6" />
-                </button>
+            </div>
+            <div className="space-y-2">
+              <Label>Slug (URL) *</Label>
+              <Input
+                value={formData.slug}
+                onChange={(e) => setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
+                placeholder="utrennyaya-meditatsiya"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Описание</Label>
+              <Textarea
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                placeholder="Описание медитации"
+                rows={3}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Длительность</Label>
+                <Input
+                  value={formData.duration}
+                  onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+                  placeholder="15 мин"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Категория</Label>
+                <Select value={formData.category} onValueChange={(v) => setFormData({ ...formData, category: v })}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="morning">Утренняя</SelectItem>
+                    <SelectItem value="energy">Энергия</SelectItem>
+                    <SelectItem value="healing">Исцеление</SelectItem>
+                    <SelectItem value="deep">Глубокая</SelectItem>
+                    <SelectItem value="sleep">Сон</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Уровень</Label>
+                <Select value={formData.level} onValueChange={(v: "beginner" | "intermediate" | "advanced") => setFormData({ ...formData, level: v })}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="beginner">Начальный</SelectItem>
+                    <SelectItem value="intermediate">Средний</SelectItem>
+                    <SelectItem value="advanced">Продвинутый</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label>Статус</Label>
+                <Select value={formData.status} onValueChange={(v: "active" | "draft" | "coming_soon") => setFormData({ ...formData, status: v })}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="draft">Черновик</SelectItem>
+                    <SelectItem value="active">Активная</SelectItem>
+                    <SelectItem value="coming_soon">Скоро</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             <div className="space-y-2">
-              <div className="flex items-start justify-between">
-                <h3 className="font-medium text-foreground line-clamp-1">{meditation.title}</h3>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <MoreVertical className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>
-                      <Pencil className="mr-2 h-4 w-4" />
-                      Editeaza
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive">
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Sterge
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              <p className="text-sm text-muted-foreground line-clamp-2">{meditation.description}</p>
-              <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                <span className="flex items-center gap-1">
-                  <Clock className="h-3.5 w-3.5" />
-                  {meditation.duration} min
-                </span>
-                <Badge variant="outline" className="capitalize">
-                  {meditation.category}
-                </Badge>
-                {meditation.isPremium && (
-                  <Badge className="bg-gold/20 text-gold border-gold/30">Premium</Badge>
-                )}
-              </div>
+              <Label>URL аудио файла</Label>
+              <Input
+                value={formData.audioUrl}
+                onChange={(e) => setFormData({ ...formData, audioUrl: e.target.value })}
+                placeholder="/audio/meditation.mp3"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>URL изображения</Label>
+              <Input
+                value={formData.image}
+                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                placeholder="/images/meditations/cover.jpg"
+              />
+            </div>
+            <div className="flex items-center gap-2 p-4 rounded-lg bg-muted/50">
+              <input
+                type="checkbox"
+                id="featured"
+                checked={formData.featured}
+                onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                className="rounded border-border"
+              />
+              <Label htmlFor="featured" className="cursor-pointer">Избранная медитация</Label>
             </div>
           </div>
-        ))}
-      </div>
+
+          <DialogFooter className="mt-6">
+            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+              Отмена
+            </Button>
+            <Button 
+              onClick={handleSave} 
+              disabled={isLoading || !formData.title || !formData.slug}
+              className="bg-gold hover:bg-gold/90 text-black"
+            >
+              {isLoading ? "Сохранение..." : (editingMeditation ? "Сохранить" : "Создать")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Удалить медитацию?</DialogTitle>
+            <DialogDescription>
+              Вы уверены, что хотите удалить медитацию &quot;{deletingMeditation?.title}&quot;? Это действие нельзя отменить.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+              Отмена
+            </Button>
+            <Button 
+              variant="destructive" 
+              onClick={handleDelete}
+              disabled={isLoading}
+            >
+              {isLoading ? "Удаление..." : "Удалить"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
