@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   LayoutDashboard,
   Image,
@@ -17,21 +17,24 @@ import {
   Search,
   Music,
   Sparkles,
-  FileText
+  FileText,
+  Globe,
+  Loader2
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 const sidebarLinks = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/media", label: "Media", icon: Image },
-  { href: "/admin/courses", label: "Cursuri", icon: BookOpen },
-  { href: "/admin/meditations", label: "Meditatii", icon: Music },
-  { href: "/admin/practices", label: "Practici", icon: Sparkles },
-  { href: "/admin/blog", label: "Blog", icon: FileText },
-  { href: "/admin/users", label: "Utilizatori", icon: Users },
-  { href: "/admin/reviews", label: "Recenzii", icon: MessageSquare },
-  { href: "/admin/settings", label: "Setari", icon: Settings },
+  { href: "/admin/media", label: "Медиа", icon: Image },
+  { href: "/admin/courses", label: "Курсы", icon: BookOpen },
+  { href: "/admin/meditations", label: "Медитации", icon: Music },
+  { href: "/admin/practices", label: "Практики", icon: Sparkles },
+  { href: "/admin/blog", label: "Блог", icon: FileText },
+  { href: "/admin/users", label: "Пользователи", icon: Users },
+  { href: "/admin/reviews", label: "Отзывы", icon: MessageSquare },
+  { href: "/admin/texts", label: "Тексты сайта", icon: Globe },
+  { href: "/admin/settings", label: "Настройки", icon: Settings },
 ]
 
 export default function AdminLayout({
@@ -40,7 +43,44 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const pathname = usePathname()
+  const router = useRouter()
+
+  useEffect(() => {
+    // Check authentication
+    const token = localStorage.getItem("karma_admin_token")
+    if (token === "authenticated") {
+      setIsAuthenticated(true)
+    } else {
+      router.push("/admin-login")
+    }
+    setIsLoading(false)
+  }, [router])
+
+  const handleLogout = () => {
+    localStorage.removeItem("karma_admin_token")
+    router.push("/admin-login")
+  }
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-charcoal flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-gold animate-spin" />
+      </div>
+    )
+  }
+
+  // If not authenticated, show loading while redirecting
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-charcoal flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-gold animate-spin" />
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-charcoal flex">
@@ -73,10 +113,10 @@ export default function AdminLayout({
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 p-4 space-y-1">
+          <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
             {sidebarLinks.map((link) => {
               const isActive = pathname === link.href || 
-                (link.href !== "/admin" && pathname.startsWith(link.href))
+                (link.href !== "/admin" && pathname?.startsWith(link.href))
               return (
                 <Link
                   key={link.href}
@@ -96,16 +136,25 @@ export default function AdminLayout({
           </nav>
 
           {/* Bottom section */}
-          <div className="p-4 border-t border-white/10">
+          <div className="p-4 border-t border-white/10 space-y-2">
             <Link href="/" target="_blank">
               <Button
                 variant="outline"
                 size="sm"
                 className="w-full border-white/10 text-cream/60 hover:bg-white/5"
               >
-                Deschide Site
+                Открыть сайт
               </Button>
             </Link>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleLogout}
+              className="w-full text-red-400 hover:text-red-300 hover:bg-red-500/10"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Выйти
+            </Button>
           </div>
         </div>
       </aside>
@@ -127,7 +176,7 @@ export default function AdminLayout({
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-cream/40" />
                 <Input
                   type="text"
-                  placeholder="Cauta..."
+                  placeholder="Поиск..."
                   className="pl-10 bg-charcoal-light/50 border-white/10 text-cream placeholder:text-cream/40 h-9"
                 />
               </div>
@@ -141,9 +190,9 @@ export default function AdminLayout({
 
               <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/5">
                 <div className="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center">
-                  <span className="text-gold text-sm font-medium">V</span>
+                  <span className="text-gold text-sm font-medium">A</span>
                 </div>
-                <span className="text-cream text-sm hidden md:block">Валентина</span>
+                <span className="text-cream text-sm hidden md:block">Admin</span>
                 <ChevronDown className="w-4 h-4 text-cream/40" />
               </button>
             </div>
