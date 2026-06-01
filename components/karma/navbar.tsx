@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronDown, User, Globe } from "lucide-react"
+import { Menu, X, ChevronDown, User, Globe, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -162,6 +162,18 @@ export function Navbar() {
                 </Button>
               </Link>
 
+              {/* Admin */}
+              <Link href="/admin-login">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="hidden sm:flex items-center gap-2 text-foreground/70 hover:text-gold"
+                >
+                  <Shield className="w-4 h-4" />
+                  <span className="text-sm">Admin</span>
+                </Button>
+              </Link>
+
               {/* CTA */}
               <Link href="/consultations" className="hidden md:block">
                 <Button size="sm" className="bg-gold hover:bg-gold-light text-background font-medium">
@@ -259,6 +271,13 @@ export function Navbar() {
                     <Button variant="outline" className="w-full border-gold/30 text-gold hover:bg-gold/10">
                       <User className="w-4 h-4 mr-2" />
                       {t("nav_login_cabinet")}
+                    </Button>
+                  </Link>
+
+                  <Link href="/admin-login" className="block px-4">
+                    <Button variant="outline" className="w-full border-gold/30 text-gold hover:bg-gold/10">
+                      <Shield className="w-4 h-4 mr-2" />
+                      Admin Panel
                     </Button>
                   </Link>
 
