@@ -321,7 +321,7 @@ const translations = {
     dash_browse_courses: "Посмотреть курсы",
 
     // Not found
-    notfound_title: "Страница не найден��",
+    notfound_title: "Страница не найдена",
     notfound_desc: "Страница, которую вы ищете, не существует или была перемещена",
     notfound_back: "На главную",
     notfound_check: "Или проверьте эти страницы:",
@@ -496,7 +496,7 @@ const translations = {
     forgot_send_link: "Отправить ссылку",
     forgot_sending: "Отправка...",
     forgot_email_sent: "Письмо отправлено",
-    forgot_email_sent_desc: "Мы отправили инструкции по восстановлению пароля на вашу почту. Проверьте папку «Спам», если письмо не пришло.",
+    forgot_email_sent_desc: "Мы отправили инстру��ции по восстановлению пароля на вашу почту. Проверьте папку «Спам», если письмо не пришло.",
     forgot_back_to_login: "Назад ко входу",
 
     // Common
@@ -527,6 +527,23 @@ const translations = {
     tarot_draw: "Сделать расклад",
     tarot_card_meaning: "Значение карты",
     tarot_close: "Закрыть",
+
+    // FAQ
+    faq_title: "Часто задаваемые вопросы",
+    faq_subtitle: "Найди ответы на вопросы о нумерологии, курсах и консультациях",
+    faq_q1: "Что такое нумерология?",
+    faq_a1: "Нумерология — это древняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
+    faq_q2: "Как работают консультации?",
+    faq_a2: "Консультации проводятся индивидуально. Я анализирую вашу нумерологическую матрицу и даю практические рекомендации для гармонизации жизни, отношений и достижения целей.",
+    faq_q3: "Какова длительность курсов?",
+    faq_a3: "Курсы разделены на модули с гибким графиком. Вы можете проходить их в своем темпе, с доступом к видео и материалам на неограниченный период.",
+    faq_q4: "Есть ли гарантия результатов?",
+    faq_a4: "Нумерология — это инструмент самопознания. Результаты зависят от вашей открытости и применения рекомендаций. Большинство клиентов замечают положительные изменения уже в течение первого месяца.",
+    faq_q5: "Можно ли пройти тестирование?",
+    faq_a5: "Да, предлагаем бесплатное тестирование, которое дает начальное представление о вашей нумерологической карте. Это хороший способ узнать, подходит ли вам работа с нумерологией.",
+    faq_q6: "Какие способы оплаты доступны?",
+    faq_a6: "Мы принимаем основные платежные системы: карты Visa/Mastercard, электронные кошельки и переводы. Для консультаций также доступна рассрочка.",
+    faq_more_questions: "Остались вопросы?",
   },
 
   ro: {
@@ -1009,6 +1026,23 @@ const translations = {
     tarot_draw: "Fă divinația",
     tarot_card_meaning: "Semnificația cărții",
     tarot_close: "Închide",
+
+    // FAQ
+    faq_title: "Întrebări frecvente",
+    faq_subtitle: "Găsește răspunsuri la întrebări despre numerologie, cursuri și consultații",
+    faq_q1: "Ce este numerologia?",
+    faq_a1: "Numerologia este o știință antică a numerelor care dezvăluie modele ascunse în destinul omului. Prin data nașterii și nume poți afla calea vieții, destinul și ciclurile cheie ale vieții.",
+    faq_q2: "Cum funcționează consultațiile?",
+    faq_a2: "Consultațiile se desfășoară individual. Analizez matricea ta numerologică și dau recomandări practice pentru armonizarea vieții, relațiilor și atingerea obiectivelor.",
+    faq_q3: "Care este durata cursurilor?",
+    faq_a3: "Cursurile sunt împărțite în module cu program flexibil. Poți să le urmezi în propriul ritm, cu acces la videoclipuri și materiale pe perioadă nelimitată.",
+    faq_q4: "Există garanție de rezultate?",
+    faq_a4: "Numerologia este un instrument de autocunoaștere. Rezultatele depind de deschiderea și aplicarea recomandărilor tale. Majoritatea clienților observă schimbări pozitive în decurs de o lună.",
+    faq_q5: "Pot face testarea?",
+    faq_a5: "Da, oferim testare gratuită care oferă o perspectivă inițială asupra hărții numerologice. Este o modalitate bună de a afla dacă numerologia e potrivită pentru tine.",
+    faq_q6: "Ce metode de plată sunt disponibile?",
+    faq_a6: "Acceptăm sisteme de plată principale: carduri Visa/Mastercard, portofeluri electronice și transferuri. Pentru consultații este disponibilă și rata.",
+    faq_more_questions: "Mai ai întrebări?",
   },
 
   en: {
@@ -1491,6 +1525,23 @@ const translations = {
     tarot_draw: "Make a reading",
     tarot_card_meaning: "Card meaning",
     tarot_close: "Close",
+
+    // FAQ
+    faq_title: "Frequently Asked Questions",
+    faq_subtitle: "Find answers to questions about numerology, courses, and consultations",
+    faq_q1: "What is numerology?",
+    faq_a1: "Numerology is an ancient science of numbers that reveals hidden patterns in human destiny. Through birth date and name, you can discover your life path, purpose, and key life cycles.",
+    faq_q2: "How do consultations work?",
+    faq_a2: "Consultations are conducted individually. I analyze your numerological matrix and provide practical recommendations for harmonizing life, relationships, and achieving goals.",
+    faq_q3: "What is the duration of courses?",
+    faq_a3: "Courses are divided into modules with flexible scheduling. You can progress at your own pace with unlimited access to videos and materials.",
+    faq_q4: "Is there a guarantee of results?",
+    faq_a4: "Numerology is a tool for self-discovery. Results depend on your openness and application of recommendations. Most clients notice positive changes within the first month.",
+    faq_q5: "Can I take a test?",
+    faq_a5: "Yes, we offer free testing that provides an initial overview of your numerological chart. It's a great way to see if numerology is right for you.",
+    faq_q6: "What payment methods are available?",
+    faq_a6: "We accept major payment systems: Visa/Mastercard, e-wallets, and transfers. Payment plans are also available for consultations.",
+    faq_more_questions: "Still have questions?",
   },
 
   ua: {
@@ -1973,6 +2024,23 @@ const translations = {
     tarot_draw: "Зробити розклад",
     tarot_card_meaning: "Значення карти",
     tarot_close: "Закрити",
+
+    // FAQ
+    faq_title: "Часто задавані питання",
+    faq_subtitle: "Знайди відповіді на питання про нумерологію, курси та консультації",
+    faq_q1: "Що таке нумерологія?",
+    faq_a1: "Нумерологія — це древня наука про числа, що розкриває прихідні закономірності в судьбі людини. Через дату народження та ім'я можна дізнатися життєвий шлях, призначення та ключові цикли життя.",
+    faq_q2: "Як працюють консультації?",
+    faq_a2: "Консультації проводяться індивідуально. Я аналізую вашу нумерологічну матрицю та даю практичні рекомендації для гармонізації життя, відносин та досягнення цілей.",
+    faq_q3: "Яка тривалість курсів?",
+    faq_a3: "Курси розділені на модулі з гнучким графіком. Ви можете проходити їх у власному темпі з необмеженим доступом до відео та матеріалів.",
+    faq_q4: "Чи є гарантія результатів?",
+    faq_a4: "Нумерологія — це інструмент самопізнання. Результати залежать від вашої відкритості та застосування рекомендацій. Більшість клієнтів помічають позитивні зміни протягом першого місяця.",
+    faq_q5: "Чи можна пройти тестування?",
+    faq_a5: "Так, пропонуємо безплатне тестування, яке дає початкове уявлення про вашу нумерологічну карту. Це хороший спосіб дізнатися, чи підходить вам робота з нумерологією.",
+    faq_q6: "Які способи оплати доступні?",
+    faq_a6: "Ми приймаємо основні платіжні системи: карти Visa/Mastercard, електронні гаманці та переводи. Для консультацій також доступна розстрочка.",
+    faq_more_questions: "Залишились питання?",
   },
 } as const
 
