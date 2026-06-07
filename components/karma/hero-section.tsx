@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import { Send, MessageCircle, HelpCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useT } from "@/lib/lang-context"
+import { SpiritualTree } from "./spiritual-tree"
 
 // Ambient golden particles
 function GoldenParticles() {
@@ -47,6 +48,13 @@ export function HeroSection() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-purple-dark/10 to-background">
       {/* Background radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.12),transparent_65%)]" />
+
+      {/* Spiritual tree background */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20 md:opacity-30">
+        <div className="w-full h-full flex items-center justify-center">
+          <SpiritualTree />
+        </div>
+      </div>
 
       {/* Ambient particles */}
       <GoldenParticles />
