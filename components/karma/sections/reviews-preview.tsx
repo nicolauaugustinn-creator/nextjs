@@ -9,7 +9,7 @@ import Link from "next/link"
 import { useT } from "@/lib/lang-context"
 
 export function ReviewsPreview() {
-  const { t } = useT()
+  const { t, lang } = useT()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
   const featuredReviews = reviews.filter(r => r.featured).slice(0, 5)
@@ -84,7 +84,12 @@ export function ReviewsPreview() {
                     ))}
                   </div>
                   <p className="text-foreground/80 text-lg leading-relaxed mb-6 line-clamp-4">
-                    {currentReview.text}
+                    {(() => {
+                      if (typeof currentReview.text === 'string') return currentReview.text
+                      if (!currentReview.text) return ""
+                      const translations = currentReview.text as Record<string, string>
+                      return translations[lang] || translations.en || translations.ru || ""
+                    })()}
                   </p>
                   <div className="flex items-center gap-4">
                     {currentReview.clientAvatar && (
