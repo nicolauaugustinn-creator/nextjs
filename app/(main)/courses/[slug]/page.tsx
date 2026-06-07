@@ -118,11 +118,11 @@ export default function CourseDetailPage() {
                 <div className="p-6">
                   <div className="flex items-baseline gap-3 mb-6">
                     <span className="font-serif text-4xl text-gold">
-                      {course.price.toLocaleString()} ₽
+                      €{course.price?.toLocaleString() || "0"}
                     </span>
                     {course.originalPrice && (
                       <span className="text-cream/40 line-through text-xl">
-                        {course.originalPrice.toLocaleString()} ₽
+                        €{course.originalPrice.toLocaleString()}
                       </span>
                     )}
                   </div>
@@ -260,7 +260,7 @@ export default function CourseDetailPage() {
               Присоединяйтесь к сотням учеников, которые уже изменили свою жизнь
             </p>
             <Button size="lg" className="bg-gold text-charcoal hover:bg-gold-light">
-              Купить курс за {course.price.toLocaleString()} ₽
+              Купить курс за €{course.price?.toLocaleString() || "0"}
             </Button>
           </motion.div>
         </div>
