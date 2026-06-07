@@ -1,23 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
 import { X } from "lucide-react"
-import { tarotCards, getRandomTarotCard } from "@/data/tarot"
+import { tarotCards } from "@/data/tarot"
 import { useT } from "@/lib/lang-context"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 export default function TarotReadingsPage() {
   const { t, lang } = useT()
-  const [selectedCard, setSelectedCard] = useState<number | null>(null)
-  const [showCardOfDay, setShowCardOfDay] = useState(false)
-  const [cardOfDay, setCardOfDay] = useState(getRandomTarotCard())
   const [showGrid, setShowGrid] = useState(false)
-
-  const handleDrawCardOfDay = () => {
-    setCardOfDay(getRandomTarotCard())
-    setShowCardOfDay(true)
-  }
 
   const titles: Record<string, string> = {
     ru: "Расклады",
@@ -29,198 +21,162 @@ export default function TarotReadingsPage() {
   const descriptions: Record<string, string> = {
     ru: "Задай свой самый сокровенный вопрос и получи расчет ответа на него",
     ro: "Pune cea mai profundă întrebare și primește răspunsul în cărți",
-    en: "Ask your deepest question and receive the answer from the cards",
-    ua: "Поставте своє найглибше питання і отримайте відповідь від карт"
+    en: "Ask your deepest question and get the answer in cards",
+    ua: "Поставте своє найглибше питання і отримайте відповідь в картах"
   }
 
-  const cardOfDayText: Record<string, string> = {
-    ru: "Вытяни карту дня",
+  const drawCardLabels: Record<string, string> = {
+    ru: "Вытяги карту дня",
     ro: "Trage cartea zilei",
-    en: "Pull Card of Today",
-    ua: "Витяги карту дня"
+    en: "Draw card of the day",
+    ua: "Витягніть карту дня"
   }
 
-  const selectCardText: Record<string, string> = {
+  const drawCardDescriptions: Record<string, string> = {
     ru: "Это не только предсказание, но и источник вдохновения и руководства твоей повседневной жизни",
-    ro: "Nu doar o predicție, ci o sursă de inspirație și îndrumare în viața ta",
-    en: "Not just a prediction, but a source of inspiration and guidance in your life",
-    ua: "Не просто передбачення, а джерело натхнення та керівництва в твоєму житті"
+    ro: "Aceasta nu este doar o predicție, ci și o sursă de inspirație și ghidare în viața ta zilnică",
+    en: "This is not just a prediction, but a source of inspiration and guidance in your daily life",
+    ua: "Це не просто передбачення, а й джерело натхнення та керівництва у вашому повсякденному житті"
   }
 
-  const oneCardText: Record<string, string> = {
-    ru: "Расклад на одну карту",
-    ro: "Divinație cu o carte",
-    en: "One Card Reading",
-    ua: "Розклад на одну карту"
-  }
-
-  const oneCardDesc: Record<string, string> = {
-    ru: "Одна карта для ответа на вопрос или понимание текущей ситуации",
-    ro: "O carte pentru răspuns la o întrebare sau înțelegerea situației actuale",
-    en: "One card to answer a question or understand your current situation",
-    ua: "Одна карта для відповіді на питання або розуміння поточної ситуації"
-  }
-
-  const drawText: Record<string, string> = {
-    ru: "Сделать расклад",
-    ro: "Fă divinația",
-    en: "Draw Reading",
-    ua: "Зробити розклад"
-  }
-
-  const selectText: Record<string, string> = {
+  const selectCardLabels: Record<string, string> = {
     ru: "Выбери карту",
     ro: "Alege o carte",
-    en: "Select a Card",
+    en: "Choose a card",
     ua: "Виберіть карту"
   }
 
+  const drawButtonLabels: Record<string, string> = {
+    ru: "Сделать расклад",
+    ro: "Fă divinația",
+    en: "Make a reading",
+    ua: "Зробити розклад"
+  }
+
   return (
-    <main className="min-h-screen bg-charcoal pt-32 pb-40 px-4 md:pb-20">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
+    <main className="min-h-screen bg-background">
+      {/* Header Section */}
+      <section className="pt-20 pb-12 md:pb-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
           <h1 className="font-serif text-5xl md:text-6xl text-gold mb-4">
             {titles[lang as keyof typeof titles]}
           </h1>
-          <p className="text-cream/60 text-lg max-w-2xl mx-auto">
+          <p className="text-cream/80 text-lg md:text-xl">
             {descriptions[lang as keyof typeof descriptions]}
           </p>
         </div>
+      </section>
 
-        {/* Card of Day Section */}
-        <div className="bg-charcoal-light rounded-2xl p-8 md:p-12 mb-12 border border-gold/20">
+      {/* First Section - Card of the Day */}
+      <section className="py-12 px-4">
+        <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="font-serif text-3xl text-gold mb-4">
-                {cardOfDayText[lang as keyof typeof cardOfDayText]}
-              </h2>
-              <p className="text-cream/70 mb-6">
-                {selectCardText[lang as keyof typeof selectCardText]}
-              </p>
-              <Button
-                onClick={handleDrawCardOfDay}
-                className="bg-gold text-charcoal hover:bg-gold-light"
-              >
-                {drawText[lang as keyof typeof drawText]}
-              </Button>
-            </div>
+            {/* Card Image */}
             <div className="flex justify-center">
-              <div className="w-full max-w-xs h-96 bg-gradient-to-br from-gold/10 to-transparent rounded-xl flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">🎴</div>
-                  <p className="text-cream/50">{selectText[lang as keyof typeof selectText]}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Card of Day Modal */}
-        {showCardOfDay && (
-          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-            <div className="bg-charcoal-light rounded-xl max-w-md w-full p-8 relative">
-              <button
-                onClick={() => setShowCardOfDay(false)}
-                className="absolute top-4 right-4 text-cream/50 hover:text-cream"
-              >
-                <X size={24} />
-              </button>
-              <h3 className="font-serif text-2xl text-gold mb-4 text-center">
-                {cardOfDay.name[lang as keyof typeof cardOfDay.name]}
-              </h3>
-              <div className="aspect-video bg-gold/10 rounded-lg mb-6 flex items-center justify-center overflow-hidden">
-                <img
-                  src={cardOfDay.image}
-                  alt={cardOfDay.name[lang as keyof typeof cardOfDay.name]}
-                  className="w-full h-full object-cover"
+              <div className="relative w-full max-w-sm aspect-[3/4] rounded-2xl overflow-hidden border-2 border-gold/20 bg-charcoal/50">
+                <Image
+                  src="/images/tarot/01-fool.png"
+                  alt="Card of the day"
+                  fill
+                  className="object-cover"
                 />
               </div>
-              <p className="text-cream/80 mb-6">
-                {cardOfDay.meaning[lang as keyof typeof cardOfDay.meaning]}
-              </p>
-              <Button
-                onClick={() => setShowCardOfDay(false)}
-                className="w-full bg-gold text-charcoal hover:bg-gold-light"
-              >
-                Gata
-              </Button>
             </div>
-          </div>
-        )}
 
-        {/* One Card Reading Section */}
-        <div className="bg-charcoal-light rounded-2xl p-8 md:p-12 border border-gold/20 mb-12">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Content */}
             <div>
               <h2 className="font-serif text-3xl text-gold mb-4">
-                {oneCardText[lang as keyof typeof oneCardText]}
+                {drawCardLabels[lang as keyof typeof drawCardLabels]}
               </h2>
-              <p className="text-cream/70 mb-6">
-                {oneCardDesc[lang as keyof typeof oneCardDesc]}
+              <p className="text-cream/70 mb-8 leading-relaxed">
+                {drawCardDescriptions[lang as keyof typeof drawCardDescriptions]}
               </p>
               <Button
                 onClick={() => setShowGrid(true)}
-                className="bg-gold text-charcoal hover:bg-gold-light"
+                className="bg-gold text-charcoal hover:bg-gold-light px-8 py-6 text-lg"
               >
-                {drawText[lang as keyof typeof drawText]}
+                {drawButtonLabels[lang as keyof typeof drawButtonLabels]}
               </Button>
             </div>
-            <div className="flex justify-center">
-              <div className="w-full max-w-xs h-96 bg-gradient-to-br from-gold/10 to-transparent rounded-xl flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">🔮</div>
-                  <p className="text-cream/50">{selectText[lang as keyof typeof selectText]}</p>
-                </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Second Section - Choose a Card */}
+      <section className="py-12 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Content */}
+            <div className="md:order-2">
+              <h3 className="font-serif text-3xl text-gold mb-4">
+                {selectCardLabels[lang as keyof typeof selectCardLabels]}
+              </h3>
+              <p className="text-cream/70 mb-8 leading-relaxed">
+                {drawCardDescriptions[lang as keyof typeof drawCardDescriptions]}
+              </p>
+              <Button
+                onClick={() => setShowGrid(true)}
+                className="bg-gold text-charcoal hover:bg-gold-light px-8 py-6 text-lg"
+              >
+                {drawButtonLabels[lang as keyof typeof drawButtonLabels]}
+              </Button>
+            </div>
+
+            {/* Card Image */}
+            <div className="flex justify-center md:order-1">
+              <div className="relative w-full max-w-sm aspect-[3/4] rounded-2xl overflow-hidden border-2 border-gold/20 bg-charcoal/50">
+                <Image
+                  src="/images/tarot/02-magician.png"
+                  alt="Choose a card"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Card Grid Modal */}
-        {showGrid && (
-          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-            <div className="bg-charcoal rounded-xl max-w-4xl w-full p-8 relative max-h-[90vh] overflow-y-auto">
+      {/* Card Grid Modal */}
+      {showGrid && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-charcoal rounded-2xl max-h-[90vh] overflow-y-auto w-full max-w-4xl">
+            {/* Close Button */}
+            <div className="sticky top-0 bg-charcoal p-4 border-b border-gold/20 flex justify-between items-center">
+              <h3 className="font-serif text-2xl text-gold">
+                {selectCardLabels[lang as keyof typeof selectCardLabels]}
+              </h3>
               <button
                 onClick={() => setShowGrid(false)}
-                className="absolute top-4 right-4 text-cream/50 hover:text-cream z-10"
+                className="text-gold hover:text-gold-light transition-colors"
               >
-                <X size={24} />
+                <X size={28} />
               </button>
-              <h3 className="font-serif text-3xl text-gold mb-8 text-center">
-                {selectText[lang as keyof typeof selectText]}
-              </h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {tarotCards.map((card) => (
-                  <Link
-                    key={card.id}
-                    href={`/tarot/${card.id}`}
-                    className="group cursor-pointer"
-                    onClick={() => setShowGrid(false)}
-                  >
-                    <div className="relative rounded-lg overflow-hidden aspect-[3/5] bg-gold/5 border-2 border-gold/30 hover:border-gold transition-all hover:scale-105">
-                      <img
-                        src={card.image}
-                        alt={card.name[lang as keyof typeof card.name]}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all" />
-                      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black to-transparent">
-                        <p className="text-cream text-sm font-medium text-center">
-                          {card.number < 10 ? `0${card.number}` : card.number}
-                        </p>
-                        <p className="text-gold text-xs text-center truncate">
-                          {card.name[lang as keyof typeof card.name]}
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+            </div>
+
+            {/* Card Grid */}
+            <div className="p-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+              {tarotCards.map((card) => (
+                <div
+                  key={card.id}
+                  className="group relative aspect-[3/4] rounded-xl overflow-hidden cursor-pointer"
+                >
+                  <Image
+                    src={card.image}
+                    alt={card.name[lang as keyof typeof card.name]}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 text-cream text-sm font-serif text-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    {card.name[lang as keyof typeof card.name]}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </main>
   )
 }

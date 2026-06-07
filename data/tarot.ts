@@ -18,385 +18,215 @@ export interface TarotCard {
 
 export const tarotCards: TarotCard[] = [
   {
-    id: "fool",
-    number: 0,
-    name: {
-      ro: "Nebunul",
-      ru: "Шут",
-      en: "The Fool",
-      ua: "Блазень"
-    },
-    meaning: {
-      ro: "Noul început, aventură, naivitate și încredere în univers. Acest card simbolizează o nouă etapă a vieții, plin de posibilități și șanse.",
-      ru: "Новое начало, приключение, наивность и вера во вселенную. Этот аркан символизирует новый этап жизни, полный возможностей и шансов.",
-      en: "New beginning, adventure, naivety and trust in the universe. This card symbolizes a new stage of life, full of possibilities and chances.",
-      ua: "Новий початок, пригода, наївність та віра у Всесвіт. Цей аркан символізує новий етап життя, повний можливостей і шансів."
-    },
-    image: "/images/tarot/00-fool.jpg"
-  },
-  {
-    id: "magician",
+    id: "01",
     number: 1,
-    name: {
-      ro: "Magicianul",
-      ru: "Маг",
-      en: "The Magician",
-      ua: "Маг"
-    },
+    name: { ro: "Ciobanul", ru: "Шут", en: "The Fool", ua: "Блазень" },
     meaning: {
-      ro: "Capacitate, abilități, putere de manifestare și control asupra realității. Magicianul vorbește despre potențialul tău de a crea și transforma.",
-      ru: "Способность, навыки, сила проявления и контроль над реальностью. Маг говорит о вашем потенциале создавать и трансформировать.",
-      en: "Ability, skills, power of manifestation and control over reality. The Magician speaks about your potential to create and transform.",
-      ua: "Здатність, навички, сила прояву та контроль над реальністю. Маг говорить про ваш потенціал створювати та трансформувати."
+      ro: "Nou început, aventură, naivitate și încredere. Acest card simbolizează o nouă etapă plin de posibilități.",
+      ru: "Новое начало, приключение, наивность и доверие к вселенной. Этот аркан символизирует новый этап жизни.",
+      en: "New beginning, adventure, innocence and faith in the universe. This card represents a fresh start full of possibilities.",
+      ua: "Новий початок, пригода, наївність та віра у всесвіт. Цей аркан символізує новий етап життя."
     },
-    image: "/images/tarot/01-magician.jpg"
+    image: "/images/tarot/01-fool.png"
   },
   {
-    id: "priestess",
+    id: "02",
     number: 2,
-    name: {
-      ro: "Preotesa",
-      ru: "Жрица",
-      en: "The High Priestess",
-      ua: "Жриця"
-    },
+    name: { ro: "Vrăjitorul", ru: "Маг", en: "The Magician", ua: "Фокусник" },
     meaning: {
-      ro: "Mister, intuiție, cunoaștere ascunsă și subconștient. Preotesa te îndeamnă să asculți vocea ta interioară și să fii receptivă.",
-      ru: "Тайна, интуиция, скрытое знание и подсознание. Жрица побуждает вас слушать свой внутренний голос и быть восприимчивым.",
-      en: "Mystery, intuition, hidden knowledge and the subconscious. The Priestess urges you to listen to your inner voice and be receptive.",
-      ua: "Таємниця, інтуїція, приховане знання та підсвідомість. Жриця спонукає вас слухати свій внутрішній голос та бути сприйнятливим."
+      ro: "Putere, abilitate, acțiune și manifestare. Dorurile pot deveni realitate prin voința și creativitate.",
+      ru: "Сила, умение, действие и манифестация. Ваши желания могут стать реальностью через волю и творчество.",
+      en: "Power, skill, action and manifestation. Your desires can become reality through will and creativity.",
+      ua: "Сила, вміння, дія та маніфестація. Ваші бажання можуть стати реальністю через волю та творчість."
     },
-    image: "/images/tarot/02-priestess.jpg"
+    image: "/images/tarot/02-magician.png"
   },
   {
-    id: "empress",
+    id: "03",
     number: 3,
-    name: {
-      ro: "Împărăteasa",
-      ru: "Императрица",
-      en: "The Empress",
-      ua: "Імператриця"
-    },
+    name: { ro: "Preoteasa", ru: "Жрица", en: "The High Priestess", ua: "Верховна Жриця" },
     meaning: {
-      ro: "Fertilitate, abundență, creativitate și nurture. Împărăteasa simbolizează abundența, frumusețea și puterea creatoare.",
-      ru: "Плодородие, изобилие, творчество и забота. Императрица символизирует изобилие, красоту и творческую силу.",
-      en: "Fertility, abundance, creativity and nurturing. The Empress symbolizes abundance, beauty and creative power.",
-      ua: "Родючість, достаток, творчість та турбота. Імператриця символізує достаток, красу та творчу силу."
+      ro: "Intuiție, mister, înțelepciune și cunoaștere internă. Ascultă vocea ta interioară și instinctul.",
+      ru: "Интуиция, мистика, мудрость и внутренние знания. Слушайте свой внутренний голос и инстинкты.",
+      en: "Intuition, mystery, wisdom and inner knowledge. Listen to your inner voice and instincts.",
+      ua: "Інтуїція, таємниця, мудрість та внутрішні знання. Слухайте свій внутрішній голос та інстинкти."
     },
-    image: "/images/tarot/03-empress.jpg"
+    image: "/images/tarot/03-priestess.png"
   },
   {
-    id: "emperor",
+    id: "04",
     number: 4,
-    name: {
-      ro: "Împăratul",
-      ru: "Император",
-      en: "The Emperor",
-      ua: "Імператор"
-    },
+    name: { ro: "Împărăteasa", ru: "Императрица", en: "The Empress", ua: "Імператриця" },
     meaning: {
-      ro: "Autoritate, putere, control și leadership. Împăratul vorbește despre dominație, ordine și autoritate personală.",
-      ru: "Власть, мощь, контроль и лидерство. Император говорит о господстве, порядке и личной власти.",
-      en: "Authority, power, control and leadership. The Emperor speaks about dominance, order and personal authority.",
-      ua: "Влада, могутність, контроль та лідерство. Імператор говорить про панування, порядок та особисту владу."
+      ro: "Fertilitate, abundență, frumusețe și crearivitate. Timp pentru manifestare și realizare a planurilor.",
+      ru: "Плодородие, изобилие, красота и творчество. Время проявления и реализации ваших планов.",
+      en: "Fertility, abundance, beauty and creativity. Time for manifestation and fulfilling your dreams.",
+      ua: "Родючість, достаток, красота та творчість. Час прояву та реалізації ваших планів."
     },
-    image: "/images/tarot/04-emperor.jpg"
+    image: "/images/tarot/04-empress.png"
   },
   {
-    id: "hierophant",
+    id: "05",
     number: 5,
-    name: {
-      ro: "Papă",
-      ru: "Иерофант",
-      en: "The Hierophant",
-      ua: "Ієрофант"
-    },
+    name: { ro: "Împăratul", ru: "Император", en: "The Emperor", ua: "Імператор" },
     meaning: {
-      ro: "Tradiție, religie, educație și valori. Papa simbolizează cunoașterea tradițională, învățăturile și moralitatea.",
-      ru: "Традиция, религия, образование и ценности. Иерофант символизирует традиционное знание, учения и мораль.",
-      en: "Tradition, religion, education and values. The Hierophant symbolizes traditional knowledge, teachings and morality.",
-      ua: "Традиція, релігія, освіта та цінності. Ієрофант символізує традиційне знання, вчення та мораль."
+      ro: "Autoritate, putere, stabilitate și control. Moment pentru a prelua conducerea și responsabilitate.",
+      ru: "Власть, сила, стабильность и контроль. Время взять на себя руководство и ответственность.",
+      en: "Authority, power, stability and control. Time to take charge and responsibility.",
+      ua: "Влада, сила, стабільність та контроль. Час взяти на себе керівництво та відповідальність."
     },
-    image: "/images/tarot/05-hierophant.jpg"
+    image: "/images/tarot/05-emperor.png"
   },
   {
-    id: "lovers",
+    id: "06",
     number: 6,
-    name: {
-      ro: "Îndrăgostiții",
-      ru: "Влюбленные",
-      en: "The Lovers",
-      ua: "Закохані"
-    },
+    name: { ro: "Ierarhul", ru: "Иерофант", en: "The Hierophant", ua: "Ієрофант" },
     meaning: {
-      ro: "Iubire, relații, alegeri și harmonie. Îndrăgostiții nu vorbesc doar de iubire romantică, ci de conexiuni profunde.",
-      ru: "Любовь, отношения, выбор и гармония. Влюбленные говорят не только о романтической любви, но о глубоких связях.",
-      en: "Love, relationships, choices and harmony. The Lovers speak not only of romantic love but of deep connections.",
-      ua: "Любов, відносини, вибір та гармонія. Закохані говорять не тільки про романтичну любов, але про глибокі зв'язки."
+      ro: "Tradițe, spiritualitate, înțelepciune și învățare. Respect și conformitate la valorile importante.",
+      ru: "Традиции, духовность, мудрость и обучение. Уважение к важным ценностям и конвенциям.",
+      en: "Tradition, spirituality, wisdom and learning. Respect for important values and conventions.",
+      ua: "Традиції, духовність, мудрість та навчання. Повага до важливих цінностей та умовностей."
     },
-    image: "/images/tarot/06-lovers.jpg"
+    image: "/images/tarot/06-hierophant.png"
   },
   {
-    id: "chariot",
+    id: "07",
     number: 7,
-    name: {
-      ro: "Carul",
-      ru: "Колесница",
-      en: "The Chariot",
-      ua: "Колісниця"
-    },
+    name: { ro: "Iubiții", ru: "Влюбленные", en: "The Lovers", ua: "Коханці" },
     meaning: {
-      ro: "Voință, determinare, control și progres. Caruțul simbolizează mișcare, vitorie și determinația de a avansa.",
-      ru: "Воля, решимость, контроль и прогресс. Колесница символизирует движение, победу и решимость двигаться вперед.",
-      en: "Will, determination, control and progress. The Chariot symbolizes movement, victory and determination to advance.",
-      ua: "Воля, рішучість, контроль та прогрес. Колісниця символізує рух, перемогу та рішучість рухатися вперед."
+      ro: "Dragoste, conexiune, alegere și relații. Moment important pentru decizii sentimentale și inimă.",
+      ru: "Любовь, связь, выбор и отношения. Важный момент для сентиментальных решений и сердца.",
+      en: "Love, connection, choice and relationships. Important moment for emotional decisions and heart matters.",
+      ua: "Любов, зв'язок, вибір та стосунки. Важливий момент для емоційних рішень та справ серця."
     },
-    image: "/images/tarot/07-chariot.jpg"
+    image: "/images/tarot/07-lovers.png"
   },
   {
-    id: "strength",
+    id: "08",
     number: 8,
-    name: {
-      ro: "Puterea",
-      ru: "Сила",
-      en: "Strength",
-      ua: "Сила"
-    },
+    name: { ro: "Carul", ru: "Колесница", en: "The Chariot", ua: "Колісниця" },
     meaning: {
-      ro: "Forță interioară, curaj, pasiune și controlul emoțiilor. Puterea nu vine din violență, ci din înțelegere și iertare.",
-      ru: "Внутренняя сила, мужество, страсть и контроль над эмоциями. Сила исходит не из насилия, а из понимания и прощения.",
-      en: "Inner strength, courage, passion and emotional control. Strength comes not from violence but from understanding and forgiveness.",
-      ua: "Внутрішня сила, мужність, пристрість та контроль над емоціями. Сила йде не з насильства, а з розуміння та прощення."
+      ro: "Determinație, control, victorie și progres. Forță pentru a depăși obstacolele și a avansa.",
+      ru: "Решимость, контроль, победа и прогресс. Сила преодолевать препятствия и двигаться вперед.",
+      en: "Determination, control, victory and progress. Strength to overcome obstacles and move forward.",
+      ua: "Рішучість, контроль, перемога та прогрес. Сила щоб подолати перешкоди та просуватися вперед."
     },
-    image: "/images/tarot/08-strength.jpg"
+    image: "/images/tarot/08-chariot.png"
   },
   {
-    id: "hermit",
+    id: "09",
     number: 9,
-    name: {
-      ro: "Pustnicul",
-      ru: "Отшельник",
-      en: "The Hermit",
-      ua: "Відлюдник"
-    },
+    name: { ro: "Puterea", ru: "Сила", en: "Strength", ua: "Сила" },
     meaning: {
-      ro: "Reflecție, solitudine, cunoaștere și meditație. Pustnicul te cheamă să-ți petreci timp singur pentru a afla adevărul interior.",
-      ru: "Размышление, одиночество, знание и медитация. Отшельник зовет вас провести время в одиночестве, чтобы найти внутреннюю истину.",
-      en: "Reflection, solitude, knowledge and meditation. The Hermit calls you to spend time alone to find inner truth.",
-      ua: "Роздум, самотність, знання та медитація. Відлюдник закликає вас провести час наодинці, щоб знайти внутрішню істину."
+      ro: "Putere interioară, calmitate, îndemânare și victorie. Abilitate de a gestiona situații greu cu calm.",
+      ru: "Внутренняя сила, спокойствие, мастерство и победа. Способность управлять сложными ситуациями спокойно.",
+      en: "Inner strength, calmness, skill and victory. Ability to manage difficult situations with grace.",
+      ua: "Внутрішня сила, спокій, майстерність та перемога. Здатність керувати складними ситуаціями спокійно."
     },
-    image: "/images/tarot/09-hermit.jpg"
+    image: "/images/tarot/09-strength.png"
   },
   {
-    id: "wheel",
+    id: "10",
     number: 10,
-    name: {
-      ro: "Roata Sorții",
-      ru: "Колесо Фортуны",
-      en: "Wheel of Fortune",
-      ua: "Колесо Фортуни"
-    },
+    name: { ro: "Pustnicul", ru: "Отшельник", en: "The Hermit", ua: "Отшельник" },
     meaning: {
-      ro: "Destul, schimbare, cicluri și karma. Roata Sorții arată că viața se rotește și orice schimbare este parte a unui ciclu.",
-      ru: "Судьба, перемены, циклы и карма. Колесо Фортуны показывает, что жизнь вращается и любые изменения часть цикла.",
-      en: "Fate, change, cycles and karma. The Wheel of Fortune shows that life rotates and any change is part of a cycle.",
-      ua: "Доля, зміни, цикли та карма. Колесо Фортуни показує, що життя обертається і будь-які зміни — частина циклу."
+      ro: "Reflecție, meditație, căutare și solitudine. Timp pentru a merge adânc în sine și a găsi răspunsuri.",
+      ru: "Размышление, медитация, поиск и одиночество. Время углубиться в себя и найти ответы.",
+      en: "Reflection, meditation, search and solitude. Time to go deep within and find answers.",
+      ua: "Роздум, медитація, пошук та самотність. Час щоб піти глибоко в себе та знайти відповіді."
     },
-    image: "/images/tarot/10-wheel.jpg"
+    image: "/images/tarot/10-hermit.png"
   },
   {
-    id: "justice",
+    id: "11",
     number: 11,
-    name: {
-      ro: "Dreptatea",
-      ru: "Справедливость",
-      en: "Justice",
-      ua: "Справедливість"
-    },
+    name: { ro: "Roata Sorții", ru: "Колесо Судьбы", en: "Wheel of Fortune", ua: "Колесо Долі" },
     meaning: {
-      ro: "Dreptate, echilibru, responsabilitate și adevăr. Dreptatea cere integritate și consecvență în acțiunile tale.",
-      ru: "Справедливость, баланс, ответственность и истина. Справедливость требует целостности и последовательности в ваших действиях.",
-      en: "Justice, balance, responsibility and truth. Justice requires integrity and consistency in your actions.",
-      ua: "Справедливість, баланс, відповідальність та істина. Справедливість вимагає цілісності та послідовності в ваших діях."
+      ro: "Destin, cicluri, noroc și schimbare. Ceea ce se ridică trebuie să coboare - ciclul continuu.",
+      ru: "Судьба, циклы, удача и перемены. Что поднимается, должно упасть - вечный цикл.",
+      en: "Destiny, cycles, luck and change. What rises must fall - the eternal cycle.",
+      ua: "Доля, цикли, удача та зміни. Те, що піднімається, мусить впасти - вічний цикл."
     },
-    image: "/images/tarot/11-justice.jpg"
+    image: "/images/tarot/11-wheel.png"
   },
   {
-    id: "hanged",
+    id: "12",
     number: 12,
-    name: {
-      ro: "Spânzuratul",
-      ru: "Повешенный",
-      en: "The Hanged Man",
-      ua: "Повішений"
-    },
+    name: { ro: "Dreptatea", ru: "Справедливость", en: "Justice", ua: "Справедливість" },
     meaning: {
-      ro: "Sacrificiu, perspectivă nouă, înțelegere și pasivitate. Spânzuratul cere să vezi lucrurile din alt unghi.",
-      ru: "Жертва, новая перспектива, понимание и пассивность. Повешенный просит увидеть вещи под другим углом.",
-      en: "Sacrifice, new perspective, understanding and passivity. The Hanged Man asks you to see things from another angle.",
-      ua: "Жертва, нова перспектива, розуміння та пасивність. Повішений просить вас бачити речі з іншого кута."
+      ro: "Echilibru, echitate, legitate și justiție. Timp pentru a face alegeri raționale și juste.",
+      ru: "Баланс, справедливость, законность и правосудие. Время для рациональных и справедливых выборов.",
+      en: "Balance, fairness, legality and justice. Time for rational and fair choices.",
+      ua: "Баланс, справедливість, законність та правосуддя. Час для раціональних та справедливих виборів."
     },
-    image: "/images/tarot/12-hanged.jpg"
+    image: "/images/tarot/12-justice.png"
   },
   {
-    id: "death",
+    id: "13",
     number: 13,
-    name: {
-      ro: "Moartea",
-      ru: "Смерть",
-      en: "Death",
-      ua: "Смерть"
-    },
+    name: { ro: "Omul Spânzurat", ru: "Повешенный", en: "The Hanged Man", ua: "Висілець" },
     meaning: {
-      ro: "Transformare, sfârşit și începere, regenerare. Moartea nu înseamnă sfârșitul fizic, ci transformarea profundă.",
-      ru: "Трансформация, конец и начало, регенерация. Смерть не означает физического конца, а глубокую трансформацию.",
-      en: "Transformation, end and beginning, regeneration. Death does not mean physical end but profound transformation.",
-      ua: "Трансформація, кінець і початок, регенерація. Смерть не означає фізичного кінця, а глибокої трансформації."
+      ro: "Sacrificiu, perspectivă nouă, meditație și stagnare. Momentul de renunțare și realipare.",
+      ru: "Жертва, новая перспектива, медитация и застой. Момент отказа и переосмысления.",
+      en: "Sacrifice, new perspective, meditation and pause. Time for letting go and realignment.",
+      ua: "Жертва, нова перспектива, медитація та пауза. Час розпуску та переанування."
     },
-    image: "/images/tarot/13-death.jpg"
+    image: "/images/tarot/13-hanged.png"
   },
   {
-    id: "temperance",
+    id: "14",
     number: 14,
-    name: {
-      ro: "Moderația",
-      ru: "Умеренность",
-      en: "Temperance",
-      ua: "Помірність"
-    },
+    name: { ro: "Moartea", ru: "Смерть", en: "Death", ua: "Смерть" },
     meaning: {
-      ro: "Echilibru, pondere, healing și armonie. Moderația te îndeamnă să găsești echilibrul în toate aspectele vieții.",
-      ru: "Баланс, гармония, исцеление и равновесие. Умеренность побуждает вас найти равновесие во всех аспектах жизни.",
-      en: "Balance, harmony, healing and equilibrium. Temperance urges you to find balance in all aspects of life.",
-      ua: "Баланс, гармонія, исцеління та рівновага. Помірність спонукає вас знайти рівновагу у всіх аспектах життя."
+      ro: "Transformare, final, nou început și schimbare. Nu este moarte literală - este transformare.",
+      ru: "Преобразование, конец, новое начало и изменение. Это не буквальная смерть - это трансформация.",
+      en: "Transformation, ending, new beginning and change. Not literal death - it is transformation.",
+      ua: "Трансформація, кінець, новий початок та зміна. Це не буквальна смерть - це трансформація."
     },
-    image: "/images/tarot/14-temperance.jpg"
+    image: "/images/tarot/14-death.png"
   },
   {
-    id: "devil",
+    id: "15",
     number: 15,
-    name: {
-      ro: "Diavolul",
-      ru: "Дьявол",
-      en: "The Devil",
-      ua: "Дракон"
-    },
+    name: { ro: "Temperanța", ru: "Умеренность", en: "Temperance", ua: "Помірність" },
     meaning: {
-      ro: "Esclavie, vizi, materialism și auto-limitare. Diavolul arată unde te-ai legat singur prin credințe și obiceiuri.",
-      ru: "Рабство, пороки, материализм и самоограничение. Дьявол показывает, где вы сами себя связали убеждениями и привычками.",
-      en: "Slavery, vices, materialism and self-limitation. The Devil shows where you have bound yourself through beliefs and habits.",
-      ua: "Рабство, пороки, матеріалізм та самообмеження. Дракон показує, де ви себе зв'язали переконаннями та звичками."
+      ro: "Echilibru, armonie, pasiune controlată și ușurare. Blend-ul perfect al contrariilor.",
+      ru: "Баланс, гармония, контролируемая страсть и облегчение. Идеальное смешивание противоположностей.",
+      en: "Balance, harmony, controlled passion and relief. Perfect blending of opposites.",
+      ua: "Баланс, гармонія, контрольована пристрасть та полегшення. Ідеальне змішування протилежностей."
     },
-    image: "/images/tarot/15-devil.jpg"
+    image: "/images/tarot/15-temperance.png"
   },
   {
-    id: "tower",
+    id: "16",
     number: 16,
-    name: {
-      ro: "Turnul",
-      ru: "Башня",
-      en: "The Tower",
-      ua: "Вежа"
-    },
+    name: { ro: "Diavolul", ru: "Дьявол", en: "The Devil", ua: "Диявол" },
     meaning: {
-      ro: "Rupere, distrugere, revelație și schimbare forțată. Turnul anunță o criză care va deschide ochi noi.",
-      ru: "Разрушение, катастрофа, откровение и вынужденные перемены. Башня возвещает кризис, который откроет новые глаза.",
-      en: "Destruction, catastrophe, revelation and forced change. The Tower announces a crisis that will open new eyes.",
-      ua: "Знищення, катастрофа, одкровення та вимушені зміни. Вежа звіщає кризу, яка відкриє нові очі."
+      ro: "Sclavie, temptație, întuneric și legare. Lucruri care ne țin captivi și din care vrem libertate.",
+      ru: "Рабство, искушение, тьма и связывание. Вещи, которые держат нас в плену и от которых мы ищем свободу.",
+      en: "Slavery, temptation, darkness and bondage. Things that hold us captive and from which we seek freedom.",
+      ua: "Рабство, спокуса, темрява та пута. Речі, які тримають нас в полоні та від яких ми шукаємо свободу."
     },
-    image: "/images/tarot/16-tower.jpg"
+    image: "/images/tarot/16-devil.png"
   },
   {
-    id: "star",
+    id: "17",
     number: 17,
-    name: {
-      ro: "Steaua",
-      ru: "Звезда",
-      en: "The Star",
-      ua: "Зірка"
-    },
+    name: { ro: "Turnul", ru: "Башня", en: "The Tower", ua: "Вежа" },
     meaning: {
-      ro: "Speranță, inspirație, duhul și claritate. Steaua îți spune să ai încredere în viitorul tău și în directția ta.",
-      ru: "Надежда, вдохновение, дух и ясность. Звезда говорит вам верить в будущее и в вашу направленность.",
-      en: "Hope, inspiration, spirit and clarity. The Star tells you to believe in your future and your direction.",
-      ua: "Надія, натхнення, дух та ясність. Зірка каже вам вірити у своє майбутнє та свою спрямованість."
+      ro: "Distrugere, schimbare violență și revelație. Deștrugerea vechiului pentru a face loc noului.",
+      ru: "Разрушение, насилие и откровение. Разрушение старого, чтобы освободить место для нового.",
+      en: "Destruction, violent change and revelation. Breaking down the old to make way for the new.",
+      ua: "Руйнування, насильницька зміна та одкровення. Розвал старого, щоб звільнити місце для нового."
     },
-    image: "/images/tarot/17-star.jpg"
-  },
-  {
-    id: "moon",
-    number: 18,
-    name: {
-      ro: "Luna",
-      ru: "Луна",
-      en: "The Moon",
-      ua: "Місяць"
-    },
-    meaning: {
-      ro: "Iluzii, instinct, mister și subconștient. Luna te cheamă să ascultezi intuiția ta și să navighezi ceața confuziei.",
-      ru: "Иллюзии, инстинкт, тайна и подсознание. Луна зовет вас слушать интуицию и ориентироваться в тумане путаницы.",
-      en: "Illusions, instinct, mystery and the subconscious. The Moon calls you to listen to your intuition and navigate the fog of confusion.",
-      ua: "Ілюзії, інстинкт, таємниця та підсвідомість. Місяць закликає вас слухати інтуїцію та орієнтуватися в тумані плутанини."
-    },
-    image: "/images/tarot/18-moon.jpg"
-  },
-  {
-    id: "sun",
-    number: 19,
-    name: {
-      ro: "Soarele",
-      ru: "Солнце",
-      en: "The Sun",
-      ua: "Сонце"
-    },
-    meaning: {
-      ro: "Succes, bucurie, vitalitate și luminozitate. Soarele aduce energie pozitivă, creștere și accomplishment.",
-      ru: "Успех, радость, жизненность и светлость. Солнце приносит позитивную энергию, рост и достижение.",
-      en: "Success, joy, vitality and brightness. The Sun brings positive energy, growth and achievement.",
-      ua: "Успіх, радість, життєвість та яскравість. Сонце приносить позитивну енергію, ріст та досягнення."
-    },
-    image: "/images/tarot/19-sun.jpg"
-  },
-  {
-    id: "judgment",
-    number: 20,
-    name: {
-      ro: "Judecata",
-      ru: "Суд",
-      en: "Judgment",
-      ua: "Суд"
-    },
-    meaning: {
-      ro: "Apel, evaluare, renaștere și autoexaminare. Judecata este despre autoevaluare și apelul să devii versiunea ta cea mai bună.",
-      ru: "Призыв, оценка, возрождение и самопроверка. Суд это о самооценке и призыве стать лучшей версией себя.",
-      en: "Calling, evaluation, rebirth and self-examination. Judgment is about self-evaluation and the call to become your best self.",
-      ua: "Поклик, оцінка, відродження та самоперевірка. Суд це про самооцінку та поклик стати кращою версією себе."
-    },
-    image: "/images/tarot/20-judgment.jpg"
-  },
-  {
-    id: "world",
-    number: 21,
-    name: {
-      ro: "Lumea",
-      ru: "Мир",
-      en: "The World",
-      ua: "Світ"
-    },
-    meaning: {
-      ro: "Completare, unitate, realizare și plenitudine. Lumea simbolizează sfârșitul unui ciclu și completarea.",
-      ru: "Завершение, единство, реализация и полнота. Мир символизирует конец цикла и завершение.",
-      en: "Completion, unity, fulfillment and wholeness. The World symbolizes the end of a cycle and completion.",
-      ua: "Завершення, єдність, здійснення та цілісність. Світ символізує кінець циклу та завершення."
-    },
-    image: "/images/tarot/21-world.jpg"
+    image: "/images/tarot/17-tower.png"
   }
 ]
 
-export function getTarotCardByNumber(number: number): TarotCard | undefined {
-  return tarotCards.find(card => card.number === number)
-}
-
 export function getRandomTarotCard(): TarotCard {
   return tarotCards[Math.floor(Math.random() * tarotCards.length)]
+}
+
+export function getTarotCardByNumber(number: number): TarotCard | undefined {
+  return tarotCards.find(c => c.number === number)
 }
