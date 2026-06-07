@@ -136,7 +136,7 @@ const translations = {
     faq_tag: "FAQ",
     faq_title: "Часто задаваемые вопросы",
     faq_q1: "Что такое нумерология?",
-    faq_a1: "Нумерология — это д��������евняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
+    faq_a1: "Нумерология — это д����������евняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
     faq_q2: "С чего начать?",
     faq_a2: "Лучший старт — бесплатный тест или консультация. Это позволит понять ваш уровень и подобрать оптимальный формат работы.",
     faq_q3: "Как проходят консультации?",
@@ -496,7 +496,7 @@ const translations = {
     forgot_send_link: "Отправить ссылку",
     forgot_sending: "Отправка...",
     forgot_email_sent: "Письмо отправлено",
-    forgot_email_sent_desc: "Мы отправили инстру��ции по восстановлению пароля на вашу почту. Проверьте папку «Спам», если письмо не пришло.",
+    forgot_email_sent_desc: "Мы отправили инстру���ции по восстановлению пароля на вашу почту. Проверьте папку «Спам», если письмо не пришло.",
     forgot_back_to_login: "Назад ко входу",
 
     // Common
@@ -544,6 +544,12 @@ const translations = {
     faq_q6: "Какие способы оплаты доступны?",
     faq_a6: "Мы принимаем основные платежные системы: карты Visa/Mastercard, электронные кошельки и переводы. Для консультаций также доступна рассрочка.",
     faq_more_questions: "Остались вопросы?",
+
+    // Testimonials
+    testimonials_title: "Отзывы клиентов",
+    testimonials_subtitle: "Прочитайте, что говорят наши студенты и клиенты о своем опыте работы с нумерологией",
+    testimonials_cta_title: "Готов начать свое путешествие?",
+    testimonials_cta_subtitle: "Присоединяйся к сотням людей, которые уже трансформировали свои жизни через нумерологию",
   },
 
   ro: {
@@ -1037,12 +1043,18 @@ const translations = {
     faq_q3: "Care este durata cursurilor?",
     faq_a3: "Cursurile sunt împărțite în module cu program flexibil. Poți să le urmezi în propriul ritm, cu acces la videoclipuri și materiale pe perioadă nelimitată.",
     faq_q4: "Există garanție de rezultate?",
-    faq_a4: "Numerologia este un instrument de autocunoaștere. Rezultatele depind de deschiderea și aplicarea recomandărilor tale. Majoritatea clienților observă schimbări pozitive în decurs de o lună.",
+    faq_a4: "Numerologia este un instrument de autocunoaștere. Rezultatele depind de deschiderea și aplicarea recomandărilor tale. Majoritatea clienților observă schimbări pozitive în decurs de o lun��.",
     faq_q5: "Pot face testarea?",
     faq_a5: "Da, oferim testare gratuită care oferă o perspectivă inițială asupra hărții numerologice. Este o modalitate bună de a afla dacă numerologia e potrivită pentru tine.",
     faq_q6: "Ce metode de plată sunt disponibile?",
     faq_a6: "Acceptăm sisteme de plată principale: carduri Visa/Mastercard, portofeluri electronice și transferuri. Pentru consultații este disponibilă și rata.",
     faq_more_questions: "Mai ai întrebări?",
+
+    // Testimonials
+    testimonials_title: "Recenzii de clienți",
+    testimonials_subtitle: "Citește ce spun studenții și clienții noștri despre experiența lor cu numerologia",
+    testimonials_cta_title: "Gata să începi călătoria ta?",
+    testimonials_cta_subtitle: "Alătură-te sutelor de oameni care și-au transformat deja viața prin numerologie",
   },
 
   en: {
@@ -1542,6 +1554,12 @@ const translations = {
     faq_q6: "What payment methods are available?",
     faq_a6: "We accept major payment systems: Visa/Mastercard, e-wallets, and transfers. Payment plans are also available for consultations.",
     faq_more_questions: "Still have questions?",
+
+    // Testimonials
+    testimonials_title: "Client Reviews",
+    testimonials_subtitle: "Read what our students and clients have to say about their experience with numerology",
+    testimonials_cta_title: "Ready to start your journey?",
+    testimonials_cta_subtitle: "Join hundreds of people who have already transformed their lives through numerology",
   },
 
   ua: {
@@ -1949,7 +1967,7 @@ const translations = {
     destiny_3_desc: "Самовираження та творчість — ваша суть. Ви здатні надихати інших своїм оптимізмом, талантами та радістю життя.",
     destiny_3_traits: "Творчість, Оптимізм, Комунікабельність, Артистизм",
     destiny_4_title: "Будівник",
-    destiny_4_desc: "Стабільність та порядок — ваш фундамент. Ви створюєте міцні основи для себе та інших завдяки дисципліні та практичності.",
+    destiny_4_desc: "Ста��ільність та порядок — ваш фундамент. Ви створюєте міцні основи для себе та інших завдяки дисципліні та практичності.",
     destiny_4_traits: "Практичність, Дисципліна, Надійність, Працьовитість",
     destiny_5_title: "Шукач",
     destiny_5_desc: "Свобода та зміни — ваш девіз. Ви прагнете пригод, нових вражень та розширення горизонтів.",
@@ -2041,6 +2059,12 @@ const translations = {
     faq_q6: "Які способи оплати доступні?",
     faq_a6: "Ми приймаємо основні платіжні системи: карти Visa/Mastercard, електронні гаманці та переводи. Для консультацій також доступна розстрочка.",
     faq_more_questions: "Залишились питання?",
+
+    // Testimonials
+    testimonials_title: "Відгуки клієнтів",
+    testimonials_subtitle: "Прочитай, що кажуть наші студенти та клієнти про свій досвід роботи з нумерологією",
+    testimonials_cta_title: "Готовий почати свою подорож?",
+    testimonials_cta_subtitle: "Приєднайся до сотень людей, які вже трансформували своє життя через нумерологію",
   },
 } as const
 
