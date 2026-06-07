@@ -299,7 +299,7 @@ const translations = {
     auth_terms: "условиями использования",
     auth_privacy_link: "политикой конфиденциальности",
     auth_register_btn: "Зарегистрироваться",
-    auth_has_account: "Уж�� есть аккаунт?",
+    auth_has_account: "Уже есть аккаунт?",
     auth_login_link: "Войти",
 
     // Auth — Forgot password
