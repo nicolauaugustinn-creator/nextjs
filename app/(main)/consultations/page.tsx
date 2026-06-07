@@ -16,7 +16,7 @@ export default function ConsultationsPage() {
       subtitle: t("consult_basic"),
       description: t("consult_numerology_desc"),
       duration: t("consult_90min"),
-      price: 15000,
+      price: 60,
       features: [
         t("consult_feature_destiny"),
         t("consult_feature_karma_tasks"),
@@ -33,7 +33,7 @@ export default function ConsultationsPage() {
       subtitle: t("consult_for_couples"),
       description: t("consult_compatibility_desc"),
       duration: t("consult_120min"),
-      price: 25000,
+      price: 120,
       features: [
         t("consult_feature_both_charts"),
         t("consult_feature_compat_map"),
@@ -50,7 +50,7 @@ export default function ConsultationsPage() {
       subtitle: t("consult_for_entrepreneurs"),
       description: t("consult_business_desc"),
       duration: t("consult_60min"),
-      price: 20000,
+      price: 100,
       features: [
         t("consult_feature_biz_energy"),
         t("consult_feature_biz_periods"),
@@ -67,7 +67,7 @@ export default function ConsultationsPage() {
       subtitle: t("consult_detailed_analysis"),
       description: t("consult_year_desc"),
       duration: t("consult_60min"),
-      price: 12000,
+      price: 50,
       features: [
         t("consult_feature_year_energy"),
         t("consult_feature_monthly"),
@@ -84,7 +84,7 @@ export default function ConsultationsPage() {
       subtitle: t("consult_extended"),
       description: t("consult_deep_desc"),
       duration: t("consult_180min"),
-      price: 35000,
+      price: 160,
       features: [
         t("consult_feature_full_calc"),
         t("consult_feature_family_karma"),
@@ -101,7 +101,7 @@ export default function ConsultationsPage() {
       subtitle: t("consult_personal_work"),
       description: t("consult_vip_desc"),
       duration: t("consult_1month"),
-      price: 100000,
+      price: 200,
       features: [
         t("consult_feature_4sessions"),
         t("consult_feature_chat_support"),
@@ -229,7 +229,7 @@ export default function ConsultationsPage() {
                   <div className="pt-6 border-t border-white/10">
                     <div className="flex items-center justify-between mb-4">
                       <span className="font-serif text-3xl text-gold">
-                        {item.price.toLocaleString()} ₽
+                        €{item.price.toLocaleString()}
                       </span>
                     </div>
                     <Link href="https://t.me/karmanumbers" target="_blank">
