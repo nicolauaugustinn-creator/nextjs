@@ -2,9 +2,11 @@
 
 import { useEffect, useRef } from "react"
 import Image from "next/image"
+import { motion } from "framer-motion"
 
 export function SpiritualTree() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // Create falling leaves animation
@@ -17,6 +19,7 @@ export function SpiritualTree() {
       const delay = Math.random() * 1
       const duration = 12 + Math.random() * 10
       const size = 2 + Math.random() * 3
+      const horizontalDrift = (Math.random() - 0.5) * 100
 
       leaf.className = "absolute pointer-events-none"
       leaf.style.cssText = `
@@ -27,7 +30,7 @@ export function SpiritualTree() {
         background: radial-gradient(circle at 30% 30%, #fcd34d, #d4af37);
         border-radius: 50%;
         box-shadow: 0 0 6px rgba(252, 211, 77, 0.9), 0 0 12px rgba(212, 175, 55, 0.6);
-        animation: fall ${duration}s linear ${delay}s forwards;
+        animation: fall ${duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}s forwards;
       `
       container.appendChild(leaf)
 
@@ -43,14 +46,18 @@ export function SpiritualTree() {
       style.textContent = `
         @keyframes fall {
           0% {
-            transform: translateY(0) rotateZ(0deg) scale(1);
+            transform: translateY(0) translateX(0) rotateZ(0deg) scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: translateY(50vh) translateX(${Math.random() * 100 - 50}px) rotateZ(360deg) scale(1);
             opacity: 1;
           }
           85% {
             opacity: 1;
           }
           100% {
-            transform: translateY(${window.innerHeight + 100}px) rotateZ(720deg) scale(0.5);
+            transform: translateY(${window.innerHeight + 100}px) translateX(${Math.random() * 100 - 50}px) rotateZ(720deg) scale(0.5);
             opacity: 0;
           }
         }
@@ -63,7 +70,7 @@ export function SpiritualTree() {
     
     // Create initial leaves
     for (let i = 0; i < 3; i++) {
-      setTimeout(() => createLeaf(), i * 300)
+      setTimeout(() => createLeaf(), i * 400)
     }
     
     return () => clearInterval(interval)
@@ -71,8 +78,20 @@ export function SpiritualTree() {
 
   return (
     <div ref={containerRef} className="relative w-full h-full flex items-center justify-center overflow-hidden">
-      {/* Background image - the spiritual tree */}
-      <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+      {/* Background image - the spiritual tree with animations */}
+      <motion.div
+        ref={imageRef}
+        className="absolute inset-0 w-full h-full flex items-center justify-center"
+        animate={{
+          scale: [1, 1.02, 1],
+          opacity: [0.85, 1, 0.85]
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
         <Image
           src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo_2026-06-07_20-54-51-laux4AvmrmkEJAXDk7hlUJn3uY82Px.jpg"
           alt="Spiritual Tree"
@@ -81,7 +100,39 @@ export function SpiritualTree() {
           priority
           quality={95}
         />
-      </div>
+      </motion.div>
+
+      {/* Glow overlay that pulses */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(circle at center, rgba(252, 211, 77, 0.15) 0%, rgba(212, 175, 55, 0.05) 30%, transparent 70%)"
+        }}
+        animate={{
+          opacity: [0.3, 0.7, 0.3]
+        }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+
+      {/* Energy field animation */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(circle at center, transparent 0%, rgba(139, 92, 246, 0.08) 40%, transparent 100%)"
+        }}
+        animate={{
+          scale: [1, 1.1, 1]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
 
       {/* Falling leaves overlay */}
       <div className="absolute inset-0 pointer-events-none" />

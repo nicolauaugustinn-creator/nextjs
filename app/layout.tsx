@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LangProvider } from "@/lib/lang-context"
+import { FallingLeavesOverlay } from "@/components/karma/falling-leaves-overlay"
 import "./globals.css"
 
 const playfair = Playfair_Display({ 
@@ -107,6 +108,7 @@ export default function RootLayout({
         >
           Перейти к содержимому
         </a>
+        <FallingLeavesOverlay />
         <LangProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
             {children}
