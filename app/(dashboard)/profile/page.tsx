@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { User, Mail, Award, TrendingUp, Settings, LogOut, Edit2 } from "lucide-react"
+import { User, Mail, Award, TrendingUp, Settings, LogOut, Edit2, Zap, Gift } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { GlassCard } from "@/components/karma/glass-card"
 import { useT } from "@/lib/lang-context"
@@ -20,6 +20,12 @@ export default function ProfilePage() {
     completionRate: 68,
     totalHours: 42,
     coursesCompleted: 3,
+    points: 1250,
+    availableDiscounts: [
+      { id: 1, title: "10% Off Any Course", cost: 500, applied: false },
+      { id: 2, title: "Free Meditation Pack", cost: 300, applied: false },
+      { id: 3, title: "20% Off Courses", cost: 1000, applied: false },
+    ],
   }
 
   const achievements = [
@@ -111,6 +117,68 @@ export default function ProfilePage() {
             </div>
             <p className="font-serif text-3xl text-cream">{user.coursesCompleted}</p>
             <p className="text-cream/50 text-sm mt-2">completed</p>
+          </GlassCard>
+        </div>
+      </motion.div>
+
+      {/* Rewards & Points System */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        <h2 className="font-serif text-xl text-cream mb-4">{t("profile_rewards")}</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {/* Points Card */}
+          <GlassCard className="lg:col-span-1">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-serif text-cream">{t("profile_available_points")}</h3>
+              <Zap className="w-6 h-6 text-gold" />
+            </div>
+            <p className="font-serif text-4xl text-gold mb-2">{user.points}</p>
+            <p className="text-cream/60 text-sm">{t("profile_points_earned")}</p>
+            <div className="mt-4 pt-4 border-t border-white/10">
+              <p className="text-xs text-cream/50 mb-3">{t("profile_points_from")}:</p>
+              <div className="space-y-2 text-sm text-cream/70">
+                <div className="flex justify-between">
+                  <span>• {t("profile_course_complete")}</span>
+                  <span className="text-gold">+50</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>• {t("profile_lesson_complete")}</span>
+                  <span className="text-gold">+10</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>• {t("profile_meditation_complete")}</span>
+                  <span className="text-gold">+5</span>
+                </div>
+              </div>
+            </div>
+          </GlassCard>
+
+          {/* Available Discounts */}
+          <GlassCard className="lg:col-span-2">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-serif text-cream">{t("profile_available_rewards")}</h3>
+              <Gift className="w-6 h-6 text-gold" />
+            </div>
+            <div className="space-y-3">
+              {user.availableDiscounts.map((discount, index) => (
+                <div key={discount.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+                  <div>
+                    <p className="text-cream font-medium">{discount.title}</p>
+                    <p className="text-cream/50 text-sm">{discount.cost} {t("profile_points")}</p>
+                  </div>
+                  <Button
+                    size="sm"
+                    disabled={user.points < discount.cost}
+                    className={discount.applied ? "bg-green-600/50 text-cream" : user.points >= discount.cost ? "bg-gold text-charcoal hover:bg-gold-light" : "bg-white/10 text-cream/50"}
+                  >
+                    {discount.applied ? "✓ Used" : user.points >= discount.cost ? "Redeem" : "Locked"}
+                  </Button>
+                </div>
+              ))}
+            </div>
           </GlassCard>
         </div>
       </motion.div>
