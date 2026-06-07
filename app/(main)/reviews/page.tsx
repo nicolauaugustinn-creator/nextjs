@@ -124,9 +124,12 @@ export default function ReviewsPage() {
 
                 {review.text && (
                   <p className="text-cream/80 mb-6 line-clamp-5">
-                    {typeof review.text === 'string' 
-                      ? review.text 
-                      : (review.text[lang as keyof typeof review.text] || review.text.en || review.text.ru)}
+                    {(() => {
+                      if (typeof review.text === 'string') return review.text
+                      if (!review.text) return ""
+                      const translations = review.text as Record<string, string>
+                      return translations[lang] || translations.en || translations.ru || ""
+                    })()}
                   </p>
                 )}
                 {review.screenshotImage && (
