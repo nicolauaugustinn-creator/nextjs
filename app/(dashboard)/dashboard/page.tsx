@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { BookOpen, Headphones, Calendar, Clock, Play, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { GlassCard } from "@/components/karma/glass-card"
 import Link from "next/link"
 import { useT } from "@/lib/lang-context"
 
@@ -51,12 +52,11 @@ export default function DashboardPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
-          <motion.div
+          <GlassCard
             key={stat.label}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="glass-card p-6"
           >
             <div className="flex items-center justify-between mb-4">
               <div className={`w-10 h-10 rounded-full bg-white/5 flex items-center justify-center ${stat.color}`}>
@@ -65,7 +65,7 @@ export default function DashboardPage() {
             </div>
             <p className="font-serif text-3xl text-cream mb-1">{stat.value}</p>
             <p className="text-cream/50 text-sm">{stat.label}</p>
-          </motion.div>
+          </GlassCard>
         ))}
       </div>
 
@@ -84,12 +84,12 @@ export default function DashboardPage() {
 
           <div className="space-y-4">
             {recentCourses.length > 0 ? recentCourses.map((course, index) => (
-              <motion.div
+              <GlassCard
                 key={course.id}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="glass-card p-4 flex gap-4"
+                className="flex gap-4"
               >
                 <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
                   <img src={course.image} alt={course.title} className="w-full h-full object-cover" />
@@ -109,9 +109,9 @@ export default function DashboardPage() {
                 <Button size="icon" className="bg-gold/10 text-gold hover:bg-gold/20 flex-shrink-0">
                   <Play className="w-5 h-5" />
                 </Button>
-              </motion.div>
+              </GlassCard>
             )) : (
-              <div className="glass-card p-8 text-center">
+              <GlassCard className="p-8 text-center">
                 <BookOpen className="w-12 h-12 text-cream/20 mx-auto mb-4" />
                 <p className="text-cream/50 mb-4">{t("dash_no_courses")}</p>
                 <Link href="/courses">
@@ -119,7 +119,7 @@ export default function DashboardPage() {
                     {t("dash_browse_courses")}
                   </Button>
                 </Link>
-              </div>
+              </GlassCard>
             )}
           </div>
         </div>
@@ -129,12 +129,11 @@ export default function DashboardPage() {
           <h2 className="font-serif text-xl text-cream mb-6">{t("nav_consultations")}</h2>
           <div className="space-y-4">
             {upcomingEvents.map((event, index) => (
-              <motion.div
+              <GlassCard
                 key={event.title}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="glass-card p-4"
               >
                 <div className="flex items-start gap-3">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
@@ -147,13 +146,13 @@ export default function DashboardPage() {
                     <p className="text-cream/50 text-sm">{event.date}</p>
                   </div>
                 </div>
-              </motion.div>
+              </GlassCard>
             ))}
           </div>
 
           <div className="mt-6">
             <h2 className="font-serif text-xl text-cream mb-4">{t("nav_meditations")}</h2>
-            <div className="glass-card p-6 text-center">
+            <GlassCard className="p-6 text-center">
               <div className="w-20 h-20 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-4">
                 <Headphones className="w-10 h-10 text-gold" />
               </div>
@@ -163,7 +162,7 @@ export default function DashboardPage() {
                 <Play className="w-4 h-4 mr-2" />
                 {t("dash_continue")}
               </Button>
-            </div>
+            </GlassCard>
           </div>
         </div>
       </div>
