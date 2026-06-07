@@ -14,8 +14,8 @@ export function SpiritualTree() {
     const createLeaf = () => {
       const leaf = document.createElement("div")
       const startX = Math.random() * window.innerWidth
-      const delay = Math.random() * 0.5
-      const duration = 4 + Math.random() * 3
+      const delay = Math.random() * 1
+      const duration = 10 + Math.random() * 8
 
       leaf.className = "absolute w-2 h-2 rounded-full pointer-events-none"
       leaf.style.cssText = `
@@ -55,7 +55,7 @@ export function SpiritualTree() {
     }
 
     // Create leaves periodically
-    const interval = setInterval(createLeaf, 200)
+    const interval = setInterval(createLeaf, 800)
     return () => clearInterval(interval)
   }, [])
 
