@@ -9,7 +9,7 @@ import Link from "next/link"
 import { useT } from "@/lib/lang-context"
 
 export default function ReviewsPage() {
-  const { t } = useT()
+  const { t, lang } = useT()
   const [selectedCategory, setSelectedCategory] = useState("all")
 
   const categories = [
@@ -123,7 +123,11 @@ export default function ReviewsPage() {
                 </div>
 
                 {review.text && (
-                  <p className="text-cream/80 mb-6 line-clamp-5">{review.text}</p>
+                  <p className="text-cream/80 mb-6 line-clamp-5">
+                    {typeof review.text === 'string' 
+                      ? review.text 
+                      : (review.text[lang as keyof typeof review.text] || review.text.en || review.text.ru)}
+                  </p>
                 )}
                 {review.screenshotImage && (
                   <div className="mb-6 rounded-lg overflow-hidden border border-gold/20">
