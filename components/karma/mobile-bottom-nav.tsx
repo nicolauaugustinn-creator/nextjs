@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, BookOpen, Headphones, Send, User } from "lucide-react"
+import { Home, BookOpen, Headphones, Send, User, Wand2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useT } from "@/lib/lang-context"
 import type { TranslationKey } from "@/lib/i18n"
@@ -11,7 +11,7 @@ const navItems: { labelKey: TranslationKey; href: string; icon: React.ElementTyp
   { labelKey: "mobile_home", href: "/", icon: Home },
   { labelKey: "mobile_courses", href: "/courses", icon: BookOpen },
   { labelKey: "mobile_meditations", href: "/meditations", icon: Headphones },
-  { labelKey: "mobile_telegram", href: "https://t.me/karmanumbers", icon: Send, external: true },
+  { labelKey: "mobile_tarot", href: "/tarot", icon: Wand2 },
   { labelKey: "mobile_profile", href: "/dashboard", icon: User },
 ]
 

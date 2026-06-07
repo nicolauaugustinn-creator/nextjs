@@ -47,7 +47,7 @@ const translations = {
     mobile_home: "Главная",
     mobile_courses: "Курсы",
     mobile_meditations: "Медитации",
-    mobile_telegram: "Telegram",
+    mobile_tarot: "Таро",
     mobile_profile: "Профиль",
 
     // Hero
@@ -136,7 +136,7 @@ const translations = {
     faq_tag: "FAQ",
     faq_title: "Часто задаваемые вопросы",
     faq_q1: "Что такое нумерология?",
-    faq_a1: "Нумерология — это д����евняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
+    faq_a1: "Нумерология — это д������евняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
     faq_q2: "С чего начать?",
     faq_a2: "Лучший старт — бесплатный тест или консультация. Это позволит понять ваш уровень и подобрать оптимальный формат работы.",
     faq_q3: "Как проходят консультации?",
@@ -299,7 +299,7 @@ const translations = {
     auth_terms: "условиями использования",
     auth_privacy_link: "политикой конфиденциальности",
     auth_register_btn: "Зарегистрироваться",
-    auth_has_account: "Уже есть аккаунт?",
+    auth_has_account: "Уж�� есть аккаунт?",
     auth_login_link: "Войти",
 
     // Auth — Forgot password
@@ -488,7 +488,7 @@ const translations = {
     practices_view_courses: "Смотреть курсы",
     practices_schedule_consultation: "Записаться на консультацию",
     filter_all: "Все",
-    filter_all_levels: "Все уровни",
+    filter_all_levels: "Все ур��вни",
 
     // Forgot password page
     forgot_title: "Восстановление пароля",
@@ -549,7 +549,7 @@ const translations = {
     mobile_home: "Acasa",
     mobile_courses: "Cursuri",
     mobile_meditations: "Meditatii",
-    mobile_telegram: "Telegram",
+    mobile_tarot: "Tarot",
     mobile_profile: "Profil",
 
     hero_join_telegram: "Alatura-te pe Telegram",
@@ -1019,7 +1019,7 @@ const translations = {
     mobile_home: "Home",
     mobile_courses: "Courses",
     mobile_meditations: "Meditations",
-    mobile_telegram: "Telegram",
+    mobile_tarot: "Tarot",
     mobile_profile: "Profile",
 
     hero_join_telegram: "Join Telegram",
@@ -1489,7 +1489,7 @@ const translations = {
     mobile_home: "Головна",
     mobile_courses: "Курси",
     mobile_meditations: "Медитації",
-    mobile_telegram: "Telegram",
+    mobile_tarot: "Таро",
     mobile_profile: "Профіль",
 
     hero_join_telegram: "Приєднатися до Telegram",
@@ -1501,7 +1501,7 @@ const translations = {
 
     about_tag: "ПРО ВАЛЕНТИНУ",
     about_title: "Нумеролог. Наставник. Провідник",
-    about_p1: "Мене звати Валентина Черняк. Я нумеролог, наставник і авторка системи KARMANUMBERS — унікального методу, що поєднує нумерологію, енергетику та психологію для глибокого розуміння себе.",
+    about_p1: "Мене звати Валентина Черняк. Я нумеролог, наставник і авторк�� системи KARMANUMBERS — унікального методу, що поєднує нумерологію, енергетику та психологію для глибокого розуміння себе.",
     about_p2: "За 7 років практики я провела понад 3 000 консультацій і допомогла сотням людей розкрити своє призначення, налагодити стосунки та вийти на новий рівень доходу.",
     about_cta: "Дізнатися більше про мій шлях",
     about_stat_consult: "консультацій",
@@ -1772,7 +1772,7 @@ const translations = {
     consult_compatibility_title: "Сумісність пари",
     consult_compatibility_desc: "Глибокий аналіз кармічного зв'язку між партнерами. Розуміння динаміки відносин, спільних завдань та шляхів гармонізації союзу.",
     consult_business_title: "Бізнес-консультація",
-    consult_business_desc: "Нумерологічний аналіз для бізнесу: вибір сприятливих дат для важливих рішень, аналіз партнерів, назв та стратегій розвитку.",
+    consult_business_desc: "Нумерологічний аналіз для бізнесу: вибір сприятливих дат для важливих рішень, аналіз партнерів, назв та стратег��й розвитку.",
     consult_year_title: "Прогноз на рік",
     consult_year_desc: "Детальний прогноз на наступний рік: ключові періоди, можливості, застереження та рекомендації по місяцях.",
     consult_deep_title: "Глибинне опрацювання",
