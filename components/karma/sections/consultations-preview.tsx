@@ -11,7 +11,7 @@ const consultations = [
     title: "Нумерологический расклад",
     description: "Полный анализ вашей кармической карты по дате рождения. Узнайте свое предназначение, сильные стороны и кармические задачи.",
     duration: "90 минут",
-    price: "15 000 ₽",
+    price: 60,
     features: ["Анализ даты рождения", "Кармическая карта", "Рекомендации по развитию"],
     popular: true
   },
@@ -20,7 +20,7 @@ const consultations = [
     title: "Совместимость пары",
     description: "Глубокий анализ кармической связи между партнерами. Понимание динамики отношений и путей гармонизации.",
     duration: "120 минут",
-    price: "25 000 ₽",
+    price: 120,
     features: ["Анализ обоих партнеров", "Карта совместимости", "Работа с кармой пары"],
     popular: false
   },
@@ -29,7 +29,7 @@ const consultations = [
     title: "Бизнес-консультация",
     description: "Нумерологический анализ для бизнеса: выбор дат, партнеров, названий и стратегий развития.",
     duration: "60 минут",
-    price: "20 000 ₽",
+    price: 100,
     features: ["Анализ бизнес-энергий", "Благоприятные периоды", "Стратегия роста"],
     popular: false
   }
@@ -119,7 +119,7 @@ export function ConsultationsPreview() {
 
                 <div className="flex items-center justify-between">
                   <span className="font-serif text-2xl text-gold">
-                    {item.price}
+                    €{item.price}
                   </span>
                   <Link href={`/consultations#${item.id}`}>
                     <Button
