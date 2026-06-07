@@ -68,12 +68,12 @@ export function Navbar() {
         <nav className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-1.5 group shrink-0">
-              <div className="relative w-7 h-7 flex items-center justify-center">
+            <Link href="/" className="flex items-center gap-1 group shrink-0">
+              <div className="relative w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-gold to-gold-dark rounded-full opacity-20 group-hover:opacity-40 transition-opacity" />
-                <span className="text-gold font-serif text-sm font-bold">KN</span>
+                <span className="text-gold font-serif text-xs font-bold">KN</span>
               </div>
-              <span className="hidden sm:block text-gold font-serif text-base font-semibold tracking-wide">
+              <span className="text-gold font-serif text-xs sm:text-sm md:text-base font-semibold tracking-wide">
                 KARMANUMBERS
               </span>
             </Link>
