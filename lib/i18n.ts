@@ -136,7 +136,7 @@ const translations = {
     faq_tag: "FAQ",
     faq_title: "Часто задаваемые вопросы",
     faq_q1: "Что такое нумерология?",
-    faq_a1: "Нумерология — это д������евняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
+    faq_a1: "Нумерология — это д��������евняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
     faq_q2: "С чего начать?",
     faq_a2: "Лучший старт — бесплатный тест или консультация. Это позволит понять ваш уровень и подобрать оптимальный формат работы.",
     faq_q3: "Как проходят консультации?",
@@ -321,7 +321,7 @@ const translations = {
     dash_browse_courses: "Посмотреть курсы",
 
     // Not found
-    notfound_title: "Страница не найдена",
+    notfound_title: "Страница не найден��",
     notfound_desc: "Страница, которую вы ищете, не существует или была перемещена",
     notfound_back: "На главную",
     notfound_check: "Или проверьте эти страницы:",
@@ -515,6 +515,18 @@ const translations = {
     common_prev: "Назад",
     common_min: "мин",
     common_free: "Бесплатно",
+
+    // Tarot
+    tarot_title: "Расклады",
+    tarot_subtitle: "Задай свой самый сокровенный вопрос и получи расчет ответа на него",
+    tarot_daily_card: "Вытяни карту дня",
+    tarot_daily_description: "Это не только предсказание, но и источник вдохновения и руководства твоей повседневной жизни",
+    tarot_one_card: "Расклад на одну карту",
+    tarot_one_description: "Одна карта для ответа на вопрос или понимание текущей ситуации",
+    tarot_select_card: "Выбери карту",
+    tarot_draw: "Сделать расклад",
+    tarot_card_meaning: "Значение карты",
+    tarot_close: "Закрыть",
   },
 
   ro: {
@@ -985,6 +997,18 @@ const translations = {
     common_prev: "Anterior",
     common_min: "min",
     common_free: "Gratuit",
+
+    // Tarot
+    tarot_title: "Divinații",
+    tarot_subtitle: "Pune cea mai profundă întrebare și primește răspunsul în cărți",
+    tarot_daily_card: "Trage cartea zilei",
+    tarot_daily_description: "Aceasta nu este doar o predicție, ci și o sursă de inspirație și ghidare în viața ta zilnică",
+    tarot_one_card: "Divinație cu o carte",
+    tarot_one_description: "O carte pentru răspuns la o întrebare sau înțelegere a situației actuale",
+    tarot_select_card: "Alege o carte",
+    tarot_draw: "Fă divinația",
+    tarot_card_meaning: "Semnificația cărții",
+    tarot_close: "Închide",
   },
 
   en: {
@@ -1455,6 +1479,18 @@ const translations = {
     common_prev: "Previous",
     common_min: "min",
     common_free: "Free",
+
+    // Tarot
+    tarot_title: "Tarot Readings",
+    tarot_subtitle: "Ask your deepest question and get the answer in cards",
+    tarot_daily_card: "Draw card of the day",
+    tarot_daily_description: "This is not just a prediction, but a source of inspiration and guidance in your daily life",
+    tarot_one_card: "One card reading",
+    tarot_one_description: "One card to answer a question or understand the current situation",
+    tarot_select_card: "Choose a card",
+    tarot_draw: "Make a reading",
+    tarot_card_meaning: "Card meaning",
+    tarot_close: "Close",
   },
 
   ua: {
@@ -1501,7 +1537,7 @@ const translations = {
 
     about_tag: "ПРО ВАЛЕНТИНУ",
     about_title: "Нумеролог. Наставник. Провідник",
-    about_p1: "Мене звати Валентина Черняк. Я нумеролог, наставник і авторк�� системи KARMANUMBERS — унікального методу, що поєднує нумерологію, енергетику та психологію для глибокого розуміння себе.",
+    about_p1: "Мене звати Валентина Черняк. Я нумеролог, наставник і авторк��� системи KARMANUMBERS — унікального методу, що поєднує нумерологію, енергетику та психологію для глибокого розуміння себе.",
     about_p2: "За 7 років практики я провела понад 3 000 консультацій і допомогла сотням людей розкрити своє призначення, налагодити стосунки та вийти на новий рівень доходу.",
     about_cta: "Дізнатися більше про мій шлях",
     about_stat_consult: "консультацій",
@@ -1772,7 +1808,7 @@ const translations = {
     consult_compatibility_title: "Сумісність пари",
     consult_compatibility_desc: "Глибокий аналіз кармічного зв'язку між партнерами. Розуміння динаміки відносин, спільних завдань та шляхів гармонізації союзу.",
     consult_business_title: "Бізнес-консультація",
-    consult_business_desc: "Нумерологічний аналіз для бізнесу: вибір сприятливих дат для важливих рішень, аналіз партнерів, назв та стратег��й розвитку.",
+    consult_business_desc: "Нумерологічний аналіз для бізнесу: вибір сприятливих дат для важливих рішень, аналіз партнерів, назв та стратег����й розвитку.",
     consult_year_title: "Прогноз на рік",
     consult_year_desc: "Детальний прогноз на наступний рік: ключові періоди, можливості, застереження та рекомендації по місяцях.",
     consult_deep_title: "Глибинне опрацювання",
@@ -1925,6 +1961,18 @@ const translations = {
     common_prev: "Назад",
     common_min: "хв",
     common_free: "Безкоштовно",
+
+    // Tarot
+    tarot_title: "Розклади",
+    tarot_subtitle: "Поставте своє найглибше питання і отримайте відповідь в картах",
+    tarot_daily_card: "Витягніть карту дня",
+    tarot_daily_description: "Це не просто передбачення, а й джерело натхнення та керівництва у вашому повсякденному житті",
+    tarot_one_card: "Розклад однієї карти",
+    tarot_one_description: "Одна карта для відповіді на питання або розуміння поточної ситуації",
+    tarot_select_card: "Виберіть карту",
+    tarot_draw: "Зробити розклад",
+    tarot_card_meaning: "Значення карти",
+    tarot_close: "Закрити",
   },
 } as const
 
