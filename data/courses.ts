@@ -14,6 +14,8 @@ export interface Course {
   forWhom: string[]
   status: "available" | "coming_soon" | "archived"
   featured: boolean
+  price?: number
+  originalPrice?: number
 }
 
 export interface CourseModule {
@@ -94,7 +96,9 @@ export const courses: Course[] = [
       "Тем, кто хочет изучить нумерологию для себя"
     ],
     status: "available",
-    featured: true
+    featured: true,
+    price: 199,
+    originalPrice: 299
   },
   {
     id: "2",
@@ -141,7 +145,9 @@ export const courses: Course[] = [
       "Тем, кто ценит обмен опытом"
     ],
     status: "available",
-    featured: true
+    featured: true,
+    price: 149,
+    originalPrice: 249
   }
 ]
 
@@ -161,7 +167,9 @@ export const miniCourses: Course[] = [
     benefits: ["Понимание своего кода успеха", "Практические рекомендации", "Аффирмации"],
     forWhom: ["Для всех, кто стремится к успеху"],
     status: "available",
-    featured: false
+    featured: false,
+    price: 29,
+    originalPrice: 49
   },
   {
     id: "m2",
@@ -178,7 +186,9 @@ export const miniCourses: Course[] = [
     benefits: ["Знания о планетарных влияниях", "Расчёт личных планет"],
     forWhom: ["Для тех, кто интересуется астрологией и нумерологией"],
     status: "available",
-    featured: false
+    featured: false,
+    price: 39,
+    originalPrice: 59
   },
   {
     id: "m3",
@@ -195,7 +205,9 @@ export const miniCourses: Course[] = [
     benefits: ["Понимание ребёнка", "Рекомендации по воспитанию", "Выявление талантов"],
     forWhom: ["Родители", "Воспитатели", "Педагоги"],
     status: "available",
-    featured: true
+    featured: true,
+    price: 49,
+    originalPrice: 79
   },
   {
     id: "m4",
@@ -212,7 +224,9 @@ export const miniCourses: Course[] = [
     benefits: ["Понимание корневых травм", "Методы исцеления", "Медитации"],
     forWhom: ["Для глубокой внутренней работы"],
     status: "available",
-    featured: true
+    featured: true,
+    price: 59,
+    originalPrice: 99
   },
   {
     id: "m5",
@@ -229,7 +243,9 @@ export const miniCourses: Course[] = [
     benefits: ["Самопознание", "Понимание своих особенностей"],
     forWhom: ["Для всех желающих понять себя"],
     status: "available",
-    featured: false
+    featured: false,
+    price: 29,
+    originalPrice: 49
   },
   {
     id: "m6",
@@ -246,7 +262,9 @@ export const miniCourses: Course[] = [
     benefits: ["Понимание своих источников энергии", "Практики наполнения", "Защита энергии"],
     forWhom: ["Для тех, кто чувствует упадок сил"],
     status: "available",
-    featured: true
+    featured: true,
+    price: 39,
+    originalPrice: 69
   },
   {
     id: "m7",
@@ -263,7 +281,9 @@ export const miniCourses: Course[] = [
     benefits: ["Денежный код", "Блоки и их устранение", "Аффирмации богатства"],
     forWhom: ["Для тех, кто хочет улучшить финансы"],
     status: "available",
-    featured: true
+    featured: true,
+    price: 49,
+    originalPrice: 79
   },
   {
     id: "m8",
@@ -280,7 +300,9 @@ export const miniCourses: Course[] = [
     benefits: ["Понимание своей сексуальности", "Раскрытие привлекательности"],
     forWhom: ["Для тех, кто хочет раскрыть свою женственность/мужественность"],
     status: "available",
-    featured: false
+    featured: false,
+    price: 29,
+    originalPrice: 49
   },
   {
     id: "m9",
@@ -297,7 +319,9 @@ export const miniCourses: Course[] = [
     benefits: ["Понимание паттернов отношений", "Совместимость", "Исцеление"],
     forWhom: ["Для тех, кто хочет улучшить отношения"],
     status: "available",
-    featured: true
+    featured: true,
+    price: 39,
+    originalPrice: 59
   },
   {
     id: "m10",
@@ -314,7 +338,9 @@ export const miniCourses: Course[] = [
     benefits: ["Расчёт совместимости", "Понимание динамики пары"],
     forWhom: ["Для пар и желающих найти партнёра"],
     status: "available",
-    featured: false
+    featured: false,
+    price: 29,
+    originalPrice: 49
   },
   {
     id: "m11",
@@ -331,7 +357,9 @@ export const miniCourses: Course[] = [
     benefits: ["Понимание слабых мест", "Профилактика", "Энергетические практики"],
     forWhom: ["Для заботящихся о здоровье"],
     status: "available",
-    featured: false
+    featured: false,
+    price: 39,
+    originalPrice: 59
   },
   {
     id: "m12",
@@ -348,7 +376,9 @@ export const miniCourses: Course[] = [
     benefits: ["Понимание причин", "Энергетические практики", "Поддержка"],
     forWhom: ["Для женщин, планирующих беременность"],
     status: "available",
-    featured: false
+    featured: false,
+    price: 49,
+    originalPrice: 79
   },
   {
     id: "m13",
@@ -365,7 +395,9 @@ export const miniCourses: Course[] = [
     benefits: ["Понимание предназначения", "Путь реализации", "Практики"],
     forWhom: ["Для ищущих свой путь"],
     status: "available",
-    featured: true
+    featured: true,
+    price: 59,
+    originalPrice: 99
   },
   {
     id: "m14",
@@ -382,7 +414,9 @@ export const miniCourses: Course[] = [
     benefits: ["Знания о прошлых жизнях", "Понимание кармы", "Исцеление"],
     forWhom: ["Для глубокой духовной работы"],
     status: "available",
-    featured: false
+    featured: false,
+    price: 59,
+    originalPrice: 99
   }
 ]
 
