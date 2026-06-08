@@ -31,15 +31,13 @@ export function AboutPreview() {
             className="relative"
           >
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
+              <img
+                src="/consultant-profile.jpg"
+                alt="Consultant Profile"
+                className="w-full h-full object-cover"
+              />
               <div className="absolute inset-0 border-2 border-gold/20 rounded-2xl" />
               <div className="absolute -inset-1 border border-gold/10 rounded-2xl" />
-              <div className="absolute inset-4 bg-gradient-to-br from-violet/20 via-gold/10 to-violet/20 rounded-xl flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gold/20 flex items-center justify-center">
-                    <span className="text-4xl font-serif text-gold">ВЧ</span>
-                  </div>
-                </div>
-              </div>
               <div className="absolute top-4 right-4 w-16 h-16 rounded-full border border-gold/30 animate-float" style={{ animationDelay: "-2s" }} />
               <div className="absolute bottom-8 left-8 w-12 h-12 rounded-full border border-violet/30 animate-float" style={{ animationDelay: "-4s" }} />
             </div>
