@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useT } from "@/lib/lang-context"
-import { destinyVariations } from "@/lib/destiny-variations"
+import { getDestinyVariations } from "@/lib/destiny-variations"
 
 function calculateDestinyNumber(date: string): number {
   const digits = date.replace(/\D/g, "").split("").map(Number)
@@ -21,11 +21,13 @@ function calculateDestinyNumber(date: string): number {
 }
 
 export default function FreeTestPage() {
-  const { t } = useT()
+  const { t, lang } = useT()
   const [birthDate, setBirthDate] = useState("")
   const [result, setResult] = useState<number | null>(null)
-  const [selectedVariation, setSelectedVariation] = useState<typeof destinyVariations[1][0] | null>(null)
+  const [selectedVariation, setSelectedVariation] = useState<any | null>(null)
   const [isCalculating, setIsCalculating] = useState(false)
+
+  const destinyVariations = getDestinyVariations(lang)
 
   const destinyNumbers: Record<number, { title: string; description: string; traits: string[] }> = {
     1: {

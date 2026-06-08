@@ -1,117 +1,121 @@
-// Extended destiny number variations - 100+ interpretations per number
-export const destinyVariations: Record<number, Array<{
+import { useT } from "@/lib/lang-context"
+
+// Get destiny variations based on current language
+export function getDestinyVariations(languageCode: string): Record<number, Array<{
   title: string
   description: string
   traits: string[]
-  career?: string
-  message?: string
-}>> = {
-  1: [
-    { title: "Лидер", description: "Вы рождены вести других. Ваша природная харизма и решимость делают вас естественным выбором для руководства. Люди инстинктивно следуют вашему примеру.", traits: ["Лидерство", "Решимость", "Инициатива", "Амбиция"] },
-    { title: "Пионер", description: "Вы первопроходец, всегда ищущий новые пути. Ваша независимость и смелость позволяют вам исследовать неизведанные территории.", traits: ["Смелость", "Новаторство", "Независимость", "Дерзновение"] },
-    { title: "Стратег", description: "Ваш ум острый как лезвие. Вы видите картину целиком и всегда знаете следующий ход. Ваше стратегическое мышление делает вас незаменимым советчиком.", traits: ["Стратегия", "Анализ", "Видение", "Предусмотрительность"] },
-    { title: "Творец", description: "В вас живет созидатель. Вы не боитесь начинать с нуля и создавать что-то совершенно новое. Ваша креативность не знает границ.", traits: ["Креативность", "Созидание", "Оригинальность", "Воображение"] },
-    { title: "Воин", description: "Вы обладаете боевым духом и никогда не сдаетесь перед трудностями. Ваша сила воли и упорство - вот ваше главное оружие.", traits: ["Упорство", "Сила воли", "Боевой дух", "Неустрашимость"] },
-    { title: "Новатор", description: "Вы видите возможности там, где другие видят препятствия. Ваши инновационные идеи меняют мир вокруг вас.", traits: ["Инновации", "Видение будущего", "Риск", "Прогресс"] },
-    { title: "Мотиватор", description: "Вы вдохновляете других верить в себя. Ваша энергия заразительна и мотивирует людей достигать своих целей.", traits: ["Мотивация", "Вдохновение", "Позитив", "Энергия"] },
-    { title: "Завоеватель", description: "Вы покоряете новые вершины. Ваша амбиция и целеустремленность знают пределы. Успех - ваша стихия.", traits: ["Амбиция", "Успех", "Целеустремленность", "Победа"] },
-    { title: "Революционер", description: "Вы готовы менять систему. Ваша независимая мысль и мужество помогают вам бросать вызов статус-кво.", traits: ["Революция", "Перемены", "Мужество", "Свобода"] },
-    { title: "Магнат", description: "Вы рождены для больших достижений. Ваше чутье на возможности и предпринимательский дух приносят вам богатство и влияние.", traits: ["Деловитость", "Влияние", "Богатство", "Предприимчивость"] }
-  ],
-  2: [
-    { title: "Дипломат", description: "Ваш путь - путь гармонии и сотрудничества. Вы обладаете способностью находить компромисс и объединять людей вокруг общей идеи.", traits: ["Дипломатичность", "Интуиция", "Чувствительность", "Сотрудничество"] },
-    { title: "Миротворец", description: "Вы видите добро в людях и верите в силу прощения. Ваша миссия - приносить мир и согласие.", traits: ["Миротворчество", "Forgiveness", "Понимание", "Гармония"] },
-    { title: "Исцелитель", description: "Вы обладаете даром исцеления. Ваше присутствие успокаивает, а ваши слова лечат раны.", traits: ["Исцеление", "Забота", "Доброта", "Сострадание"] },
-    { title: "Советник", description: "Люди приходят к вам за советом. Ваша мудрость и понимание помогают другим найти правильный путь.", traits: ["Мудрость", "Советы", "Понимание", "Опыт"] },
-    { title: "Поддерживающий", description: "Вы - опора для других. Ваша поддержка помогает людям становиться лучше и достигать высот.", traits: ["Поддержка", "Надежность", "Преданность", "Верность"] },
-    { title: "Слушатель", description: "Вы слышите не только слова, но и то, что скрывается между ними. Ваше внимание - ценный подарок.", traits: ["Внимание", "Слушание", "Эмпатия", "Понимание"] },
-    { title: "Гармонизатор", description: "Вы приносите порядок и баланс. Где бы вы ни появились, атмосфера становится спокойнее и благоприятнее.", traits: ["Гармония", "Баланс", "Мир", "Равновесие"] },
-    { title: "Партнер", description: "Вы верите в силу партнерства. Вместе с правильным человеком вы можете добиться чего угодно.", traits: ["Партнерство", "Сотрудничество", "Командность", "Взаимодействие"] },
-    { title: "Чувствующий", description: "Ваша чувствительность - не слабость, а сила. Вы видите эмоции других людей и отвечаете на них с искренностью.", traits: ["Чувствительность", "Эмоциональность", "Интуиция", "Восприимчивость"] },
-    { title: "Любитель мира", description: "Вы живете ради красоты и гармонии в мире. Ваша любовь к миру вдохновляет других жить лучше.", traits: ["Любовь", "Миролюбие", "Красота", "Вдохновение"] }
-  ],
-  3: [
-    { title: "Творческий гений", description: "Ваша творческая энергия безгранична. Вы видите мир в красках и звуках, которые другие не замечают.", traits: ["Креативность", "Художественность", "Воображение", "Самовыражение"] },
-    { title: "Коммуникатор", description: "Слова - ваше оружие. Вы можете убеждать, вдохновлять и развлекать своей речью.", traits: ["Коммуникация", "Красноречие", "Убеждение", "Выразительность"] },
-    { title: "Радостный", description: "Ваша позитивная энергия заразительна. Где вы - там радость и смех.", traits: ["Радость", "Оптимизм", "Веселье", "Позитив"] },
-    { title: "Художник", description: "Вы видите красоту в обыденном. Ваша рука может воплотить любое видение в реальность.", traits: ["Художество", "Видение", "Мастерство", "Эстетика"] },
-    { title: "Развлекатель", description: "Вы рождены для того, чтобы развлекать и вдохновлять людей. Ваше присутствие делает жизнь ярче.", traits: ["Развлечение", "Юмор", "Веселость", "Харизма"] },
-    { title: "Писатель", description: "Ваши слова имеют силу менять миры. Вы рассказываете истории, которые трогают сердца.", traits: ["Письмо", "Сторителлинг", "Воображение", "Выражение"] },
-    { title: "Социалист", description: "Вы живете общением и дружбой. Ваша способность находить общий язык с людьми уникальна.", traits: ["Общительность", "Дружелюбие", "Социальность", "Коллективность"] },
-    { title: "Вдохновитель", description: "Вы вдохновляете других на творчество и самовыражение. Ваша энергия催化 творческие процессы.", traits: ["Вдохновение", "Мотивация", "Энергия", "Влияние"] },
-    { title: "Веселый", description: "Жизнь - это праздник, и вы знаете, как его отмечать. Ваша легкость помогает другим не принимать все так серьезно.", traits: ["Легкость", "Веселье", "Оптимизм", "Спонтанность"] },
-    { title: "Выразитель", description: "Вы выражаете то, что другие только чувствуют. Ваша способность артикулировать эмоции уникальна.", traits: ["Самовыражение", "Артистизм", "Честность", "Аутентичность"] }
-  ],
-  4: [
-    { title: "Строитель", description: "Вы создаете прочный фундамент для будущего. Ваша практичность и трудолюбие - основа всего.", traits: ["Практичность", "Надежность", "Трудолюбие", "Ответственность"] },
-    { title: "Основатель", description: "Вы закладываете основы империй. Ваша способность строить системы и структуры неоценима.", traits: ["Системность", "Организованность", "Стабильность", "Основательность"] },
-    { title: "Охранитель", description: "Вы защищаете то, что важно. Ваша верность и надежность делают вас стеной для тех, кого вы любите.", traits: ["Защита", "Верность", "Ответственность", "Охрана"] },
-    { title: "Мастер", description: "Ваши руки создают чудеса. Мастерство и внимание к деталям - вот ваша подпись.", traits: ["Мастерство", "Внимание к деталям", "Умение", "Совершенство"] },
-    { title: "Администратор", description: "Вы видите хаос и превращаете его в порядок. Ваша организованность вызывает уважение.", traits: ["Организованность", "Управление", "Порядок", "Контроль"] },
-    { title: "Земной", description: "Вы крепко стоите на земле и видите реальность такой, какая она есть. Ваш здравый смысл - ваше богатство.", traits: ["Практичность", "Здравомыслие", "Реалистичность", "Приземленность"] },
-    { title: "Честный", description: "Ваша честь неподкупна. Вы живете по моральным принципам и ожидаете того же от других.", traits: ["Честность", "Честь", "Принципиальность", "Моральность"] },
-    { title: "Трудолюбивый", description: "Вы знаете ценность работы. Ваш вклад вкладывает камень за камнем в здание успеха.", traits: ["Трудолюбие", "Упорство", "Постоянство", "Усердие"] },
-    { title: "Прочный", description: "Вы как гранит - прочны и долговечны. Люди полагаются на вас потому, что знают - вы не подведете.", traits: ["Надежность", "Прочность", "Стабильность", "Верность"] },
-    { title: "Твердый", description: "Ваша воля тверда как скала. Вы знаете, чего хотите, и идете к этому неустанно.", traits: ["Твердость", "Воля", "Целеустремленность", "Непоколебимость"] }
-  ],
-  5: [
-    { title: "Свободный дух", description: "Вы рождены быть свободными. Ограничения и рамки - это не для вас. Ваша свобода заразительна.", traits: ["Свобода", "Независимость", "Приключение", "Спонтанность"] },
-    { title: "Путешественник", description: "Мир - ваш дом. Вы ищете приключения на каждом углу и находите красоту везде.", traits: ["Приключение", "Путешествие", "Исследование", "Открытость"] },
-    { title: "Авантюристор", description: "Вы живете на грани. Адреналин и неизвестность зовут вас вперед.", traits: ["Авантюра", "Риск", "Адреналин", "Дерзость"] },
-    { title: "Гибкий", description: "Вы адаптируетесь к любым ситуациям. Ваша гибкость - ваша сила в быстро меняющемся мире.", traits: ["Гибкость", "Адаптивность", "Приспособляемость", "Универсальность"] },
-    { title: "Любитель перемен", description: "Монотонность - ваш враг. Вы ищете новизну и изменения везде и всегда.", traits: ["Перемены", "Новизна", "Динамичность", "Активность"] },
-    { title: "Любопытный", description: "Ваше любопытство не знает границ. Вы хотите знать все и везде находите интерес.", traits: ["Любопытство", "Интерес", "Знание", "Исследование"] },
-    { title: "Коммуникативный", description: "Общение - ваша стихия. Вы легко находите общий язык с людьми из разных миров.", traits: ["Общительность", "Коммуникация", "Контактность", "Дружелюбие"] },
-    { title: "Живой", description: "Вы живете полной жизнью. Энергия и жизнь так и бьют ключом из вас.", traits: ["Жизнелюбие", "Энергия", "Активность", "Живость"] },
-    { title: "Хаотичный творец", description: "Из хаоса вы создаете шедевры. Ваша непредсказуемость - это инновация.", traits: ["Творчество", "Хаос", "Импровизация", "Оригинальность"] },
-    { title: "Радиант", description: "Ваша энергия светит как маяк. Люди тянутся к вам за позитивом и вдохновением.", traits: ["Светлость", "Энергия", "Позитив", "Привлекательность"] }
-  ],
-  6: [
-    { title: "Опекун", description: "Ваше сердце преданно тем, кто вам дорог. Вы готовы пожертвовать многим ради благополучия других.", traits: ["Забота", "Преданность", "Опека", "Жертвенность"] },
-    { title: "Целитель", description: "Вы несете исцеление везде, куда бы вы ни пошли. Ваша забота исцеляет раны.", traits: ["Исцеление", "Забота", "Сочувствие", "Целительство"] },
-    { title: "Ответственный", description: "На вас можно положиться. Ваша ответственность делает вас краеугольным камнем в жизни других.", traits: ["Ответственность", "Надежность", "Верность", "Обязательность"] },
-    { title: "Гуманитарий", description: "Вы служите человечеству. Ваша миссия - делать мир лучше для всех.", traits: ["Гуманизм", "Служение", "Альтруизм", "Сочувствие"] },
-    { title: "Советник", description: "Люди приходят к вам за советом. Ваша мудрость помогает другим найти правильный путь.", traits: ["Мудрость", "Совет", "Понимание", "Опыт"] },
-    { title: "Любящий", description: "Любовь - ваша природа. Вы любите глубоко и неусловно.", traits: ["Любовь", "Нежность", "Теплота", "Сердечность"] },
-    { title: "Защитник", description: "Вы встаете на защиту слабых. Ваша справедливость вдохновляет других.", traits: ["Защита", "Справедливость", "Защищенность", "Мужество"] },
-    { title: "Семейный", description: "Семья - ваш центр. Вы создаете теплые, любящие отношения везде.", traits: ["Семейность", "Домашность", "Теплота", "Единство"] },
-    { title: "Советница", description: "Вы видите в людях добро и помогаете им развиваться. Ваш совет рождает мудрость.", traits: ["Мудрость", "Интуиция", "Советы", "Развитие"] },
-    { title: "Служитель", description: "Служение - ваша стезя. Вы находите смысл в помощи другим и создании гармонии.", traits: ["Служение", "Помощь", "Гармония", "Смысл"] }
-  ],
-  7: [
-    { title: "Мудрец", description: "Вы ищете истину везде. Ваша мудрость приходит из глубокого размышления и понимания.", traits: ["Мудрость", "Рефлексия", "Понимание", "Глубина"] },
-    { title: "Мистик", description: "Вы видите скрытые миры. Ваша способность ощущать невидимое уникальна.", traits: ["Мистицизм", "Интуиция", "Видение", "Чувствительность"] },
-    { title: "Аналитик", description: "Ваш ум острый как бритва. Вы разбираете любую ситуацию на составные части.", traits: ["Анализ", "Логика", "Внимание к деталям", "Целостность"] },
-    { title: "Философ", description: "Вы задаете большие вопросы. Ваша философия жизни вдохновляет других.", traits: ["Философия", "Размышление", "Глубина", "Смысл"] },
-    { title: "Исследователь", description: "Вы копаете до самых корней. Ваша жажда знания неутомима.", traits: ["Исследование", "Любопытство", "Анализ", "Открытие"] },
-    { title: "Созерцатель", description: "Вы видите то, что пропускают другие. Ваша созерцательность - это источник мудрости.", traits: ["Созерцание", "Наблюдение", "Видение", "Понимание"] },
-    { title: "Интуитивный", description: "Ваша интуиция никогда не ошибается. Вы чувствуете истину в душе.", traits: ["Интуиция", "Чувство", "Ощущение", "Восприятие"] },
-    { title: "Духовный", description: "Вы связаны с чем-то большим. Ваша духовность приносит мир и смысл.", traits: ["Духовность", "Вера", "Связь", "Гармония"] },
-    { title: "Одиночка мудрый", description: "Вы находите силу в одиночестве. Ваше одиночество - это не изоляция, а путь к самопознанию.", traits: ["Независимость", "Самопознание", "Глубина", "Медитация"] },
-    { title: "Проницательный", description: "Вы видите сквозь покров. Ваша проницательность делает вас источником истины.", traits: ["Проницательность", "Видение", "Понимание", "Ясность"] }
-  ],
-  8: [
-    { title: "Магнат", description: "Вы рождены для успеха и богатства. Ваша сила притягивает процветание.", traits: ["Успех", "Богатство", "Влияние", "Власть"] },
-    { title: "Предпринимателель", description: "Вы видите возможности везде. Ваша предпринимательская жилка приносит вам деньги и влияние.", traits: ["Предпринимательство", "Инновация", "Риск", "Успех"] },
-    { title: "Руководитель", description: "Вы ведете людей к вершинам. Ваше руководство опирается на силу и видение.", traits: ["Руководство", "Лидерство", "Видение", "Решительность"] },
-    { title: "Власть", description: "Вы не избегаете власти. Вы знаете, как ею пользоваться мудро и справедливо.", traits: ["Власть", "Авторитет", "Влияние", "Контроль"] },
-    { title: "Финансист", description: "Деньги - ваш язык. Вы понимаете их ценность и умеете их множить.", traits: ["Финансы", "Богатство", "Управление", "Процветание"] },
-    { title: "Завоеватель", description: "Вы покоряете рынки и сердца. Ваша амбиция знает пределы.", traits: ["Амбиция", "Завоевание", "Стремление", "Мощь"] },
-    { title: "Интегратор", description: "Вы объединяете противоположности в гармонию. Ваша способность синтезировать приносит успех.", traits: ["Синтез", "Интеграция", "Гармония", "Баланс"] },
-    { title: "Мастер", description: "Вы мастер своего дела. Ваше мастерство приносит вам признание и прибыль.", traits: ["Мастерство", "Совершенство", "Компетентность", "Умение"] },
-    { title: "Реалист", description: "Вы видите реальность как она есть. Ваш реализм помогает вам добиваться реальных результатов.", traits: ["Реалистичность", "Практичность", "Ясность", "Честность"] },
-    { title: "Созидатель", description: "Вы создаете империи. Ваша созидательная энергия меняет мир.", traits: ["Созидание", "Творчество", "Строительство", "Развитие"] }
-  ],
-  9: [
-    { title: "Мудрец", description: "Вы воплощение мудрости. Ваша жизненный опыт делает вас советчиком для всех.", traits: ["Мудрость", "Опыт", "Понимание", "Глубина"] },
-    { title: "Целитель", description: "Ваше присутствие целит раны. Вы несете исцеление всему миру.", traits: ["Исцеление", "Забота", "Сострадание", "Теплота"] },
-    { title: "Гуманитарий", description: "Вы служите человечеству. Ваша миссия - делать мир лучше.", traits: ["Гуманизм", "Служение", "Альтруизм", "Соучастие"] },
-    { title: "Учитель", description: "Вы рождены учить. Ваша мудрость передается другим и помогает им расти.", traits: ["Образование", "Передача знаний", "Воспитание", "Вдохновение"] },
-    { title: "Проповедник", description: "Ваш голос несет истину. Вы вдохновляете других на служение и рост.", traits: ["Вдохновение", "Проповедь", "Убеждение", "Миссия"] },
-    { title: "Всепрощающий", description: "Вы понимаете людей и прощаете их. Ваше прощение исцеляет.", traits: ["Прощение", "Понимание", "Сострадание", "Миролюбие"] },
-    { title: "Мудрец-отшельник", description: "Вы сочетаете мудрость с отстранением. Ваша позиция наблюдателя дает вам ясность.", traits: ["Мудрость", "Отстранение", "Ясность", "Покой"] },
-    { title: "Благодетель", description: "Вы несете благодеяния везде. Ваша щедрость зеркало вашей мудрости.", traits: ["Щедрость", "Благодеяние", "Поддержка", "Помощь"] },
-    { title: "Циклист", description: "Вы видите циклы жизни и смерти. Ваше понимание циклов помогает вам мудро принимать решения.", traits: ["Циклы", "Естественность", "Равновесие", "Понимание"] },
-    { title: "Завершитель", description: "Вы закрываете круги. Ваша способность завершать приносит мир и обновление.", traits: ["Завершение", "Обновление", "Мир", "Цикличность"] }
-  ]
+}>> {
+  const variations: Record<string, Record<number, Array<{ title: string; description: string; traits: string[] }>>> = {
+    // RUSSIAN
+    ru: {
+      1: [
+        { title: "Лидер", description: "Вы рождены вести других. Ваша природная харизма и решимость делают вас естественным выбором для руководства.", traits: ["Лидерство", "Решимость", "Инициатива"] },
+        { title: "Пионер", description: "Вы первопроходец, всегда ищущий новые пути. Ваша независимость позволяет вам исследовать неизведанные территории.", traits: ["Смелость", "Новаторство", "Независимость"] },
+        { title: "Стратег", description: "Ваш ум острый как лезвие. Вы видите картину целиком и всегда знаете следующий ход.", traits: ["Стратегия", "Анализ", "Видение"] },
+        { title: "Творец", description: "В вас живет созидатель. Вы создаете что-то совершенно новое. Ваша креативность не знает границ.", traits: ["Креативность", "Созидание", "Оригинальность"] },
+        { title: "Воин", description: "Вы обладаете боевым духом и никогда не сдаетесь. Ваша сила воли - вот ваше главное оружие.", traits: ["Упорство", "Сила воли", "Боевой дух"] },
+        { title: "Новатор", description: "Вы видите возможности там, где другие видят препятствия. Ваши инновационные идеи меняют мир.", traits: ["Инновации", "Видение будущего", "Риск"] },
+        { title: "Мотиватор", description: "Вы вдохновляете других верить в себя. Ваша энергия заразительна и мотивирует людей.", traits: ["Мотивация", "Вдохновение", "Позитив"] },
+        { title: "Завоеватель", description: "Вы покоряете новые вершины. Ваша амбиция знает пределы. Успех - ваша стихия.", traits: ["Амбиция", "Успех", "Целеустремленность"] },
+        { title: "Революционер", description: "Вы готовы менять систему. Ваша независимая мысль помогает вам бросать вызов статус-кво.", traits: ["Революция", "Перемены", "Мужество"] },
+        { title: "Магнат", description: "Вы рождены для больших достижений. Ваше предпринимательство приносит вам богатство и влияние.", traits: ["Деловитость", "Влияние", "Богатство"] }
+      ],
+      2: [
+        { title: "Дипломат", description: "Ваш путь - путь гармонии. Вы обладаете способностью находить компромисс и объединять людей.", traits: ["Дипломатичность", "Интуиция", "Сотрудничество"] },
+        { title: "Миротворец", description: "Вы видите добро в людях и верите в силу прощения. Ваша миссия - приносить мир.", traits: ["Миротворчество", "Прощение", "Понимание"] },
+        { title: "Исцелитель", description: "Вы обладаете даром исцеления. Ваше присутствие успокаивает, а ваши слова лечат раны.", traits: ["Исцеление", "Забота", "Доброта"] },
+        { title: "Советник", description: "Люди приходят к вам за советом. Ваша мудрость помогает другим найти правильный путь.", traits: ["Мудрость", "Советы", "Понимание"] },
+        { title: "Поддерживающий", description: "Вы - опора для других. Ваша поддержка помогает людям становиться лучше.", traits: ["Поддержка", "Надежность", "Преданность"] },
+        { title: "Слушатель", description: "Вы слышите не только слова, но и то, что скрывается между ними. Ваше внимание - ценный подарок.", traits: ["Внимание", "Слушание", "Эмпатия"] },
+        { title: "Гармонизатор", description: "Вы приносите порядок и баланс. Где бы вы ни появились, атмосфера становится благоприятнее.", traits: ["Гармония", "Баланс", "Мир"] },
+        { title: "Партнер", description: "Вы верите в силу партнерства. Вместе с правильным человеком вы добиваетесь чего угодно.", traits: ["Партнерство", "Сотрудничество", "Командность"] },
+        { title: "Чувствующий", description: "Ваша чувствительность - не слабость, а сила. Вы видите эмоции других и отвечаете с искренностью.", traits: ["Чувствительность", "Эмоциональность", "Интуиция"] },
+        { title: "Хранитель", description: "Вы охраняете благополучие других. Ваша верность и забота делают вас надежным другом и советчиком.", traits: ["Верность", "Охрана", "Заботливость"] }
+      ]
+    },
+    // ROMANIAN
+    ro: {
+      1: [
+        { title: "Lider", description: "Ești născut să conduci pe alții. Tua charisma naturală și determinare te fac o alegere firească pentru conducere.", traits: ["Conducere", "Determinare", "Inițiativă"] },
+        { title: "Pionier", description: "Ești un pionier, mereu în căutarea de noi drumuri. Taua independență te permite să explorezi teritorii necunoscute.", traits: ["Curaj", "Inovație", "Independență"] },
+        { title: "Strateg", description: "Gândirea ta este ascuțită. Vezi imaginea de ansamblu și știi mereu următoarea mișcare. Perspectiva strategică te face indispensabil.", traits: ["Strategie", "Analiză", "Viziune"] },
+        { title: "Creator", description: "în tine trăiește un creator. Nu te-ai temut să pornești de la zero și să creezi ceva cu totul nou.", traits: ["Creativitate", "Creație", "Originalitate"] },
+        { title: "Războinic", description: "Posezi spirit de luptător și nu te renunți niciodată. Voia ta de fier este arma ta principală.", traits: ["Perseverență", "Voință puternică", "Spirit de luptă"] },
+        { title: "Inovator", description: "Vezi oportunități acolo unde alții văd obstacole. Ideile tale inovatoare schimbă lumea din jur.", traits: ["Inovație", "Viziune de viitor", "Risc"] },
+        { title: "Motivator", description: "Îi inspiri pe alții să creadă în ei. Energia ta este contagioasă și motivează oamenii.", traits: ["Motivație", "Inspirație", "Pozitivitate"] },
+        { title: "Cuceritorul", description: "Cucerești noi înălțimi. Ambiția ta nu cunoaște limite. Succesul este elementul tău.", traits: ["Ambițe", "Succes", "Determinare"] },
+        { title: "Revoluționar", description: "Ești gata să schimbi sistemul. Gândirea ta independentă te ajută să provoci status quo-ul.", traits: ["Revoluție", "Schimbare", "Curaj"] },
+        { title: "Magnat", description: "Ești născut pentru realizări mari. Intuiția ta pentru oportunități aduce bogăție și influență.", traits: ["Afaceri", "Influență", "Bogăție"] }
+      ],
+      2: [
+        { title: "Diplomat", description: "Calea ta este calea armoniei. Posezi abilitatea de a găsi compromis și de a uni oamenii.", traits: ["Diplomație", "Intuiție", "Cooperare"] },
+        { title: "Făuritor de pace", description: "Vezi binele în oameni și crezi în puterea iertării. Misiunea ta este să aduci pace.", traits: ["Pacea", "Iertare", "Înțelegere"] },
+        { title: "Vindecător", description: "Posezi darul vindecării. Prezența ta liniștește, iar cuvintele tale terapia rănile.", traits: ["Vindecare", "Grije", "Bunătate"] },
+        { title: "Consilier", description: "Oamenii vin la tine pentru sfat. Înțelepciunea ta îi ajută pe alții să găsească calea dreaptă.", traits: ["Înțelepciune", "Consiliere", "Înțelegere"] },
+        { title: "Susținător", description: "Ești sprijinul altora. Suportul tău îi ajută pe oameni să devină mai buni.", traits: ["Sprijin", "Fiabilitate", "Devoție"] },
+        { title: "Ascultător", description: "Auzi nu doar cuvintele, ci și ceea ce se ascunde între ele. Atenția ta este un dar prețios.", traits: ["Atenție", "Ascultare", "Empatie"] },
+        { title: "Armonizator", description: "Aduci ordine și echilibru. Oriunde apari, atmosfera devine mai liniștit și favorabilă.", traits: ["Armonie", "Echilibru", "Pace"] },
+        { title: "Partener", description: "Crezi în puterea parteneriatului. Cu persoana potrivită poți realiza orice.", traits: ["Parteneriat", "Cooperare", "Lucru în echipă"] },
+        { title: "Simțitor", description: "Sensibilitatea ta nu este o slăbiciune, ci o forță. Vezi emoțiile altora și răspunzi cu sinceritate.", traits: ["Sensibilitate", "Emoționalitate", "Intuiție"] },
+        { title: "Păzitor", description: "Protejezi bunăstarea celorlalți. Loialitatea și grija ta te fac un prieten și sfetnic de nădejde.", traits: ["Loialitate", "Protecție", "Îngrijorare"] }
+      ]
+    },
+    // ENGLISH
+    en: {
+      1: [
+        { title: "Leader", description: "You are born to lead others. Your natural charisma and determination make you a natural choice for leadership.", traits: ["Leadership", "Determination", "Initiative"] },
+        { title: "Pioneer", description: "You are a pioneer, always seeking new paths. Your independence allows you to explore uncharted territories.", traits: ["Courage", "Innovation", "Independence"] },
+        { title: "Strategist", description: "Your mind is sharp as a blade. You see the whole picture and always know the next move.", traits: ["Strategy", "Analysis", "Vision"] },
+        { title: "Creator", description: "A creator lives within you. You are not afraid to start from zero and create something completely new.", traits: ["Creativity", "Creation", "Originality"] },
+        { title: "Warrior", description: "You possess a fighting spirit and never give up. Your willpower is your greatest weapon.", traits: ["Perseverance", "Strong Will", "Battle Spirit"] },
+        { title: "Innovator", description: "You see opportunities where others see obstacles. Your innovative ideas change the world around you.", traits: ["Innovation", "Future Vision", "Risk"] },
+        { title: "Motivator", description: "You inspire others to believe in themselves. Your energy is contagious and motivates people.", traits: ["Motivation", "Inspiration", "Positivity"] },
+        { title: "Conqueror", description: "You conquer new heights. Your ambition knows no bounds. Success is your element.", traits: ["Ambition", "Success", "Determination"] },
+        { title: "Revolutionary", description: "You are ready to change the system. Your independent thinking helps you challenge the status quo.", traits: ["Revolution", "Change", "Courage"] },
+        { title: "Magnate", description: "You are born for great achievements. Your entrepreneurship brings wealth and influence.", traits: ["Business", "Influence", "Wealth"] }
+      ],
+      2: [
+        { title: "Diplomat", description: "Your path is one of harmony. You possess the ability to find compromise and unite people.", traits: ["Diplomacy", "Intuition", "Cooperation"] },
+        { title: "Peacemaker", description: "You see the good in people and believe in the power of forgiveness. Your mission is to bring peace.", traits: ["Peace", "Forgiveness", "Understanding"] },
+        { title: "Healer", description: "You possess the gift of healing. Your presence soothes, and your words heal wounds.", traits: ["Healing", "Care", "Kindness"] },
+        { title: "Counselor", description: "People come to you for advice. Your wisdom helps others find the right path.", traits: ["Wisdom", "Counseling", "Understanding"] },
+        { title: "Supporter", description: "You are the support for others. Your support helps people become better.", traits: ["Support", "Reliability", "Devotion"] },
+        { title: "Listener", description: "You hear not only words but also what lies between them. Your attention is a precious gift.", traits: ["Attention", "Listening", "Empathy"] },
+        { title: "Harmonizer", description: "You bring order and balance. Wherever you appear, the atmosphere becomes more peaceful and favorable.", traits: ["Harmony", "Balance", "Peace"] },
+        { title: "Partner", description: "You believe in the power of partnership. With the right person you can achieve anything.", traits: ["Partnership", "Cooperation", "Teamwork"] },
+        { title: "Feeler", description: "Your sensitivity is not a weakness but a strength. You see others' emotions and respond with sincerity.", traits: ["Sensitivity", "Emotionality", "Intuition"] },
+        { title: "Guardian", description: "You protect the well-being of others. Your loyalty and care make you a trusted friend and advisor.", traits: ["Loyalty", "Protection", "Care"] }
+      ]
+    },
+    // UKRAINIAN
+    ua: {
+      1: [
+        { title: "Лідер", description: "Ти народжений вести інших. Твоя природна харизма та рішучість роблять тебе природним вибором для керівництва.", traits: ["Лідерство", "Рішучість", "Ініціатива"] },
+        { title: "Піонер", description: "Ти піонер, завжди в пошуку нових шляхів. Твоя незалежність дозволяє тобі досліджувати невідомі території.", traits: ["Мужність", "Інновація", "Незалежність"] },
+        { title: "Стратег", description: "Твій розум гострий як лезо. Ти бачиш картину в цілому та завжди знаєш наступний крок.", traits: ["Стратегія", "Аналіз", "Бачення"] },
+        { title: "Творець", description: "У тобі живе творець. Ти не боїшся починати з нуля та створювати щось абсолютно нове.", traits: ["Креативність", "Творчість", "Оригінальність"] },
+        { title: "Воїн", description: "Ти маєш бойовий дух і ніколи не здаєшся. Твоя сила волі - це твоя головна зброя.", traits: ["Наполегливість", "Сила волі", "Бойовий дух"] },
+        { title: "Новатор", description: "Ти бачиш можливості там, де інші бачать перешкоди. Твої інноваційні ідеї змінюють світ навколо.", traits: ["Інновація", "Бачення майбутнього", "Ризик"] },
+        { title: "Мотиватор", description: "Ти надихаєш інших вірити в себе. Твоя енергія заразна і мотивує людей.", traits: ["Мотивація", "Натхнення", "Позитив"] },
+        { title: "Завойовник", description: "Ти завойовуєш нові висоти. Твоя амбіція не знає меж. Успіх - твій елемент.", traits: ["Амбіція", "Успіх", "Цілеспрямованість"] },
+        { title: "Революціонер", description: "Ти готовий змінити систему. Твоє незалежне мислення допомагає тобі кидати виклик статус-кво.", traits: ["Революція", "Зміна", "Мужність"] },
+        { title: "Магнат", description: "Ти народжений для великих досягнень. Твоє підприємництво приносить тобі багатство та вплив.", traits: ["Бізнес", "Вплив", "Багатство"] }
+      ],
+      2: [
+        { title: "Дипломат", description: "Твій шлях - це шлях гармонії. Ти маєш здатність знаходити компроміс та об'єднувати людей.", traits: ["Дипломатія", "Інтуїція", "Співпраця"] },
+        { title: "Миротворець", description: "Ти бачиш добро в людях та віриш у силу прощення. Твоя місія - приносити мир.", traits: ["Мир", "Прощення", "Розуміння"] },
+        { title: "Цілитель", description: "Ти маєш дар цілення. Твоя присутність заспокоює, а твої слова гояться рани.", traits: ["Цілення", "Дбання", "Доброта"] },
+        { title: "Рада", description: "Люди приходять до тебе за порадою. Твоя мудрість допомагає іншим знайти правильний шлях.", traits: ["Мудрість", "Рада", "Розуміння"] },
+        { title: "Прихильник", description: "Ти - опора для інших. Твоя підтримка допомагає людям стати кращими.", traits: ["Підтримка", "Надійність", "Відданість"] },
+        { title: "Слухач", description: "Ти чуєш не лише слова, але й те, що лежить між ними. Твоя увага - дорогоцінний дар.", traits: ["Увага", "Слухання", "Емпатія"] },
+        { title: "Гармонізатор", description: "Ти приносиш порядок та баланс. Де б ти не з'явився, атмосфера стає спокійнішою та сприятливішою.", traits: ["Гармонія", "Баланс", "Мир"] },
+        { title: "Партнер", description: "Ти віриш у силу партнерства. З правильною людиною ти можеш досягти чого завгодно.", traits: ["Партнерство", "Співпраця", "Командна робота"] },
+        { title: "Почуваючий", description: "Твоя чутливість - не слабкість, а сила. Ти бачиш емоції інших та реагуєш з щирістю.", traits: ["Чутливість", "Емоційність", "Інтуїція"] },
+        { title: "Охоронець", description: "Ти охороняєш благополуччя інших. Твоя вірність та дбання роблять тебе надійним другом та радником.", traits: ["Вірність", "Охорона", "Дбання"] }
+      ]
+    }
+  }
+
+  return variations[languageCode] || variations.en
 }
