@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import {
   LayoutDashboard,
@@ -37,11 +37,22 @@ export default function DashboardLayout({
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
   const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
     const userData = getCurrentUser()
     setUser(userData)
   }, [])
+
+  const handleLogout = () => {
+    // Clear user data from localStorage
+    localStorage.removeItem('karma_user_data')
+    localStorage.removeItem('current_user_id')
+    localStorage.removeItem('current_user_email')
+    
+    // Redirect to homepage
+    router.push('/')
+  }
 
   return (
     <div className="min-h-screen bg-charcoal flex">
@@ -55,7 +66,7 @@ export default function DashboardLayout({
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-charcoal-dark lg:bg-charcoal-light/50 border-r border-white/10 transform transition-transform duration-300 ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-charcoal-dark border-r border-white/10 transform transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
@@ -118,6 +129,7 @@ export default function DashboardLayout({
             )}
             
             <Button
+              onClick={handleLogout}
               variant="outline"
               size="sm"
               className="w-full border-white/10 text-cream/60 hover:bg-white/5"
