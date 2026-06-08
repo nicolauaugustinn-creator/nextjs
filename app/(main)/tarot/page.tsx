@@ -6,11 +6,13 @@ import Image from "next/image"
 import { tarotCards } from "@/data/tarot"
 import { useT } from "@/lib/lang-context"
 import { Button } from "@/components/ui/button"
+import { getRandomVariation } from "@/lib/tarot-variations"
 
 export default function TarotReadingsPage() {
   const { t, lang } = useT()
   const [showGrid, setShowGrid] = useState(false)
   const [selectedCard, setSelectedCard] = useState<(typeof tarotCards)[0] | null>(null)
+  const [selectedVariation, setSelectedVariation] = useState<string>("")
 
   return (
     <main className="min-h-screen bg-background">
@@ -133,7 +135,11 @@ export default function TarotReadingsPage() {
                 {tarotCards.map((card) => (
                   <button
                     key={card.id}
-                    onClick={() => setSelectedCard(card)}
+                    onClick={() => {
+                      setSelectedCard(card)
+                      const variation = getRandomVariation(card.id, lang)
+                      setSelectedVariation(variation)
+                    }}
                     className="group relative aspect-[3/4] rounded-lg overflow-hidden border-4 border-amber-700 hover:border-amber-600 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
                   >
                     <Image
@@ -157,15 +163,18 @@ export default function TarotReadingsPage() {
       {/* Card Detail Modal */}
       {selectedCard && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+          <div className="bg-charcoal rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden border-2 border-gold/30">
             {/* Close Button */}
-            <div className="sticky top-0 flex justify-between items-center p-4 sm:p-6 bg-white border-b border-gold/20">
-              <h3 className="font-serif text-xl sm:text-2xl text-charcoal">
+            <div className="sticky top-0 flex justify-between items-center p-4 sm:p-6 bg-charcoal border-b border-gold/30">
+              <h3 className="font-serif text-xl sm:text-2xl text-gold">
                 {selectedCard.name[lang as keyof typeof selectedCard.name]}
               </h3>
               <button
-                onClick={() => setSelectedCard(null)}
-                className="text-charcoal hover:text-gold transition-colors p-2"
+                onClick={() => {
+                  setSelectedCard(null)
+                  setSelectedVariation("")
+                }}
+                className="text-gold hover:text-gold/70 transition-colors p-2"
               >
                 <X size={28} />
               </button>
@@ -189,18 +198,21 @@ export default function TarotReadingsPage() {
                 </div>
               </div>
 
-              {/* Description */}
-              <div className="w-full bg-cream/95 rounded-xl p-6 sm:p-8">
-                <p className="text-charcoal/80 text-base sm:text-lg leading-relaxed text-justify">
-                  {selectedCard.meaning[lang as keyof typeof selectedCard.meaning]}
+              {/* Description - Show random variation */}
+              <div className="w-full bg-charcoal/50 rounded-xl p-6 sm:p-8 border border-gold/20">
+                <p className="text-cream/90 text-base sm:text-lg leading-relaxed text-justify">
+                  {selectedVariation || selectedCard.meaning[lang as keyof typeof selectedCard.meaning]}
                 </p>
               </div>
             </div>
 
             {/* Action Button */}
-            <div className="p-6 border-t border-gold/20 bg-white">
+            <div className="p-6 border-t border-gold/30 bg-charcoal">
               <Button
-                onClick={() => setSelectedCard(null)}
+                onClick={() => {
+                  setSelectedCard(null)
+                  setSelectedVariation("")
+                }}
                 className="w-full bg-gold hover:bg-gold/90 text-charcoal font-serif text-base sm:text-lg py-4"
               >
                 {t("tarot_close")}
