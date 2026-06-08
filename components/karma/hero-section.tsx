@@ -73,11 +73,15 @@ export function HeroSection() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="font-serif font-bold mb-6 tracking-wide leading-none
-                       text-[clamp(2.2rem,10vw,6rem)]
-                       whitespace-nowrap"
+                       text-[clamp(1.8rem,8vw,4.5rem)]
+                       flex items-center justify-center gap-2 px-4"
           >
-            <span className="text-gold-gradient glow-text-gold">KARMA</span>
-            <span className="text-foreground">NUMBERS</span>
+            <span className="flex-1 h-0.5 bg-gradient-to-r from-transparent via-gold/30 to-transparent"></span>
+            <div className="flex whitespace-nowrap">
+              <span className="text-gold-gradient glow-text-gold">KARMA</span>
+              <span className="text-foreground">NUMBERS</span>
+            </div>
+            <span className="flex-1 h-0.5 bg-gradient-to-r from-transparent via-gold/30 to-transparent"></span>
           </motion.h1>
 
           {/* Subtitle */}
