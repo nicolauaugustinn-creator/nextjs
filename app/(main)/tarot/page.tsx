@@ -6,11 +6,13 @@ import Image from "next/image"
 import { tarotCards } from "@/data/tarot"
 import { useT } from "@/lib/lang-context"
 import { Button } from "@/components/ui/button"
+import { getRandomVariation } from "@/lib/tarot-variations"
 
 export default function TarotReadingsPage() {
   const { t, lang } = useT()
   const [showGrid, setShowGrid] = useState(false)
   const [selectedCard, setSelectedCard] = useState<(typeof tarotCards)[0] | null>(null)
+  const [selectedVariation, setSelectedVariation] = useState<string>("")
 
   return (
     <main className="min-h-screen bg-background">
@@ -133,7 +135,11 @@ export default function TarotReadingsPage() {
                 {tarotCards.map((card) => (
                   <button
                     key={card.id}
-                    onClick={() => setSelectedCard(card)}
+                    onClick={() => {
+                      setSelectedCard(card)
+                      const variation = getRandomVariation(card.id, lang)
+                      setSelectedVariation(variation)
+                    }}
                     className="group relative aspect-[3/4] rounded-lg overflow-hidden border-4 border-amber-700 hover:border-amber-600 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
                   >
                     <Image
@@ -164,7 +170,10 @@ export default function TarotReadingsPage() {
                 {selectedCard.name[lang as keyof typeof selectedCard.name]}
               </h3>
               <button
-                onClick={() => setSelectedCard(null)}
+                onClick={() => {
+                  setSelectedCard(null)
+                  setSelectedVariation("")
+                }}
                 className="text-gold hover:text-gold/70 transition-colors p-2"
               >
                 <X size={28} />
@@ -189,10 +198,10 @@ export default function TarotReadingsPage() {
                 </div>
               </div>
 
-              {/* Description */}
+              {/* Description - Show random variation */}
               <div className="w-full bg-charcoal/50 rounded-xl p-6 sm:p-8 border border-gold/20">
                 <p className="text-cream/90 text-base sm:text-lg leading-relaxed text-justify">
-                  {selectedCard.meaning[lang as keyof typeof selectedCard.meaning]}
+                  {selectedVariation || selectedCard.meaning[lang as keyof typeof selectedCard.meaning]}
                 </p>
               </div>
             </div>
@@ -200,7 +209,10 @@ export default function TarotReadingsPage() {
             {/* Action Button */}
             <div className="p-6 border-t border-gold/30 bg-charcoal">
               <Button
-                onClick={() => setSelectedCard(null)}
+                onClick={() => {
+                  setSelectedCard(null)
+                  setSelectedVariation("")
+                }}
                 className="w-full bg-gold hover:bg-gold/90 text-charcoal font-serif text-base sm:text-lg py-4"
               >
                 {t("tarot_close")}
