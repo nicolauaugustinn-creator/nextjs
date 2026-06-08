@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { Eye, EyeOff, Mail, Lock, User, Phone } from "lucide-react"
 import { Input } from "@/components/ui/input"
@@ -10,6 +11,7 @@ import { useT } from "@/lib/lang-context"
 
 export default function RegisterPage() {
   const { t } = useT()
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -18,6 +20,8 @@ export default function RegisterPage() {
     setIsLoading(true)
     await new Promise((resolve) => setTimeout(resolve, 1500))
     setIsLoading(false)
+    // Redirect to profile after registration
+    router.push("/profile")
   }
 
   return (

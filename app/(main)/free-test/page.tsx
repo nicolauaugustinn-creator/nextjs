@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useT } from "@/lib/lang-context"
+import { getDestinyVariations } from "@/lib/destiny-variations"
 
 function calculateDestinyNumber(date: string): number {
   const digits = date.replace(/\D/g, "").split("").map(Number)
@@ -20,10 +21,13 @@ function calculateDestinyNumber(date: string): number {
 }
 
 export default function FreeTestPage() {
-  const { t } = useT()
+  const { t, lang } = useT()
   const [birthDate, setBirthDate] = useState("")
   const [result, setResult] = useState<number | null>(null)
+  const [selectedVariation, setSelectedVariation] = useState<any | null>(null)
   const [isCalculating, setIsCalculating] = useState(false)
+
+  const destinyVariations = getDestinyVariations(lang)
 
   const destinyNumbers: Record<number, { title: string; description: string; traits: string[] }> = {
     1: {
@@ -73,6 +77,12 @@ export default function FreeTestPage() {
     }
   }
 
+  const getRandomVariation = (number: number) => {
+    const variations = destinyVariations[number as keyof typeof destinyVariations]
+    if (!variations || variations.length === 0) return null
+    return variations[Math.floor(Math.random() * variations.length)]
+  }
+
   const handleCalculate = async () => {
     if (!birthDate) return
     
@@ -81,15 +91,21 @@ export default function FreeTestPage() {
     
     const number = calculateDestinyNumber(birthDate)
     setResult(number)
+    
+    // Select random variation from 100+
+    const variation = getRandomVariation(number)
+    setSelectedVariation(variation)
+    
     setIsCalculating(false)
   }
 
   const handleReset = () => {
     setResult(null)
+    setSelectedVariation(null)
     setBirthDate("")
   }
 
-  const resultData = result ? destinyNumbers[result] : null
+  const resultData = selectedVariation || (result ? destinyNumbers[result] : null)
 
   return (
     <main className="pt-24 pb-20 min-h-screen">
