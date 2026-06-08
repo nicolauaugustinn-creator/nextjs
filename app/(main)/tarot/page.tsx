@@ -157,15 +157,15 @@ export default function TarotReadingsPage() {
       {/* Card Detail Modal */}
       {selectedCard && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+          <div className="bg-charcoal rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden border-2 border-gold/30">
             {/* Close Button */}
-            <div className="sticky top-0 flex justify-between items-center p-4 sm:p-6 bg-white border-b border-gold/20">
-              <h3 className="font-serif text-xl sm:text-2xl text-charcoal">
+            <div className="sticky top-0 flex justify-between items-center p-4 sm:p-6 bg-charcoal border-b border-gold/30">
+              <h3 className="font-serif text-xl sm:text-2xl text-gold">
                 {selectedCard.name[lang as keyof typeof selectedCard.name]}
               </h3>
               <button
                 onClick={() => setSelectedCard(null)}
-                className="text-charcoal hover:text-gold transition-colors p-2"
+                className="text-gold hover:text-gold/70 transition-colors p-2"
               >
                 <X size={28} />
               </button>
@@ -190,15 +190,15 @@ export default function TarotReadingsPage() {
               </div>
 
               {/* Description */}
-              <div className="w-full bg-cream/95 rounded-xl p-6 sm:p-8">
-                <p className="text-charcoal/80 text-base sm:text-lg leading-relaxed text-justify">
+              <div className="w-full bg-charcoal/50 rounded-xl p-6 sm:p-8 border border-gold/20">
+                <p className="text-cream/90 text-base sm:text-lg leading-relaxed text-justify">
                   {selectedCard.meaning[lang as keyof typeof selectedCard.meaning]}
                 </p>
               </div>
             </div>
 
             {/* Action Button */}
-            <div className="p-6 border-t border-gold/20 bg-white">
+            <div className="p-6 border-t border-gold/30 bg-charcoal">
               <Button
                 onClick={() => setSelectedCard(null)}
                 className="w-full bg-gold hover:bg-gold/90 text-charcoal font-serif text-base sm:text-lg py-4"
