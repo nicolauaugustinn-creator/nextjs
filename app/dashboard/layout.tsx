@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
@@ -14,9 +14,11 @@ import {
   LogOut,
   Menu,
   X,
-  Bell
+  Bell,
+  Zap
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { getCurrentUser } from "@/lib/user-system"
 
 const sidebarLinks = [
   { href: "/dashboard", label: "Главная", icon: LayoutDashboard },
@@ -33,7 +35,13 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [user, setUser] = useState<any>(null)
   const pathname = usePathname()
+
+  useEffect(() => {
+    const userData = getCurrentUser()
+    setUser(userData)
+  }, [])
 
   return (
     <div className="min-h-screen bg-charcoal flex">
@@ -47,7 +55,7 @@ export default function DashboardLayout({
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-charcoal-light/50 border-r border-white/10 transform transition-transform duration-300 ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-charcoal-dark lg:bg-charcoal-light/50 border-r border-white/10 transform transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
@@ -86,15 +94,29 @@ export default function DashboardLayout({
 
           {/* User section */}
           <div className="p-4 border-t border-white/10">
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">
                 <User className="w-5 h-5 text-gold" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-cream text-sm font-medium truncate">Анна Иванова</p>
-                <p className="text-cream/50 text-xs truncate">anna@email.com</p>
+                <p className="text-cream text-sm font-medium truncate">{user?.name || "User"}</p>
+                <p className="text-cream/50 text-xs truncate">{user?.email || "user@email.com"}</p>
               </div>
             </div>
+            
+            {/* Points Display */}
+            {user && (
+              <Link href="/dashboard/profile" onClick={() => setIsSidebarOpen(false)}>
+                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gold/10 border border-gold/20 hover:bg-gold/20 transition-colors mb-3 cursor-pointer">
+                  <Zap className="w-4 h-4 text-gold" />
+                  <div>
+                    <p className="text-gold text-xs font-medium">Points</p>
+                    <p className="text-gold font-bold text-sm">{user.points}</p>
+                  </div>
+                </div>
+              </Link>
+            )}
+            
             <Button
               variant="outline"
               size="sm"
