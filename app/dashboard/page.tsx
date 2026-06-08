@@ -174,7 +174,7 @@ export default function DashboardPage() {
 
         {/* Right sidebar */}
         <div>
-          <h2 className="font-serif text-xl text-cream mb-6">{t("dash_stats")}</h2>
+          <h2 className="font-serif text-xl text-cream mb-6">Statistics</h2>
           <div className="space-y-4">
             <GlassCard>
               <div className="flex items-start gap-3">
@@ -196,7 +196,7 @@ export default function DashboardPage() {
                   <Clock className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-cream font-medium">{t("dash_level")}</h4>
+                  <h4 className="text-cream font-medium">Current Level</h4>
                   <p className="text-emerald-400 text-lg font-bold">
                     {userProfile?.current_level || "Beginner"}
                   </p>
@@ -206,7 +206,7 @@ export default function DashboardPage() {
           </div>
 
           <div className="mt-6">
-            <h2 className="font-serif text-xl text-cream mb-4">{t("dash_points")}</h2>
+            <h2 className="font-serif text-xl text-cream mb-4">Your Points</h2>
             <GlassCard className="p-6 text-center">
               <div className="w-20 h-20 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-4">
                 <span className="text-gold text-3xl font-bold">⭐</span>

@@ -2,7 +2,7 @@
 
 import { useParams, notFound } from "next/navigation"
 import { motion } from "framer-motion"
-import { Clock, Users, Star, Play, BookOpen, Check, ChevronDown, Lock } from "lucide-react"
+import { Clock, BookOpen, Play, Check, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { courses } from "@/data/courses"
 import Link from "next/link"
@@ -45,7 +45,7 @@ export default function CourseDetailPage() {
               </h1>
 
               <p className="text-cream/70 text-lg mb-8">
-                {course.description}
+                {course.fullDescription}
               </p>
 
               <div className="flex flex-wrap items-center gap-6 mb-8 text-cream/60">
@@ -55,18 +55,8 @@ export default function CourseDetailPage() {
                 </span>
                 <span className="flex items-center gap-2">
                   <BookOpen className="w-5 h-5 text-gold" />
-                  {course.lessons} уроков
+                  {course.modules?.length || 0} модулей
                 </span>
-                <span className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-gold" />
-                  {course.students || "100+"} учеников
-                </span>
-                {course.rating && (
-                  <span className="flex items-center gap-2">
-                    <Star className="w-5 h-5 text-gold fill-gold" />
-                    {course.rating}
-                  </span>
-                )}
               </div>
 
               <div className="flex items-center gap-4 mb-8">
@@ -83,16 +73,14 @@ export default function CourseDetailPage() {
                 </div>
               </div>
 
-              {course.features && (
-                <div className="space-y-3">
-                  {course.features.map((feature, index) => (
+              <div className="space-y-3">
+                  {course.benefits?.map((benefit, index) => (
                     <div key={index} className="flex items-start gap-3">
                       <Check className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
-                      <span className="text-cream/80">{feature}</span>
+                      <span className="text-cream/80">{benefit}</span>
                     </div>
                   ))}
-                </div>
-              )}
+              </div>
             </motion.div>
 
             <motion.div
@@ -104,7 +92,7 @@ export default function CourseDetailPage() {
               <div className="glass-card overflow-hidden">
                 <div className="aspect-video relative">
                   <img
-                    src={course.image}
+                    src={course.coverImage}
                     alt={course.title}
                     className="w-full h-full object-cover"
                   />
@@ -170,7 +158,7 @@ export default function CourseDetailPage() {
                 Программа курса
               </h2>
               <p className="text-cream/60">
-                {course.modules.length} модулей, {course.lessons} уроков
+                {course.modules?.length || 0} модулей
               </p>
             </motion.div>
 
@@ -213,19 +201,10 @@ export default function CourseDetailPage() {
                             className="flex items-center justify-between py-2"
                           >
                             <div className="flex items-center gap-3">
-                              {lesson.isFree ? (
-                                <Play className="w-4 h-4 text-gold" />
-                              ) : (
-                                <Lock className="w-4 h-4 text-cream/40" />
-                              )}
-                              <span className={lesson.isFree ? "text-cream" : "text-cream/60"}>
+                              <Play className="w-4 h-4 text-gold" />
+                              <span className="text-cream">
                                 {lesson.title}
                               </span>
-                              {lesson.isFree && (
-                                <span className="text-xs bg-gold/20 text-gold px-2 py-0.5 rounded">
-                                  Бесплатно
-                                </span>
-                              )}
                             </div>
                             <span className="text-cream/40 text-sm">{lesson.duration}</span>
                           </div>

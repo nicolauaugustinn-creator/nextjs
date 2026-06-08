@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Search, Play, Pause, Clock, Headphones, Lock, Volume2 } from "lucide-react"
+import { Search, Play, Pause, Clock, Headphones, Volume2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { meditations, type Meditation } from "@/data/meditations"
@@ -26,30 +26,22 @@ function MeditationCard({ meditation, isPlaying, onPlay }: {
       <div className="glass-card overflow-hidden">
         <div className="aspect-square relative overflow-hidden">
           <img
-            src={meditation.image}
+            src={meditation.coverImage}
             alt={meditation.title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/50 to-transparent" />
 
-          {meditation.isFree ? (
-            <button onClick={onPlay} className="absolute inset-0 flex items-center justify-center">
-              <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-all ${
-                isPlaying ? "bg-gold scale-110" : "bg-gold/80 group-hover:bg-gold group-hover:scale-110"
-              }`}>
-                {isPlaying
-                  ? <Pause className="w-7 h-7 text-charcoal" />
-                  : <Play className="w-7 h-7 text-charcoal ml-1" />
-                }
-              </div>
-            </button>
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-charcoal/80 flex items-center justify-center">
-                <Lock className="w-7 h-7 text-cream/60" />
-              </div>
+          <button onClick={onPlay} className="absolute inset-0 flex items-center justify-center">
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-all ${
+              isPlaying ? "bg-gold scale-110" : "bg-gold/80 group-hover:bg-gold group-hover:scale-110"
+            }`}>
+              {isPlaying
+                ? <Pause className="w-7 h-7 text-charcoal" />
+                : <Play className="w-7 h-7 text-charcoal ml-1" />
+              }
             </div>
-          )}
+          </button>
 
           <div className="absolute bottom-4 left-4 right-4">
             <div className="flex items-center justify-between text-cream/80 text-sm">
@@ -57,11 +49,6 @@ function MeditationCard({ meditation, isPlaying, onPlay }: {
                 <Clock className="w-4 h-4" />
                 {meditation.duration}
               </span>
-              {meditation.isFree && (
-                <span className="bg-gold/20 text-gold px-2 py-0.5 rounded text-xs">
-                  {t("common_free")}
-                </span>
-              )}
             </div>
           </div>
         </div>

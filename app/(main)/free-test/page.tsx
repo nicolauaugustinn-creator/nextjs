@@ -206,7 +206,7 @@ export default function FreeTestPage() {
                   {t("free_test_key_traits")}
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  {resultData?.traits.map((trait) => (
+                  {resultData?.traits.map((trait: string) => (
                     <span
                       key={trait}
                       className="px-4 py-2 bg-gold/10 text-gold rounded-full text-sm"

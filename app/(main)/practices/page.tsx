@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Clock, Sparkles, Search, ArrowRight, Lock } from "lucide-react"
+import { Search, ArrowRight, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -34,10 +34,9 @@ export default function PracticesPage() {
 
   const filteredPractices = practices.filter((practice) => {
     const matchesCategory = selectedCategory === "all" || practice.category === selectedCategory
-    const matchesLevel = selectedLevel === "all" || practice.level === selectedLevel
     const matchesSearch = practice.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          practice.description.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesLevel && matchesSearch
+    return matchesCategory && matchesSearch
   })
 
   return (
@@ -52,7 +51,7 @@ export default function PracticesPage() {
             className="max-w-3xl mx-auto text-center"
           >
             <Badge className="mb-4 bg-gold/20 text-gold border-gold/30">
-              <Sparkles className="w-3 h-3 mr-1" />
+              <Star className="w-3 h-3 mr-1" />
               {t("practices_spiritual")}
             </Badge>
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-cream mb-6">
@@ -140,18 +139,10 @@ export default function PracticesPage() {
                     {/* Image */}
                     <div className="aspect-video overflow-hidden">
                       <img
-                        src={practice.imageUrl}
+                        src={practice.coverImage}
                         alt={practice.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      {practice.isPremium && (
-                        <div className="absolute top-4 right-4">
-                          <Badge className="bg-gold/90 text-charcoal">
-                            <Lock className="w-3 h-3 mr-1" />
-                            Premium
-                          </Badge>
-                        </div>
-                      )}
                     </div>
 
                     {/* Content */}
@@ -159,9 +150,6 @@ export default function PracticesPage() {
                       <div className="flex flex-wrap items-center gap-2 mb-3">
                         <Badge variant="outline" className="border-gold/30 text-gold capitalize">
                           {practice.category}
-                        </Badge>
-                        <Badge variant="outline" className="border-white/20 text-cream/60 capitalize">
-                          {practice.level}
                         </Badge>
                       </div>
 
@@ -174,9 +162,8 @@ export default function PracticesPage() {
                       </p>
 
                       <div className="flex items-center justify-between">
-                        <span className="flex items-center gap-1 text-sm text-cream/50">
-                          <Clock className="w-4 h-4" />
-                          {practice.duration} {t("practices_min")}
+                        <span className="text-sm text-cream/50">
+                          {practice.format}
                         </span>
 
                         <Button

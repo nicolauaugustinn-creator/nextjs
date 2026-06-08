@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Plus, Pencil, Trash2, Search, Filter, MoreVertical, FileText, Clock, Star } from "lucide-react"
+import { Plus, Pencil, Trash2, Search, Filter, MoreVertical, FileText, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -162,7 +162,7 @@ export default function AdminPracticesPage() {
           >
             <div className="mb-4 aspect-video overflow-hidden rounded-lg bg-muted">
               <img
-                src={practice.imageUrl}
+                src={practice.coverImage}
                 alt={practice.title}
                 className="h-full w-full object-cover transition-transform group-hover:scale-105"
               />
@@ -190,15 +190,11 @@ export default function AdminPracticesPage() {
               </div>
               <p className="text-sm text-muted-foreground line-clamp-2">{practice.description}</p>
               <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                <span className="flex items-center gap-1">
-                  <Clock className="h-3.5 w-3.5" />
-                  {practice.duration} min
-                </span>
                 <Badge variant="outline" className="capitalize">
                   {practice.category}
                 </Badge>
                 <Badge variant="outline" className="capitalize">
-                  {practice.level}
+                  {practice.status}
                 </Badge>
               </div>
             </div>
