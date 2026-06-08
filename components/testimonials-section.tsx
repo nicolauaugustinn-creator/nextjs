@@ -115,7 +115,15 @@ function ScrollingColumn({
   direction = "up",
   duration = 25,
 }: {
-  testimonials: (typeof testimonials)[0][]
+  testimonials: Array<{
+    body: string
+    author: {
+      name: string
+      handle: string
+      role: string
+      imageUrl: string
+    }
+  }>
   direction?: "up" | "down"
   duration?: number
 }) {
