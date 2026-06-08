@@ -75,7 +75,7 @@ export function TelegramCTA() {
                 <div className="flex items-center justify-between py-3">
                   <span className="text-muted-foreground">{t("common_loading").replace("...", "")}</span>
                   <span className="text-gold font-medium">
-                    {t("lang_daily") ?? (t("tg_tag"))}
+                    {t("tg_tag")}
                   </span>
                 </div>
               </div>

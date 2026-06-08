@@ -5,12 +5,25 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { reviews } from "@/data/reviews"
+import { useT } from "@/lib/lang-context"
 import Link from "next/link"
 
 export function ReviewsSection() {
+  const { lang } = useT()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
   const featuredReviews = reviews.filter(r => r.featured).slice(0, 5)
+
+  // Helper to get localized review text
+  const getReviewText = (textObj?: { ro?: string; ru?: string; en?: string }): string => {
+    if (!textObj) return ""
+    const langMap: Record<string, keyof typeof textObj> = {
+      ro: "ro",
+      ru: "ru",
+      en: "en"
+    }
+    return textObj[langMap[lang as keyof typeof langMap] || "en"] || ""
+  }
 
   const slideVariants = {
     enter: (direction: number) => ({
@@ -124,24 +137,24 @@ export function ReviewsSection() {
                   </div>
 
                   <p className="text-cream/80 text-lg md:text-xl leading-relaxed mb-8 line-clamp-6">
-                    {currentReview.text}
+                    {getReviewText(currentReview.text)}
                   </p>
 
                   <div className="flex items-center gap-4 mt-auto">
-                    {currentReview.avatar && (
+                    {currentReview.clientAvatar && (
                       <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-gold/30">
                         <img
-                          src={currentReview.avatar}
-                          alt={currentReview.name}
+                          src={currentReview.clientAvatar}
+                          alt={currentReview.clientName}
                           className="w-full h-full object-cover"
                         />
                       </div>
                     )}
                     <div>
                       <h4 className="font-serif text-cream text-lg">
-                        {currentReview.name}
+                        {currentReview.clientName}
                       </h4>
-                      <p className="text-gold text-sm">{currentReview.service}</p>
+                      <p className="text-gold text-sm">{currentReview.category}</p>
                     </div>
                   </div>
                 </div>

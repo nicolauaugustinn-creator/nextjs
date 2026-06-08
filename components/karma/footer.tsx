@@ -96,12 +96,14 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-semibold text-foreground mb-4">{t("footer_navigation")}</h3>
             <ul className="space-y-3">
-              {[
-                { labelKey: "nav_my_path", href: "/my-path" },
-                { labelKey: "nav_blog", href: "/blog" },
-                { labelKey: "nav_reviews", href: "/reviews" },
-                { labelKey: "nav_consultations", href: "/consultations" },
-              ].map((link) => (
+              {(
+                [
+                  { labelKey: "nav_my_path" as const, href: "/my-path" },
+                  { labelKey: "nav_blog" as const, href: "/blog" },
+                  { labelKey: "nav_reviews" as const, href: "/reviews" },
+                  { labelKey: "nav_consultations" as const, href: "/consultations" },
+                ] as const
+              ).map((link) => (
                 <li key={link.href}>
                   <Link href={link.href}
                     className="text-sm text-muted-foreground hover:text-gold transition-colors hover-underline">

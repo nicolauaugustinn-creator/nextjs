@@ -21,11 +21,24 @@ export function ReviewCard({ review, variant = "default" }: ReviewCardProps) {
     retreat: t("nav_retreat")
   }
 
+  // Get text for current language
+  const getLocalizedText = (textObj?: { ro?: string; ru?: string; en?: string }): string | undefined => {
+    if (!textObj) return undefined
+    const langMap: Record<string, keyof typeof textObj> = {
+      ro: "ro",
+      ru: "ru",
+      en: "en"
+    }
+    return textObj[langMap[lang as keyof typeof langMap] || "en"]
+  }
+
   // Determine review type
   const hasVideo = !!review.videoPlaceholder
   const hasAudio = !!review.audioPlaceholder
   const hasScreenshot = !!review.screenshotImage
   const hasText = !!review.text
+
+  const reviewText = getLocalizedText(review.text)
 
   return (
     <GlassCard
@@ -84,7 +97,7 @@ export function ReviewCard({ review, variant = "default" }: ReviewCardProps) {
           "text-sm text-muted-foreground leading-relaxed",
           variant === "compact" ? "line-clamp-3" : "line-clamp-6"
         )}>
-          &ldquo;{review.text}&rdquo;
+          &ldquo;{reviewText}&rdquo;
         </p>
       )}
 
