@@ -18,6 +18,10 @@ interface UserData {
   }
 }
 
+export function generateReferralCode(): string {
+  return Math.random().toString(36).substring(2, 8).toUpperCase()
+}
+
 const DEFAULT_USER: UserData = {
   id: "user_" + Math.random().toString(36).substr(2, 9),
   name: "Alexandra Popescu",
@@ -33,10 +37,6 @@ const DEFAULT_USER: UserData = {
     totalHoursSpent: 8.5,
     level: "Advanced Student",
   },
-}
-
-export function generateReferralCode(): string {
-  return Math.random().toString(36).substring(2, 8).toUpperCase()
 }
 
 export function getCurrentUser(): UserData {
