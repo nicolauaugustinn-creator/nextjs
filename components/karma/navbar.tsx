@@ -73,7 +73,7 @@ export function Navbar() {
                 <div className="absolute inset-0 bg-gradient-to-br from-gold to-gold-dark rounded-full opacity-20 group-hover:opacity-40 transition-opacity" />
                 <span className="text-gold font-serif text-xs font-bold">KN</span>
               </div>
-              <span className="text-gold font-serif text-xs sm:text-sm md:text-base font-semibold tracking-wide">
+              <span className="text-gold font-serif text-sm sm:text-base md:text-lg font-semibold tracking-wide">
                 KARMANUMBERS
               </span>
             </Link>
