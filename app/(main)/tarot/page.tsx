@@ -137,7 +137,7 @@ export default function TarotReadingsPage() {
                     key={card.id}
                     onClick={() => {
                       setSelectedCard(card)
-                      const variation = getRandomVariation(card.id, lang)
+                      const variation = getRandomVariation(parseInt(card.id), lang)
                       setSelectedVariation(variation)
                     }}
                     className="group relative aspect-[3/4] rounded-lg overflow-hidden border-4 border-amber-700 hover:border-amber-600 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"

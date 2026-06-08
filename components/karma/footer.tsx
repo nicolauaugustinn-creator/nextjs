@@ -32,12 +32,6 @@ export function Footer() {
       { labelKey: "nav_practices", href: "/practices" },
       { labelKey: "nav_retreat", href: "/retreat" },
     ],
-    support: [
-      { label: "С чего начать?", href: "/start-here" },
-      { label: "Бесплатный тест", href: "/free-test" },
-      { labelKey: "nav_consultations", href: "/consultations" },
-      { label: "FAQ", href: "/faq" },
-    ],
   } as const
 
   return (

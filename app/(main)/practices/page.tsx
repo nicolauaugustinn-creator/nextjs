@@ -162,9 +162,8 @@ export default function PracticesPage() {
                       </p>
 
                       <div className="flex items-center justify-between">
-                        <span className="flex items-center gap-1 text-sm text-cream/50">
-                          <Clock className="w-4 h-4" />
-                          {practice.duration} {t("practices_min")}
+                        <span className="text-sm text-cream/50">
+                          {practice.format}
                         </span>
 
                         <Button
