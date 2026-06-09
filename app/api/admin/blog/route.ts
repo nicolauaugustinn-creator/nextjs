@@ -1,12 +1,26 @@
 import { neon } from '@neondatabase/serverless';
 import { NextRequest, NextResponse } from 'next/server';
 
-const sql = neon(process.env.DATABASE_URL!);
+// Prevent static generation for this API route
+export const dynamic = 'force-dynamic';
+
+// Lazy initialize SQL connection
+let sql: any;
+
+function getSql() {
+  if (!sql) {
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL is not set');
+    }
+    sql = neon(process.env.DATABASE_URL);
+  }
+  return sql;
+}
 
 // GET all blog posts
 export async function GET(req: NextRequest) {
   try {
-    const posts = await sql`SELECT * FROM blog_posts ORDER BY created_at DESC`;
+    const posts = await getSql()`SELECT * FROM blog_posts ORDER BY created_at DESC`;
     return NextResponse.json(posts);
   } catch (error) {
     console.error('Error fetching blog posts:', error);
@@ -20,7 +34,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { title, slug, excerpt, content, image, category, author, status, featured } = body;
 
-    const result = await sql`
+    const result = await getSql()`
       INSERT INTO blog_posts (title, slug, excerpt, content, image, category, author, status, featured)
       VALUES (${title}, ${slug}, ${excerpt}, ${content}, ${image}, ${category}, ${author}, ${status || 'draft'}, ${featured || false})
       RETURNING *`;
@@ -38,7 +52,7 @@ export async function PUT(req: NextRequest) {
     const body = await req.json();
     const { id, title, slug, excerpt, content, image, category, author, status, featured } = body;
 
-    const result = await sql`
+    const result = await getSql()`
       UPDATE blog_posts 
       SET title = ${title}, slug = ${slug}, excerpt = ${excerpt}, content = ${content}, image = ${image}, 
           category = ${category}, author = ${author}, status = ${status}, featured = ${featured}, updated_at = NOW()
@@ -66,7 +80,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
 
-    const result = await sql`DELETE FROM blog_posts WHERE id = ${id} RETURNING id`;
+    const result = await getSql()`DELETE FROM blog_posts WHERE id = ${id} RETURNING id`;
 
     if (result.length === 0) {
       return NextResponse.json({ error: 'Blog post not found' }, { status: 404 });
