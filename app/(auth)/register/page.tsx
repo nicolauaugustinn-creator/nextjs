@@ -21,7 +21,7 @@ export default function RegisterPage() {
     await new Promise((resolve) => setTimeout(resolve, 1500))
     setIsLoading(false)
     // Redirect to profile after registration
-    router.push("/profile")
+    router.push("/dashboard/profile")
   }
 
   return (
