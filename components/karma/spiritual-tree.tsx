@@ -93,7 +93,7 @@ export function SpiritualTree() {
         }}
       >
         <Image
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo_2026-06-07_20-54-51-laux4AvmrmkEJAXDk7hlUJn3uY82Px.jpg"
+          src="/images/spiritual-tree-3d.png"
           alt="Spiritual Tree"
           fill
           className="object-cover object-center"
