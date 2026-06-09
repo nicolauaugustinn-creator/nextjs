@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { motion } from "framer-motion"
-import { Eye, EyeOff, Lock, User, AlertCircle } from "lucide-react"
+import { Eye, EyeOff, Lock, User, AlertCircle, ArrowLeft, Home } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -45,12 +46,34 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-charcoal flex items-center justify-center p-4">
+    <div className="min-h-screen bg-charcoal flex flex-col">
+      {/* Navigation Header */}
+      <header className="sticky top-0 z-50 bg-charcoal/90 backdrop-blur-xl border-b border-gold/20 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          {/* Logo/Brand */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gold to-burgundy flex items-center justify-center group-hover:shadow-lg group-hover:shadow-gold/30 transition-all">
+              <span className="font-serif text-lg text-cream">K</span>
+            </div>
+            <span className="font-serif text-xl text-cream group-hover:text-gold transition-colors hidden sm:block">KARMANUMBERS</span>
+          </Link>
+
+          {/* Back to Homepage Button */}
+          <Link href="/">
+            <Button className="bg-gold/20 hover:bg-gold/30 text-gold border border-gold/30 font-semibold flex items-center gap-2">
+              <Home className="w-4 h-4" />
+              <span className="hidden sm:inline">На главную</span>
+              <span className="sm:hidden">Главная</span>
+            </Button>
+          </Link>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="flex-1 flex items-center justify-center p-4"
       {/* Background gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.15),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(201,169,98,0.1),transparent_50%)]" />
-
-      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -140,6 +163,7 @@ export default function AdminLoginPage() {
           Доступ только для администраторов
         </p>
       </motion.div>
+    </div>
     </div>
   )
 }
