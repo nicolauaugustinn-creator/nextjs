@@ -37,8 +37,22 @@ import {
 } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { blogStore, type BlogPost } from "@/lib/admin-store"
 import { toast } from "sonner"
+
+interface BlogPost {
+  id: string
+  title: string
+  slug: string
+  excerpt: string
+  content: string
+  image: string
+  category: string
+  author: string
+  status: "published" | "draft"
+  featured: boolean
+  created_at: string
+  updated_at: string
+}
 
 export default function AdminBlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
@@ -50,7 +64,6 @@ export default function AdminBlogPage() {
   const [deletingPost, setDeletingPost] = useState<BlogPost | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  // Form state
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -67,9 +80,15 @@ export default function AdminBlogPage() {
     loadPosts()
   }, [])
 
-  const loadPosts = () => {
-    const data = blogStore.getAll()
-    setPosts(data)
+  const loadPosts = async () => {
+    try {
+      const response = await fetch('/api/admin/blog')
+      const data = await response.json()
+      setPosts(data || [])
+    } catch (error) {
+      console.error('Error loading posts:', error)
+      toast.error("Ошибка при загрузке статей")
+    }
   }
 
   const resetForm = () => {
@@ -108,7 +127,7 @@ export default function AdminBlogPage() {
     setIsDialogOpen(true)
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!formData.title.trim()) {
       toast.error("Введите заголовок статьи")
       return
@@ -121,14 +140,20 @@ export default function AdminBlogPage() {
     setIsLoading(true)
 
     try {
-      if (editingPost) {
-        blogStore.update(editingPost.id, formData)
-        toast.success("Статья успешно обновлена!")
-      } else {
-        blogStore.create(formData)
-        toast.success("Статья успешно создана!")
-      }
+      const method = editingPost ? 'PUT' : 'POST'
+      const body = editingPost 
+        ? { id: editingPost.id, title: formData.title, slug: formData.slug, excerpt: formData.excerpt, content: formData.content, image: formData.image, category: formData.category, author: formData.author, status: formData.status, featured: formData.featured }
+        : formData
 
+      const response = await fetch('/api/admin/blog', {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+
+      if (!response.ok) throw new Error('API error')
+
+      toast.success(editingPost ? "Статья успешно обновлена!" : "Статья успешно создана!")
       loadPosts()
       setIsDialogOpen(false)
       resetForm()
@@ -139,12 +164,17 @@ export default function AdminBlogPage() {
     }
   }
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (!deletingPost) return
 
     setIsLoading(true)
     try {
-      blogStore.delete(deletingPost.id)
+      const response = await fetch(`/api/admin/blog?id=${deletingPost.id}`, {
+        method: 'DELETE'
+      })
+
+      if (!response.ok) throw new Error('API error')
+
       toast.success("Статья успешно удалена!")
       loadPosts()
       setIsDeleteDialogOpen(false)
@@ -161,20 +191,45 @@ export default function AdminBlogPage() {
     setIsDeleteDialogOpen(true)
   }
 
-  const toggleFeatured = (post: BlogPost) => {
-    blogStore.update(post.id, { featured: !post.featured })
-    loadPosts()
-    toast.success(post.featured ? "Статья убрана из избранных" : "Статья добавлена в избранные")
+  const toggleFeatured = async (post: BlogPost) => {
+    try {
+      const response = await fetch('/api/admin/blog', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          ...post,
+          featured: !post.featured 
+        })
+      })
+      if (response.ok) {
+        loadPosts()
+        toast.success(post.featured ? "Статья убрана из избранных" : "Статья добавлена в избранные")
+      }
+    } catch (error) {
+      toast.error("Ошибка при обновлении статьи")
+    }
   }
 
-  const togglePublished = (post: BlogPost) => {
+  const togglePublished = async (post: BlogPost) => {
     const newStatus = post.status === "published" ? "draft" : "published"
-    blogStore.update(post.id, { status: newStatus })
-    loadPosts()
-    toast.success(newStatus === "published" ? "Статья опубликована" : "Статья снята с публикации")
+    try {
+      const response = await fetch('/api/admin/blog', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          ...post,
+          status: newStatus 
+        })
+      })
+      if (response.ok) {
+        loadPosts()
+        toast.success(newStatus === "published" ? "Статья опубликована" : "Статья снята с публикации")
+      }
+    } catch (error) {
+      toast.error("Ошибка при обновлении статьи")
+    }
   }
 
-  // Filter posts
   const filteredPosts = posts.filter(post => {
     const matchesSearch = post.title.toLowerCase().includes(search.toLowerCase()) ||
                          post.excerpt.toLowerCase().includes(search.toLowerCase())
@@ -182,7 +237,6 @@ export default function AdminBlogPage() {
     return matchesSearch && matchesStatus
   })
 
-  // Stats
   const stats = {
     total: posts.length,
     published: posts.filter(p => p.status === "published").length,
@@ -325,7 +379,7 @@ export default function AdminBlogPage() {
                   <TableCell>
                     <div className="flex items-center gap-1 text-muted-foreground">
                       <Calendar className="w-4 h-4" />
-                      {new Date(post.createdAt).toLocaleDateString('ru-RU')}
+                      {new Date(post.created_at).toLocaleDateString('ru-RU')}
                     </div>
                   </TableCell>
                   <TableCell>
