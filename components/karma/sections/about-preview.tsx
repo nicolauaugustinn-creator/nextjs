@@ -32,7 +32,7 @@ export function AboutPreview() {
           >
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
               <img
-                src="/consultant-profile.jpg"
+                src="/images/about-me.jpg"
                 alt="Consultant Profile"
                 className="w-full h-full object-cover"
               />

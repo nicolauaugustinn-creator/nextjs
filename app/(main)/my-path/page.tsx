@@ -76,7 +76,7 @@ export default function MyPathPage() {
             >
               <div className="aspect-[3/4] rounded-2xl overflow-hidden border border-gold/20">
                 <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5391083623739495321-KGl47fLM4bM3P1E6FkJFtLB7HR9VBV.jpg"
+                  src="/images/about-me.jpg"
                   alt={t("about_title")}
                   className="w-full h-full object-cover"
                 />
