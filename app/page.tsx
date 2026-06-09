@@ -1,3 +1,7 @@
+import { Navbar } from "@/components/karma/navbar"
+import { Footer } from "@/components/karma/footer"
+import { MobileBottomNav } from "@/components/karma/mobile-bottom-nav"
+import { StickyTelegramButton } from "@/components/karma/sticky-telegram-button"
 import { HeroSection } from "@/components/karma/hero-section"
 import { AboutPreview } from "@/components/karma/sections/about-preview"
 import { DirectionsSection } from "@/components/karma/sections/directions-section"
@@ -12,18 +16,24 @@ import { PWABanner } from "@/components/karma/sections/pwa-banner"
 
 export default function HomePage() {
   return (
-    <main id="main-content">
-      <HeroSection />
-      <AboutPreview />
-      <DirectionsSection />
-      <CoursesPreview />
-      <MeditationsPreview />
-      <RetreatPreview />
-      <ReviewsPreview />
-      <FreeTestCTA />
-      <TelegramCTA />
-      <FAQPreview />
-      <PWABanner />
-    </main>
+    <>
+      <Navbar />
+      <main id="main-content">
+        <HeroSection />
+        <AboutPreview />
+        <DirectionsSection />
+        <CoursesPreview />
+        <MeditationsPreview />
+        <RetreatPreview />
+        <ReviewsPreview />
+        <FreeTestCTA />
+        <TelegramCTA />
+        <FAQPreview />
+        <PWABanner />
+      </main>
+      <Footer />
+      <MobileBottomNav />
+      <StickyTelegramButton />
+    </>
   )
 }

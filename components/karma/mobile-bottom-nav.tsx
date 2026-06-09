@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Star, Heart, Wine, Bell, ShoppingBag } from "lucide-react"
@@ -18,8 +19,14 @@ const navItems: { labelKey: TranslationKey; href: string; icon: React.ElementTyp
 export function MobileBottomNav() {
   const pathname = usePathname()
   const { t } = useT()
+  const [mounted, setMounted] = useState(false)
 
-  if (pathname.startsWith("/admin")) return null
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Don't render if not mounted (hydration) or if on admin pages
+  if (!mounted || pathname.startsWith("/(admin)")) return null
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-background/90 backdrop-blur-xl border-t border-border/50 pb-safe">
