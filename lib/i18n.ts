@@ -137,7 +137,7 @@ const translations = {
     faq_title: "Часто задаваемые вопросы",
     faq_subtitle: "Найди ответы на вопросы о нумерологии, курсах и консультациях",
     faq_q1: "Что такое нумерология?",
-    faq_a1: "Нумерология — это д����������������евняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
+    faq_a1: "Нумерология — это древняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
     faq_q2: "С чего начать?",
     faq_a2: "Лучший старт — бесплатный тест или консультация. Это позволит понять ваш уровень и подобрать оптимальный формат работы.",
     faq_q3: "Как проходят консультации?",
@@ -213,7 +213,7 @@ const translations = {
     page_retreat_tag: "СЛЕДУЮЩИЙ РЕТРИТ",
     page_retreat_register: "Записаться на ретрит",
     page_retreat_program: "Программа",
-    page_retreat_included: "Что включе��о",
+    page_retreat_included: "Что включено",
     page_retreat_location: "Место проведения",
     page_retreat_faq: "Вопросы и ответы",
     page_retreat_contact: "Связаться для записи",
@@ -382,7 +382,7 @@ const translations = {
     consult_step2_title: "Оставьте заявку",
     consult_step2_desc: "Заполните форму или напишите в Telegram для записи на консультацию",
     consult_step3_title: "Согласуем время",
-    consult_step3_desc: "Я свяжусь с вами для выбора уд��бного времени и уточнения деталей",
+    consult_step3_desc: "Я свяжусь с вами для выбора удобного времени и уточнения деталей",
     consult_step4_title: "Консультация",
     consult_step4_desc: "Проводим встречу онлайн через Zoom, вы получаете запись и материалы",
     consult_not_sure: "Не уверены, какая консультация вам нужна?",
@@ -401,7 +401,7 @@ const translations = {
     consult_feature_growth_points: "Точки роста и конфликтов",
     consult_feature_harmony_practices: "Практики для гармонизации",
     consult_feature_biz_energy: "Анализ личных бизнес-энергий",
-    consult_feature_biz_periods: "Благоприятные периоды для решен��й",
+    consult_feature_biz_periods: "Благоприятные периоды для решений",
     consult_feature_partner_compat: "Совместимость с партнёрами",
     consult_feature_company_name: "Анализ названия компании",
     consult_feature_strategy: "Стратегия развития",
@@ -487,7 +487,7 @@ const translations = {
     practices_view_courses: "Смотреть курсы",
     practices_schedule_consultation: "Записаться на консультацию",
     filter_all: "Все",
-    filter_all_levels: "Все ур��вни",
+    filter_all_levels: "Все уровни",
 
     // Forgot password page
     forgot_title: "Восстановление пароля",
@@ -495,7 +495,7 @@ const translations = {
     forgot_send_link: "Отправить ссылку",
     forgot_sending: "Отправка...",
     forgot_email_sent: "Письмо отправлено",
-    forgot_email_sent_desc: "Мы отправили ��нстр�����ции по восстановлению пароля на вашу почту. Проверьте папку «Спам», если письмо не пришло.",
+    forgot_email_sent_desc: "Мы отправили инструкции по восстановлению пароля на вашу почту. Проверьте папку «Спам», если письмо не пришло.",
     forgot_back_to_login: "Назад ко входу",
 
     // Common
