@@ -57,10 +57,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon-kn.png", type: "image/png" },
+      { url: "/favicon-kn.png", sizes: "any" },
       { url: "/icon.svg", type: "image/svg+xml" }
     ],
-    apple: "/apple-touch-icon.png"
+    apple: "/apple-icon.png",
+    shortcut: "/favicon-kn.png"
   },
   manifest: "/manifest.json",
   robots: {
@@ -95,6 +96,10 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning className="bg-background">
       <head>
+        <link rel="icon" href="/favicon-kn.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <link rel="shortcut icon" href="/favicon-kn.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
