@@ -110,6 +110,12 @@ export default function AdminDashboardPage() {
           <h1 className="font-serif text-2xl md:text-3xl text-cream">Dashboard</h1>
           <p className="text-cream/60">Управление контентом сайта KARMANUMBERS</p>
         </div>
+        <Link href="/">
+          <Button className="bg-gold/20 text-gold hover:bg-gold/30 border border-gold/30">
+            <ArrowRight className="w-4 h-4 mr-2" />
+            На главную страницу
+          </Button>
+        </Link>
       </div>
 
       {/* Quick Actions */}
