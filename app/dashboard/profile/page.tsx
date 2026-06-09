@@ -36,16 +36,16 @@ export default function ProfilePage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-charcoal-light/50 rounded-lg p-6 border border-white/10"
+        className="bg-gradient-to-r from-gold/10 to-burgundy/10 rounded-xl p-8 border border-gold/30 shadow-lg shadow-gold/10"
       >
-        <div className="flex items-start gap-4">
-          <div className="w-24 h-24 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
-            <User className="w-12 h-12 text-gold" />
+        <div className="flex items-start gap-6">
+          <div className="w-28 h-28 rounded-full bg-gradient-to-br from-gold/30 to-burgundy/30 flex items-center justify-center flex-shrink-0 border-2 border-gold/50 shadow-lg">
+            <User className="w-14 h-14 text-gold" />
           </div>
           <div className="flex-1">
-            <h1 className="font-serif text-3xl text-cream mb-2">{user.name}</h1>
-            <p className="text-gold font-medium mb-1">{user.stats.level}</p>
-            <p className="text-cream/60 text-sm">Member since {new Date(user.createdAt).toLocaleDateString()}</p>
+            <h1 className="font-serif text-4xl text-cream mb-3">{user.name}</h1>
+            <p className="text-gold font-bold text-lg mb-2">{user.stats.level}</p>
+            <p className="text-cream/60">Участник с {new Date(user.createdAt).toLocaleDateString('ru-RU')}</p>
           </div>
         </div>
       </motion.div>
@@ -57,21 +57,21 @@ export default function ProfilePage() {
         transition={{ delay: 0.1 }}
         className="grid grid-cols-1 sm:grid-cols-4 gap-4"
       >
-        <div className="bg-charcoal-light/50 rounded-lg p-4 border border-white/10">
-          <p className="text-cream/70 text-sm mb-2">Courses</p>
-          <p className="font-serif text-3xl text-cream">{user.stats.coursesCompleted}</p>
+        <div className="bg-gradient-to-br from-blue/10 to-blue/5 rounded-lg p-6 border border-blue/30 hover:border-blue/50 transition-all hover:shadow-lg hover:shadow-blue/20">
+          <p className="text-cream/70 text-sm font-medium mb-2">Курсы</p>
+          <p className="font-serif text-3xl text-blue-400">{user.stats.coursesCompleted}</p>
         </div>
-        <div className="bg-charcoal-light/50 rounded-lg p-4 border border-white/10">
-          <p className="text-cream/70 text-sm mb-2">Meditations</p>
-          <p className="font-serif text-3xl text-cream">{user.stats.meditationsCompleted}</p>
+        <div className="bg-gradient-to-br from-purple/10 to-purple/5 rounded-lg p-6 border border-purple/30 hover:border-purple/50 transition-all hover:shadow-lg hover:shadow-purple/20">
+          <p className="text-cream/70 text-sm font-medium mb-2">Медитации</p>
+          <p className="font-serif text-3xl text-purple-400">{user.stats.meditationsCompleted}</p>
         </div>
-        <div className="bg-charcoal-light/50 rounded-lg p-4 border border-white/10">
-          <p className="text-cream/70 text-sm mb-2">Hours</p>
-          <p className="font-serif text-3xl text-cream">{user.stats.totalHoursSpent.toFixed(1)}h</p>
+        <div className="bg-gradient-to-br from-green/10 to-green/5 rounded-lg p-6 border border-green/30 hover:border-green/50 transition-all hover:shadow-lg hover:shadow-green/20">
+          <p className="text-cream/70 text-sm font-medium mb-2">Часов</p>
+          <p className="font-serif text-3xl text-green-400">{user.stats.totalHoursSpent.toFixed(1)}h</p>
         </div>
-        <div className="bg-charcoal-light/50 rounded-lg p-4 border border-white/10">
-          <p className="text-cream/70 text-sm mb-2">Level</p>
-          <p className="font-serif text-lg text-cream">{user.stats.level}</p>
+        <div className="bg-gradient-to-br from-gold/10 to-burgundy/10 rounded-lg p-6 border border-gold/30 hover:border-gold/50 transition-all hover:shadow-lg hover:shadow-gold/20">
+          <p className="text-cream/70 text-sm font-medium mb-2">Уровень</p>
+          <p className="font-serif text-2xl text-gold">{user.stats.level}</p>
         </div>
       </motion.div>
 
@@ -80,59 +80,59 @@ export default function ProfilePage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-4"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
         {/* Points */}
-        <div className="bg-charcoal-light/50 rounded-lg p-6 border border-white/10">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-serif text-lg text-cream">Your Points</h3>
-            <Zap className="w-6 h-6 text-gold" />
+        <div className="bg-gradient-to-br from-gold/15 to-burgundy/10 rounded-xl p-8 border border-gold/40 shadow-lg shadow-gold/10">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="font-serif text-2xl text-cream">Ваши Очки</h3>
+            <Zap className="w-8 h-8 text-gold" />
           </div>
-          <p className="font-serif text-5xl text-gold mb-4">{user.points}</p>
-          <p className="text-cream/60 text-sm mb-6">Available to redeem for rewards</p>
-          <div className="border-t border-white/10 pt-4 mt-4">
-            <p className="text-xs text-cream/50 mb-3">How to earn points:</p>
-            <ul className="space-y-2 text-sm text-cream/70">
-              <li className="flex justify-between">
-                <span>Complete course</span>
-                <span className="text-gold">+100</span>
+          <p className="font-serif text-6xl text-gold mb-6 font-bold">{user.points}</p>
+          <p className="text-cream/70 text-sm mb-8">Доступны для обмена на награды</p>
+          <div className="border-t border-gold/20 pt-6 mt-6">
+            <p className="text-xs text-cream/60 mb-4 font-medium">Как получить очки:</p>
+            <ul className="space-y-3">
+              <li className="flex justify-between items-center p-3 rounded-lg hover:bg-white/5 transition-colors">
+                <span className="text-cream/80">Завершить курс</span>
+                <span className="text-gold font-bold">+100</span>
               </li>
-              <li className="flex justify-between">
-                <span>Meditation session</span>
-                <span className="text-gold">+25</span>
+              <li className="flex justify-between items-center p-3 rounded-lg hover:bg-white/5 transition-colors">
+                <span className="text-cream/80">Сеанс медитации</span>
+                <span className="text-gold font-bold">+25</span>
               </li>
-              <li className="flex justify-between">
-                <span>Referral</span>
-                <span className="text-gold">+50</span>
+              <li className="flex justify-between items-center p-3 rounded-lg hover:bg-white/5 transition-colors">
+                <span className="text-cream/80">Реферал</span>
+                <span className="text-gold font-bold">+50</span>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Referrals */}
-        <div className="bg-charcoal-light/50 rounded-lg p-6 border border-white/10">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-serif text-lg text-cream">Referral Program</h3>
-            <Gift className="w-6 h-6 text-gold" />
+        <div className="bg-gradient-to-br from-burgundy/15 to-purple/10 rounded-xl p-8 border border-burgundy/40 shadow-lg shadow-burgundy/10">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="font-serif text-2xl text-cream">Программа Рефералов</h3>
+            <Gift className="w-8 h-8 text-burgundy-400" />
           </div>
-          <p className="text-cream/60 text-sm mb-3">Your referral code:</p>
-          <div className="flex gap-2 mb-4">
-            <div className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between">
-              <span className="font-mono text-gold font-bold">{user.referralCode}</span>
+          <p className="text-cream/70 text-sm mb-4 font-medium">Ваш код рефeral:</p>
+          <div className="flex gap-2 mb-6">
+            <div className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-burgundy/30 flex items-center justify-between">
+              <span className="font-mono text-gold font-bold text-lg">{user.referralCode}</span>
             </div>
             <Button
               size="sm"
               onClick={copyReferralCode}
-              className="bg-gold text-charcoal hover:bg-gold-light"
+              className="bg-gold/20 hover:bg-gold/30 text-gold border border-gold/50 font-semibold"
             >
               {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             </Button>
           </div>
-          <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-            <p className="text-sm text-cream/70 mb-2">Your referrals:</p>
-            <p className="font-serif text-3xl text-gold mb-1">{referralStats.totalReferrals}</p>
+          <div className="bg-gradient-to-r from-burgundy/10 to-purple/10 rounded-lg p-4 border border-burgundy/30 hover:border-burgundy/50 transition-all">
+            <p className="text-sm text-cream/70 mb-3 font-medium">Ваши рефералы:</p>
+            <p className="font-serif text-4xl text-burgundy-400 mb-2">{referralStats.totalReferrals}</p>
             <p className="text-cream/50 text-xs">
-              {referralStats.totalReferralPoints} points earned
+              {referralStats.totalReferralPoints} очков заработано
             </p>
           </div>
         </div>
@@ -143,26 +143,26 @@ export default function ProfilePage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="bg-charcoal-light/50 rounded-lg p-6 border border-white/10"
+        className="bg-gradient-to-br from-charcoal-light/80 to-charcoal-light/50 rounded-xl p-8 border border-white/20 shadow-lg backdrop-blur-sm"
       >
-        <h3 className="font-serif text-lg text-cream mb-4">Contact Information</h3>
+        <h3 className="font-serif text-2xl text-cream mb-6">Контактная информация</h3>
         <div className="space-y-4">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">
-              <Mail className="w-5 h-5 text-gold" />
+          <div className="flex items-center gap-4 p-4 rounded-lg hover:bg-white/5 transition-colors">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold/20 to-gold/10 flex items-center justify-center flex-shrink-0">
+              <Mail className="w-6 h-6 text-gold" />
             </div>
             <div>
-              <p className="text-cream/70 text-sm">Email</p>
-              <p className="text-cream">{user.email}</p>
+              <p className="text-cream/70 text-sm font-medium">Email</p>
+              <p className="text-cream font-semibold">{user.email}</p>
             </div>
           </div>
           <div className="border-t border-white/10 pt-4">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-purple/20 flex items-center justify-center">
-                <User className="w-5 h-5 text-purple-400" />
+            <div className="flex items-center gap-4 p-4 rounded-lg hover:bg-white/5 transition-colors">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple/20 to-purple/10 flex items-center justify-center flex-shrink-0">
+                <User className="w-6 h-6 text-purple-400" />
               </div>
               <div>
-                <p className="text-cream/70 text-sm">User ID</p>
+                <p className="text-cream/70 text-sm font-medium">ID пользователя</p>
                 <p className="text-cream font-mono text-sm">{user.id}</p>
               </div>
             </div>

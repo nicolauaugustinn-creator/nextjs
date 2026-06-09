@@ -66,23 +66,23 @@ export default function DashboardLayout({
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-charcoal-dark border-r border-white/10 transform transition-transform duration-300 ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-charcoal-dark/95 backdrop-blur-sm border-r border-gold/20 transform transition-transform duration-300 shadow-2xl ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full bg-gradient-to-b from-charcoal-dark to-charcoal-dark/90">
           {/* Logo */}
-          <div className="p-6 border-b border-white/10">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-burgundy flex items-center justify-center">
+          <div className="p-6 border-b border-gold/20 bg-charcoal-dark/50 backdrop-blur">
+            <Link href="/" className="flex items-center gap-2 group">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-burgundy flex items-center justify-center group-hover:shadow-lg group-hover:shadow-gold/30 transition-all">
                 <span className="font-serif text-lg text-cream">K</span>
               </div>
-              <span className="font-serif text-xl text-cream">KARMANUMBERS</span>
+              <span className="font-serif text-xl text-cream group-hover:text-gold transition-colors">KARMANUMBERS</span>
             </Link>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 p-4 space-y-1">
+          <nav className="flex-1 p-4 space-y-2">
             {sidebarLinks.map((link) => {
               const isActive = pathname === link.href
               return (
@@ -90,27 +90,28 @@ export default function DashboardLayout({
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsSidebarOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group ${
                     isActive
-                      ? "bg-gold/10 text-gold"
-                      : "text-cream/60 hover:bg-white/5 hover:text-cream"
+                      ? "bg-gradient-to-r from-gold/20 to-gold/10 text-gold border border-gold/30 shadow-md shadow-gold/10"
+                      : "text-cream/70 hover:bg-white/8 hover:text-cream hover:border hover:border-white/10"
                   }`}
                 >
-                  <link.icon className="w-5 h-5" />
-                  {link.label}
+                  <link.icon className={`w-5 h-5 transition-transform group-hover:scale-110 ${isActive ? "text-gold" : ""}`} />
+                  <span className="font-medium">{link.label}</span>
+                  {isActive && <div className="ml-auto w-2 h-2 rounded-full bg-gold" />}
                 </Link>
               )
             })}
           </nav>
 
           {/* User section */}
-          <div className="p-4 border-t border-white/10">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">
+          <div className="p-4 border-t border-gold/20 bg-charcoal-dark/50 backdrop-blur space-y-3">
+            <div className="flex items-center gap-3 bg-white/5 rounded-lg p-3 border border-white/10">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold/20 to-burgundy/20 flex items-center justify-center flex-shrink-0">
                 <User className="w-5 h-5 text-gold" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-cream text-sm font-medium truncate">{user?.name || "User"}</p>
+                <p className="text-cream text-sm font-semibold truncate">{user?.name || "User"}</p>
                 <p className="text-cream/50 text-xs truncate">{user?.email || "user@email.com"}</p>
               </div>
             </div>
@@ -118,11 +119,13 @@ export default function DashboardLayout({
             {/* Points Display */}
             {user && (
               <Link href="/dashboard/profile" onClick={() => setIsSidebarOpen(false)}>
-                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gold/10 border border-gold/20 hover:bg-gold/20 transition-colors mb-3 cursor-pointer">
-                  <Zap className="w-4 h-4 text-gold" />
+                <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-gradient-to-r from-gold/15 to-burgundy/15 border border-gold/30 hover:border-gold/50 transition-all cursor-pointer hover:shadow-md hover:shadow-gold/20 group">
+                  <div className="flex-shrink-0">
+                    <Zap className="w-5 h-5 text-gold group-hover:scale-110 transition-transform" />
+                  </div>
                   <div>
-                    <p className="text-gold text-xs font-medium">Points</p>
-                    <p className="text-gold font-bold text-sm">{user.points}</p>
+                    <p className="text-gold/80 text-xs font-semibold">Points</p>
+                    <p className="text-gold font-bold text-lg">{user.points}</p>
                   </div>
                 </div>
               </Link>
@@ -130,9 +133,8 @@ export default function DashboardLayout({
             
             <Button
               onClick={handleLogout}
-              variant="outline"
               size="sm"
-              className="w-full border-white/10 text-cream/60 hover:bg-white/5"
+              className="w-full bg-burgundy/20 border border-burgundy/50 text-burgundy hover:bg-burgundy/30 hover:border-burgundy/70 transition-all font-medium"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Выйти
@@ -144,11 +146,11 @@ export default function DashboardLayout({
       {/* Main content */}
       <div className="flex-1 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="sticky top-0 z-30 bg-charcoal/80 backdrop-blur-xl border-b border-white/10">
+        <header className="sticky top-0 z-30 bg-charcoal-dark/90 backdrop-blur-xl border-b border-gold/20 shadow-lg">
           <div className="flex items-center justify-between px-4 lg:px-8 h-16">
             <button
               onClick={() => setIsSidebarOpen(true)}
-              className="lg:hidden p-2 text-cream/60 hover:text-cream"
+              className="lg:hidden p-2 text-cream/60 hover:text-gold transition-colors"
             >
               <Menu className="w-6 h-6" />
             </button>
@@ -156,9 +158,9 @@ export default function DashboardLayout({
             <div className="flex-1" />
 
             <div className="flex items-center gap-4">
-              <button className="relative p-2 text-cream/60 hover:text-cream">
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-gold rounded-full" />
+              <button className="relative p-2 text-cream/60 hover:text-gold transition-colors group">
+                <Bell className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-gold rounded-full animate-pulse" />
               </button>
             </div>
           </div>
