@@ -12,18 +12,20 @@ import { PWABanner } from "@/components/karma/sections/pwa-banner"
 
 export default function HomePage() {
   return (
-    <main id="main-content">
-      <HeroSection />
-      <AboutPreview />
-      <DirectionsSection />
-      <CoursesPreview />
-      <MeditationsPreview />
-      <RetreatPreview />
-      <ReviewsPreview />
-      <FreeTestCTA />
-      <TelegramCTA />
-      <FAQPreview />
-      <PWABanner />
-    </main>
+    <>
+      <main id="main-content">
+        <HeroSection />
+        <AboutPreview />
+        <DirectionsSection />
+        <CoursesPreview />
+        <MeditationsPreview />
+        <RetreatPreview />
+        <ReviewsPreview />
+        <FreeTestCTA />
+        <TelegramCTA />
+        <FAQPreview />
+        <PWABanner />
+      </main>
+    </>
   )
 }

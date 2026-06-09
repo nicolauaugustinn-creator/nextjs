@@ -374,7 +374,6 @@ const translations = {
     consult_180min: "180 минут",
     consult_1month: "1 месяц",
     consult_popular: "Популярное",
-    consult_book: "Записаться",
     consult_how_it_works: "Как это работает",
     consult_booking_process: "Процесс записи",
     consult_step1_title: "Выберите формат",
@@ -426,7 +425,6 @@ const translations = {
     consult_feature_full_transform: "Полная трансформация",
 
     // Free test page
-    free_test_title: "Узнайте своё Число Судьбы",
     free_test_subtitle: "Введите дату рождения и получите краткую характеристику вашего жизненного пути",
     free_test_birthdate: "Дата рождения",
     free_test_calculate: "Рассчитать",
@@ -529,7 +527,6 @@ const translations = {
     tarot_close: "Закрыть",
 
     // FAQ
-    faq_title: "Часто задаваемые вопросы",
     faq_subtitle: "Найди ответы на вопросы о нумерологии, курсах и консультациях",
     faq_q1: "Что такое нумерология?",
     faq_a1: "Нумерология — это древняя наука о числах, которая раскрывает скрытые закономерности в судьбе человека. Через дату рождения и имя можно узнать жизненный путь, предназначение и ключевые циклы жизни.",
