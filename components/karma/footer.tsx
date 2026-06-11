@@ -165,13 +165,12 @@ export function Footer() {
           <div className="pt-6 border-t border-border/20">
             <p className="text-center text-xs text-muted-foreground/70">
               Creat de 
-              <a href="https://nicolauaugustinn.com" target="_blank" rel="noopener noreferrer" 
-                className="text-gold hover:text-gold-light transition-colors ml-1">
-                Nicolau Augustinn
+              <a href="https://www.adsmoldova.md" target="_blank" rel="noopener noreferrer" 
+                className="text-gold hover:text-gold-light transition-colors ml-1 font-semibold">
+                ADS Moldova
               </a>
               <span className="mx-1">•</span>
-              Dezvoltat cu 
-              <span className="text-gold ml-1">Next.js, React & Neon</span>
+              Agenție de Marketing Digital & Web Development
             </p>
           </div>
         </div>
