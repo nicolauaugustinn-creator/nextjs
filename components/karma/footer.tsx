@@ -147,7 +147,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-border/30">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
             <p className="text-xs text-muted-foreground">
               2024 KARMANUMBERS. {t("footer_rights")}.
             </p>
@@ -159,6 +159,20 @@ export function Footer() {
                 {t("footer_terms")}
               </Link>
             </div>
+          </div>
+
+          {/* Created By Credit */}
+          <div className="pt-6 border-t border-border/20">
+            <p className="text-center text-xs text-muted-foreground/70">
+              Creat de 
+              <a href="https://nicolauaugustinn.com" target="_blank" rel="noopener noreferrer" 
+                className="text-gold hover:text-gold-light transition-colors ml-1">
+                Nicolau Augustinn
+              </a>
+              <span className="mx-1">•</span>
+              Dezvoltat cu 
+              <span className="text-gold ml-1">Next.js, React & Neon</span>
+            </p>
           </div>
         </div>
       </div>
