@@ -57,11 +57,13 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon-kn.png", sizes: "any" },
+      { url: "/favicon.png", sizes: "32x32", type: "image/png" },
       { url: "/icon.svg", type: "image/svg+xml" }
     ],
-    apple: "/apple-icon.png",
-    shortcut: "/favicon-kn.png"
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" }
+    ],
+    shortcut: "/favicon.png"
   },
   manifest: "/manifest.json",
   robots: {
@@ -96,15 +98,18 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning className="bg-background">
       <head>
-        <link rel="icon" href="/favicon-kn.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
-        <link rel="shortcut icon" href="/favicon-kn.png" />
+        <link rel="shortcut icon" href="/favicon.png" />
+        <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="KARMANUMBERS" />
+        <meta name="theme-color" content="#0a0a0f" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#f8f7f4" media="(prefers-color-scheme: light)" />
       </head>
       <body className={`antialiased ${playfair.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
         <a

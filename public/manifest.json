@@ -1,0 +1,45 @@
+{
+  "name": "KARMANUMBERS - Curs de Numerologie și Consultații Spirituale",
+  "short_name": "KARMANUMBERS",
+  "description": "Descoperă codul destinului tău prin numerologie, cursuri online, meditații și consultații personalizate cu Valentina Chernyak",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a0a0f",
+  "theme_color": "#c9a962",
+  "icons": [
+    {
+      "src": "/icon-dark-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["education", "lifestyle", "wellness"],
+  "screenshots": [
+    {
+      "src": "/screenshots/homepage.png",
+      "sizes": "540x720",
+      "type": "image/png"
+    }
+  ]
+}
