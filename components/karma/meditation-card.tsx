@@ -33,6 +33,13 @@ export function MeditationCard({ meditation, variant = "default" }: MeditationCa
   }
 
   const isComingSoon = meditation.status === "coming_soon"
+  const hasYoutubeLink = meditation.youtubeLink && !isComingSoon
+
+  const handlePlay = () => {
+    if (hasYoutubeLink) {
+      window.open(meditation.youtubeLink, "_blank")
+    }
+  }
 
   return (
     <GlassCard
@@ -66,12 +73,15 @@ export function MeditationCard({ meditation, variant = "default" }: MeditationCa
               <Lock className="w-6 h-6 text-zinc-400" />
             </div>
           ) : (
-            <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 group-hover:bg-gold/20 transition-all">
+            <button
+              onClick={handlePlay}
+              className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 group-hover:bg-gold/20 transition-all cursor-pointer"
+            >
               <Play className={cn(
                 "w-6 h-6 ml-1",
                 meditation.isBlackWhite ? "text-white" : "text-violet-light"
               )} />
-            </div>
+            </button>
           )}
         </div>
 
@@ -130,12 +140,11 @@ export function MeditationCard({ meditation, variant = "default" }: MeditationCa
 
         {/* Action */}
         {!isComingSoon && (
-          <Link href={`/meditations/${meditation.slug}`}>
-            <Button
-              variant="outline"
-              size="sm"
+          hasYoutubeLink ? (
+            <button
+              onClick={handlePlay}
               className={cn(
-                "w-full",
+                "w-full px-3 py-2 text-sm font-medium rounded-md border transition-all flex items-center justify-center",
                 meditation.isBlackWhite
                   ? "border-zinc-600 text-zinc-300 hover:bg-zinc-800"
                   : "border-violet/30 text-violet-light hover:bg-violet/10"
@@ -143,8 +152,24 @@ export function MeditationCard({ meditation, variant = "default" }: MeditationCa
             >
               <Play className="w-4 h-4 mr-2" />
               {t("listen")}
-            </Button>
-          </Link>
+            </button>
+          ) : (
+            <Link href={`/meditations/${meditation.slug}`}>
+              <Button
+                variant="outline"
+                size="sm"
+                className={cn(
+                  "w-full",
+                  meditation.isBlackWhite
+                    ? "border-zinc-600 text-zinc-300 hover:bg-zinc-800"
+                    : "border-violet/30 text-violet-light hover:bg-violet/10"
+                )}
+              >
+                <Play className="w-4 h-4 mr-2" />
+                {t("listen")}
+              </Button>
+            </Link>
+          )
         )}
       </div>
     </GlassCard>

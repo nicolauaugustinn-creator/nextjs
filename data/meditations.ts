@@ -43,6 +43,7 @@ export const meditations: Meditation[] = [
     level: "beginner",
     coverImage: "/images/meditations/morning-message.jpg",
     videoPlaceholder: "IMG_1201.MOV",
+    youtubeLink: "https://youtu.be/SFbS0EDFXxo?si=clbsu1hZ7Elf3bol",
     isBlackWhite: false,
     status: "available",
     featured: true
@@ -57,6 +58,7 @@ export const meditations: Meditation[] = [
     level: "beginner",
     coverImage: "/images/meditations/feminine-energy.jpg",
     videoPlaceholder: "IMG_1202.MOV",
+    youtubeLink: "https://youtu.be/5K3gK67s-28?si=ljYb26LX-VfKqDDy",
     isBlackWhite: false,
     status: "available",
     featured: true
@@ -71,6 +73,7 @@ export const meditations: Meditation[] = [
     level: "intermediate",
     coverImage: "/images/meditations/inner-child.jpg",
     videoPlaceholder: "IMG_1203.MOV",
+    youtubeLink: "https://youtu.be/GpheYX6cvpc?si=2NaXrDj8H0LPY2Z4",
     isBlackWhite: false,
     status: "available",
     featured: true
@@ -85,6 +88,7 @@ export const meditations: Meditation[] = [
     level: "advanced",
     coverImage: "/images/meditations/lineage-healing.jpg",
     videoPlaceholder: "IMG_1204.MOV",
+    youtubeLink: "https://youtu.be/wML8IVv236o?si=pU24dD_4SF1UrciM",
     isBlackWhite: false,
     status: "available",
     featured: false
@@ -99,6 +103,7 @@ export const meditations: Meditation[] = [
     level: "advanced",
     coverImage: "/images/meditations/bw-soul-silence.jpg",
     videoPlaceholder: "IMG_1205.MOV",
+    youtubeLink: "https://youtu.be/dsNIa5gUpE0?si=KoPoFkctWc8WWy3s",
     isBlackWhite: true,
     status: "available",
     featured: true
@@ -113,6 +118,7 @@ export const meditations: Meditation[] = [
     level: "advanced",
     coverImage: "/images/meditations/bw-shadow-light.jpg",
     videoPlaceholder: "IMG_1206.MOV",
+    youtubeLink: "https://youtu.be/kKrqASoVn4M?si=8_ZrSmjJGavtE9Sg",
     isBlackWhite: true,
     status: "available",
     featured: false
@@ -127,6 +133,7 @@ export const meditations: Meditation[] = [
     level: "advanced",
     coverImage: "/images/meditations/bw-void.jpg",
     videoPlaceholder: "IMG_1207.MOV",
+    youtubeLink: "https://youtu.be/w4UYJ87NGBw?si=exHzLRDxnB6F3yog",
     isBlackWhite: true,
     status: "available",
     featured: false
@@ -140,6 +147,7 @@ export const meditations: Meditation[] = [
     duration: "18 мин",
     level: "beginner",
     coverImage: "/images/meditations/sun-energy.jpg",
+    youtubeLink: "https://youtu.be/DwSPAOTxhFg?si=v1AR0ZsMKVveX4CS",
     isBlackWhite: false,
     status: "available",
     featured: false
@@ -153,6 +161,7 @@ export const meditations: Meditation[] = [
     duration: "10 мин",
     level: "beginner",
     coverImage: "/images/meditations/morning-gratitude.jpg",
+    youtubeLink: "https://youtu.be/VBMTEqrRtlE?si=nIw029eOBWVhD8b4",
     isBlackWhite: false,
     status: "available",
     featured: false
@@ -166,6 +175,7 @@ export const meditations: Meditation[] = [
     duration: "25 мин",
     level: "intermediate",
     coverImage: "/images/meditations/heart-healing.jpg",
+    youtubeLink: "https://youtu.be/bX7YVDFEC3c?si=v6rA2bLx1E45oe81",
     isBlackWhite: false,
     status: "available",
     featured: true
@@ -179,8 +189,9 @@ export const meditations: Meditation[] = [
     duration: "30 мин",
     level: "advanced",
     coverImage: "/images/meditations/third-eye.jpg",
+    youtubeLink: "https://youtu.be/NpN5W2vjfNc?si=3hSUrv2TOUp8ECd6",
     isBlackWhite: false,
-    status: "coming_soon",
+    status: "available",
     featured: false
   },
   {
@@ -192,8 +203,9 @@ export const meditations: Meditation[] = [
     duration: "50 мин",
     level: "advanced",
     coverImage: "/images/meditations/bw-rebirth.jpg",
+    youtubeLink: "https://youtu.be/n8EvRN-VLSc?si=wB_IqT0g3-nBYV5N",
     isBlackWhite: true,
-    status: "coming_soon",
+    status: "available",
     featured: false
   }
 ]
