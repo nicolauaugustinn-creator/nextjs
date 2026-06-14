@@ -19,11 +19,17 @@ const LangContext = createContext<LangContextValue>({
 
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(DEFAULT_LANG)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const stored = localStorage.getItem(STORAGE_KEY) as Lang | null
     if (stored && ["ru", "ro", "en", "ua"].includes(stored)) {
       setLangState(stored)
+    } else {
+      // If no language is stored, default to Russian and save it
+      setLangState("ru")
+      localStorage.setItem(STORAGE_KEY, "ru")
     }
   }, [])
 
@@ -34,6 +40,10 @@ export function LangProvider({ children }: { children: ReactNode }) {
 
   function tFn(key: TranslationKey): string {
     return translate(lang, key)
+  }
+
+  if (!mounted) {
+    return <>{children}</>
   }
 
   return (
