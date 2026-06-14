@@ -12,7 +12,8 @@ interface ReviewImage {
 }
 
 // Start from review-02.jpg (skip the first one with Russian text)
-const reviewImages: ReviewImage[] = Array.from({ length: 18 }, (_, i) => ({
+// Now includes 27 images: review-02 through review-28
+const reviewImages: ReviewImage[] = Array.from({ length: 27 }, (_, i) => ({
   id: i + 1,
   src: `/reviews-images/review-${String(i + 2).padStart(2, '0')}.jpg`,
   alt: `Client testimonial ${i + 1}`,
