@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import Image from 'next/image'
 import { ChevronLeft, ChevronRight, X, Eye, ChevronDown } from 'lucide-react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { useT } from '@/lib/lang-context'
@@ -24,6 +23,7 @@ export function ReviewsGallery() {
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
+  const [imageDimensions, setImageDimensions] = useState<{ [key: number]: { width: number; height: number } }>({})
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollY } = useScroll()
   const { t } = useT()
@@ -60,8 +60,9 @@ export function ReviewsGallery() {
     }
   }
 
-  const handleImageLoad = (id: number) => {
+  const handleImageLoad = (id: number, width: number, height: number) => {
     setLoadedImages(prev => new Set([...prev, id]))
+    setImageDimensions(prev => ({ ...prev, [id]: { width, height } }))
   }
 
   const previousImage = () => {
@@ -112,7 +113,6 @@ export function ReviewsGallery() {
       >
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 auto-rows-max">
           {reviewImages.map((image, index) => {
-            // Calculate stagger based on position in grid
             const columnIndex = index % 3
             const rowIndex = Math.floor(index / 3)
             const staggerDelay = columnIndex * 0.1 + (rowIndex % 2) * 0.05
@@ -145,14 +145,15 @@ export function ReviewsGallery() {
 
                 {/* Image Container */}
                 <div className="relative w-full" style={{ aspectRatio: '9/16' }}>
-                  <Image
+                  <img
                     src={image.src}
                     alt={image.alt}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    onLoad={() => handleImageLoad(image.id)}
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-                    quality={85}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                    onLoad={(e) => {
+                      const img = e.target as HTMLImageElement
+                      handleImageLoad(image.id, img.naturalWidth, img.naturalHeight)
+                    }}
+                    loading="lazy"
                   />
                 </div>
 
@@ -193,7 +194,7 @@ export function ReviewsGallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-2 md:p-4 overflow-hidden"
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-2 md:p-4 overflow-y-auto"
             onClick={(e) => e.target === e.currentTarget && setSelectedImage(null)}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
@@ -203,7 +204,7 @@ export function ReviewsGallery() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2, type: 'spring', stiffness: 300, damping: 30 }}
-              className="relative w-full max-w-4xl max-h-[90vh] flex flex-col"
+              className="relative w-full max-w-4xl flex flex-col my-auto"
             >
               {/* Close Button */}
               <motion.button
@@ -216,31 +217,30 @@ export function ReviewsGallery() {
                 <X size={28} />
               </motion.button>
 
-              {/* Image Container with Swipe Hint */}
+              {/* Image Container */}
               <motion.div 
-                className="relative flex-1 rounded-lg overflow-hidden bg-black/50 backdrop-blur-sm border border-gold/20 min-h-[400px] md:min-h-[600px]"
+                className="relative rounded-lg overflow-hidden bg-black/50 backdrop-blur-sm border border-gold/20 w-full"
                 layoutId="lightbox-image"
               >
-                <div className="relative w-full h-full flex items-center justify-center">
+                <div className="relative w-full flex items-center justify-center bg-black/80">
                   <AnimatePresence mode="wait">
-                    <motion.div
-                      key={selectedImage}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="relative w-full h-full"
-                    >
-                      <Image
-                        src={reviewImages[currentImageIndex].src}
-                        alt={reviewImages[currentImageIndex].alt}
-                        fill
-                        className="object-contain"
-                        priority
-                        quality={95}
-                        unoptimized
-                      />
-                    </motion.div>
+                    {selectedImage && (
+                      <motion.div
+                        key={selectedImage}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="relative w-full max-h-[70vh] md:max-h-[80vh]"
+                      >
+                        <img
+                          src={reviewImages[currentImageIndex].src}
+                          alt={reviewImages[currentImageIndex].alt}
+                          className="w-full h-full object-contain"
+                          style={{ maxHeight: '70vh' }}
+                        />
+                      </motion.div>
+                    )}
                   </AnimatePresence>
                 </div>
 
