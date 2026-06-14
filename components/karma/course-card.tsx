@@ -66,7 +66,7 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
           </Badge>
         </div>
 
-        <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground mb-2 group-hover:text-gold transition-colors">
+        <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground mb-2 group-hover:text-gold transition-colors line-clamp-2">
           {course.title}
         </h3>
 
