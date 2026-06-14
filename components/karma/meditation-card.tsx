@@ -5,6 +5,7 @@ import { Play, Clock, Lock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { GlassCard } from "./glass-card"
+import { YouTubePlayer } from "./youtube-player"
 import { cn } from "@/lib/utils"
 import type { Meditation } from "@/data/meditations"
 import { useT } from "@/lib/lang-context"
@@ -66,12 +67,12 @@ export function MeditationCard({ meditation, variant = "default" }: MeditationCa
               <Lock className="w-6 h-6 text-zinc-400" />
             </div>
           ) : (
-            <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 group-hover:bg-gold/20 transition-all">
+            <Link href={`/meditations/${meditation.slug}`} className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 group-hover:bg-gold/20 transition-all">
               <Play className={cn(
                 "w-6 h-6 ml-1",
                 meditation.isBlackWhite ? "text-white" : "text-violet-light"
               )} />
-            </div>
+            </Link>
           )}
         </div>
 

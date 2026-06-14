@@ -11,8 +11,8 @@ export function AboutPreview() {
 
   const stats = [
     { icon: Star, value: "749+", labelKey: "about_stat_consult" as const },
-    { icon: Award, value: "ТОП-10", labelKey: "about_stat_students" as const },
-    { icon: Users, value: "4+", labelKey: "about_stat_years" as const },
+    { icon: Award, value: "17+", labelKey: "about_stat_retreats" as const },
+    { icon: Users, value: "+100", labelKey: "about_stat_group" as const },
   ]
 
   return (
@@ -49,7 +49,7 @@ export function AboutPreview() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-2 rounded-lg bg-transparent border-2 border-red-500 text-gold text-sm font-medium mb-4">
+            <span className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-sm font-medium mb-4">
               {t("about_tag")}
             </span>
 
@@ -57,15 +57,13 @@ export function AboutPreview() {
               {t("about_title")}
             </h2>
 
-            <div className="border-2 border-blue-500 p-6 rounded-lg mb-8 bg-blue-500/5">
-              <p className="text-base md:text-lg text-foreground mb-4 leading-relaxed">
-                {t("about_p1")}
-              </p>
+            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              {t("about_p1")}
+            </p>
 
-              <p className="text-sm md:text-base text-foreground/80">
-                {t("about_p2")}
-              </p>
-            </div>
+            <p className="text-muted-foreground mb-8">
+              {t("about_p2")}
+            </p>
 
             <div className="grid grid-cols-3 gap-4 mb-10">
               {stats.map((stat, index) => (
