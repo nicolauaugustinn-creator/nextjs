@@ -11,8 +11,8 @@ export function AboutPreview() {
 
   const stats = [
     { icon: Star, value: "749+", labelKey: "about_stat_consult" as const },
-    { icon: Award, value: "ТОП-10", labelKey: "about_stat_students" as const },
-    { icon: Users, value: "4+", labelKey: "about_stat_years" as const },
+    { icon: Award, value: "17+", labelKey: "about_stat_students" as const },
+    { icon: Users, value: "+100", labelKey: "about_stat_group" as const },
   ]
 
   return (

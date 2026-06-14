@@ -59,7 +59,7 @@ const translations = {
     hero_scroll: "Листай вниз",
 
     // Sections — About preview
-    about_tag: "О ВАЛЕНТИНЕ",
+    about_tag: "О СЕБЕ",
     about_title: "Нумеролог. Наставник. Проводник",
     about_p1: "Меня зовут Валентина Черняк. Я нумеролог, наставник и автор системы KARMANUMBERS — уникального метода, который объединяет нумерологию, энергетику и психологию для глубокого понимания себя.",
     about_p2: "За 7 лет практики я провела более 3 000 консультаций и помогла сотням людей раскрыть своё предназначение, наладить отношения и выйти на новый уровень дохода.",
@@ -67,6 +67,7 @@ const translations = {
     about_stat_consult: "консультаций",
     about_stat_students: "студентов",
     about_stat_years: "лет практики",
+    about_stat_group: "учеников",
 
     // Sections — Directions
     dir_tag: "НАПРАВЛЕНИЯ",
@@ -289,7 +290,7 @@ const translations = {
 
     // Auth — Register
     auth_register_title: "Создать аккаунт",
-    auth_register_subtitle: "Начните свой путь трансформации",
+    auth_register_subtitle: "Начните свой путь трансформаци��",
     auth_name: "Ваше имя",
     auth_name_ph: "Введите имя",
     auth_email_ph: "Введите email",
@@ -298,7 +299,7 @@ const translations = {
     auth_confirm_ph: "Повторите пароль",
     auth_agree: "Я согласен с",
     auth_terms: "условиями использования",
-    auth_privacy_link: "политикой конфи��енциальности",
+    auth_privacy_link: "политикой конфи����енциальности",
     auth_register_btn: "Зарегистрироваться",
     auth_has_account: "Уже есть аккаунт?",
     auth_login_link: "Войти",
