@@ -342,6 +342,10 @@ const translations = {
     // Shared
     coming_soon: "Скоро",
     listen: "Слушать",
+    back: "Назад",
+    duration_label: "Продолжительность",
+    level_label: "Уровень",
+    category_label: "Категория",
 
     // Review media labels
     review_video: "Видео-отзыв",
