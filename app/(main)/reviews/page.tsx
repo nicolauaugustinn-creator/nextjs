@@ -31,7 +31,7 @@ export default function ReviewsPage() {
             </p>
             <div className="flex items-center justify-center gap-8 text-cream/60">
               <div className="text-center">
-                <p className="font-serif text-3xl text-gold mb-1">19+</p>
+                <p className="font-serif text-3xl text-gold mb-1">27+</p>
                 <p className="text-sm">{t("page_reviews_total")}</p>
               </div>
               <div className="text-center">
