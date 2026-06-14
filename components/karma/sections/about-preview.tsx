@@ -4,7 +4,6 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowRight, Star, Award, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { GlassCard } from "../glass-card"
 import { useT } from "@/lib/lang-context"
 
 export function AboutPreview() {
@@ -50,37 +49,38 @@ export function AboutPreview() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-sm font-medium mb-4">
+            <span className="inline-block px-4 py-2 rounded-lg bg-transparent border-2 border-red-500 text-gold text-sm font-medium mb-4">
               {t("about_tag")}
             </span>
 
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
               {t("about_title")}
             </h2>
 
-            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              {t("about_p1")}
-            </p>
+            <div className="border-2 border-blue-500 p-6 rounded-lg mb-8 bg-blue-500/5">
+              <p className="text-base md:text-lg text-foreground mb-4 leading-relaxed">
+                {t("about_p1")}
+              </p>
 
-            <p className="text-muted-foreground mb-8">
-              {t("about_p2")}
-            </p>
+              <p className="text-sm md:text-base text-foreground/80">
+                {t("about_p2")}
+              </p>
+            </div>
 
-            <div className="grid grid-cols-3 gap-4 mb-8">
+            <div className="grid grid-cols-3 gap-4 mb-10">
               {stats.map((stat, index) => (
-                <GlassCard
+                <motion.div
                   key={index}
-                  variant="gold"
-                  className="p-4 text-center"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
+                  className="border border-gold/30 rounded-lg p-4 text-center bg-gold/5 hover:bg-gold/10 transition-colors"
                 >
                   <stat.icon className="w-6 h-6 text-gold mx-auto mb-2" />
                   <p className="text-2xl font-bold text-gold">{stat.value}</p>
                   <p className="text-xs text-muted-foreground">{t(stat.labelKey)}</p>
-                </GlassCard>
+                </motion.div>
               ))}
             </div>
 
