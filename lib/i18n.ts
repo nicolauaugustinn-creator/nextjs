@@ -298,7 +298,7 @@ const translations = {
     auth_confirm_ph: "Повторите пароль",
     auth_agree: "Я согласен с",
     auth_terms: "условиями использования",
-    auth_privacy_link: "политикой конфиденциальности",
+    auth_privacy_link: "политикой конфи��енциальности",
     auth_register_btn: "Зарегистрироваться",
     auth_has_account: "Уже есть аккаунт?",
     auth_login_link: "Войти",
@@ -346,6 +346,15 @@ const translations = {
     review_video: "Видео-отзыв",
     review_audio: "Голосовой отзыв",
     review_screenshot: "Скриншот отзыва",
+
+    // Reviews gallery
+    gallery_title: "Реальные отзывы клиентов",
+    gallery_subtitle: "{{ count }} подлинных отзывов от нашего сообщества",
+    gallery_tap_to_open: "Нажмите, чтобы открыть",
+    gallery_swipe_navigate: "Проведите влево/вправо для навигации",
+    gallery_tap_close: "Нажмите X, чтобы закрыть",
+    gallery_arrow_navigate: "Используйте стрелки или кнопки • ESC для выхода",
+    gallery_loading: "Загрузка...",
 
     // Consultations page
     consult_personal_work: "Персональная работа",
@@ -495,7 +504,7 @@ const translations = {
     forgot_send_link: "Отправить ссылку",
     forgot_sending: "Отправка...",
     forgot_email_sent: "Письмо отправлено",
-    forgot_email_sent_desc: "Мы отправили инструкции по восстановлению пароля на вашу почту. Проверьте папку «Спам», если письмо не пришло.",
+    forgot_email_sent_desc: "Мы отправили инструкции по в��сстановлению пароля на вашу почту. Проверьте папку «Спам», если письмо не пришло.",
     forgot_back_to_login: "Назад ко входу",
 
     // Common
@@ -544,6 +553,15 @@ const translations = {
     // ... (other translations)
     testimonials_cta_subtitle: "Alătură-te sutelor de oameni care și-au transformat deja viața prin numerologie",
 
+    // Gallery reviews
+    gallery_title: "Recenzii reale ale clienților",
+    gallery_subtitle: "{{ count }} recenzii autentice din comunitatea noastră",
+    gallery_tap_to_open: "Apasă pentru a deschide",
+    gallery_swipe_navigate: "Glisează stânga/dreapta pentru navigare",
+    gallery_tap_close: "Apasă X pentru a închide",
+    gallery_arrow_navigate: "Utilizează săgețile sau butoanele • ESC pentru ieșire",
+    gallery_loading: "Se încarcă...",
+
     // Profile
     profile_title: "Profilul meu",
     profile_personal_info: "Informații personale",
@@ -582,6 +600,15 @@ const translations = {
     // ... (other translations)
     testimonials_cta_subtitle: "Join hundreds of people who have already transformed their lives through numerology",
 
+    // Gallery reviews
+    gallery_title: "Real Client Testimonials",
+    gallery_subtitle: "{{ count }} authentic reviews from our community",
+    gallery_tap_to_open: "Tap to open",
+    gallery_swipe_navigate: "Swipe left/right to navigate",
+    gallery_tap_close: "Tap X to close",
+    gallery_arrow_navigate: "Use arrow keys or buttons • Press ESC to exit",
+    gallery_loading: "Loading...",
+
     // Profile
     profile_title: "My Profile",
     profile_personal_info: "Personal Information",
@@ -619,6 +646,15 @@ const translations = {
   ua: {
     // ... (other translations)
     testimonials_cta_subtitle: "Приєднайся до сотень людей, які вже трансформували своє життя через нумерологію",
+
+    // Gallery reviews
+    gallery_title: "Реальні відгуки клієнтів",
+    gallery_subtitle: "{{ count }} автентичні відгуки з нашої спільноти",
+    gallery_tap_to_open: "Натисніть, щоб відкрити",
+    gallery_swipe_navigate: "Проведіть вліво/вправо для навігації",
+    gallery_tap_close: "Натисніть X, щоб закрити",
+    gallery_arrow_navigate: "Використовуйте клавіші зі стрілками або кнопки • ESC для виходу",
+    gallery_loading: "Завантаження...",
 
     // Profile
     profile_title: "Мій профіль",

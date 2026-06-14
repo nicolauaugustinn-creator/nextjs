@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, X, Eye, ChevronDown } from 'lucide-react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import { useT } from '@/lib/lang-context'
 
 interface ReviewImage {
   id: number
@@ -11,9 +12,10 @@ interface ReviewImage {
   alt: string
 }
 
-const reviewImages: ReviewImage[] = Array.from({ length: 19 }, (_, i) => ({
+// Start from review-02.jpg (skip the first one with Russian text)
+const reviewImages: ReviewImage[] = Array.from({ length: 18 }, (_, i) => ({
   id: i + 1,
-  src: `/reviews-images/review-${String(i + 1).padStart(2, '0')}.jpg`,
+  src: `/reviews-images/review-${String(i + 2).padStart(2, '0')}.jpg`,
   alt: `Client testimonial ${i + 1}`,
 }))
 
@@ -24,6 +26,7 @@ export function ReviewsGallery() {
   const [touchEnd, setTouchEnd] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollY } = useScroll()
+  const { t } = useT()
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -84,10 +87,10 @@ export function ReviewsGallery() {
           viewport={{ once: true }}
         >
           <h2 className="font-serif text-3xl md:text-4xl text-cream mb-2">
-            Real Client Testimonials
+            {t('gallery_title')}
           </h2>
           <p className="text-cream/60 mb-4">
-            {reviewImages.length} authentic reviews from our community
+            {reviewImages.length} {t('gallery_subtitle').replace('{{ count }}', '')}
           </p>
         </motion.div>
         
@@ -174,7 +177,7 @@ export function ReviewsGallery() {
 
                 {/* Mobile: Tap Indicator */}
                 <div className="absolute bottom-2 left-2 md:hidden text-xs text-gold/60 font-medium">
-                  Tap to open
+                  {t('gallery_tap_to_open')}
                 </div>
               </motion.button>
             )
@@ -215,7 +218,7 @@ export function ReviewsGallery() {
 
               {/* Image Container with Swipe Hint */}
               <motion.div 
-                className="relative flex-1 rounded-lg overflow-hidden bg-black/50 backdrop-blur-sm border border-gold/20"
+                className="relative flex-1 rounded-lg overflow-hidden bg-black/50 backdrop-blur-sm border border-gold/20 min-h-[400px] md:min-h-[600px]"
                 layoutId="lightbox-image"
               >
                 <div className="relative w-full h-full flex items-center justify-center">
@@ -235,6 +238,7 @@ export function ReviewsGallery() {
                         className="object-contain"
                         priority
                         quality={95}
+                        unoptimized
                       />
                     </motion.div>
                   </AnimatePresence>
@@ -246,7 +250,7 @@ export function ReviewsGallery() {
                   transition={{ duration: 2, repeat: Infinity }}
                   className="absolute bottom-3 left-1/2 transform -translate-x-1/2 md:hidden text-xs text-gold/70 font-medium px-3 py-1 rounded-full bg-black/50 backdrop-blur-sm border border-gold/30"
                 >
-                  Swipe to navigate
+                  {t('gallery_swipe_navigate')}
                 </motion.div>
               </motion.div>
 
@@ -305,8 +309,8 @@ export function ReviewsGallery() {
                 transition={{ delay: 0.4 }}
                 className="mt-3 md:mt-4 text-center text-xs text-cream/40"
               >
-                <p className="hidden md:block">Use arrow keys or click buttons to navigate • Press ESC to close</p>
-                <p className="md:hidden">Swipe left/right to navigate • Tap X to close</p>
+                <p className="hidden md:block">{t('gallery_arrow_navigate')}</p>
+                <p className="md:hidden">{t('gallery_swipe_navigate')} • {t('gallery_tap_close')}</p>
               </motion.div>
             </motion.div>
           </motion.div>
