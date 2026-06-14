@@ -65,7 +65,7 @@ const translations = {
     about_p2: "За 7 лет практики я провела более 3 000 консультаций и помогла сотням людей раскрыть своё предназначение, наладить отношения и выйти на новый уровень дохода.",
     about_cta: "Узнать больше о моём пути",
     about_stat_consult: "консультаций",
-    about_stat_students: "студентов",
+    about_stat_retreats: "ретриты",
     about_stat_years: "лет практики",
     about_stat_group: "учеников",
 
@@ -211,7 +211,7 @@ const translations = {
 
     // Pages — Retreat
     page_retreat_title: "Ретрит трансформации",
-    page_retreat_tag: "СЛЕДУЮЩИЙ РЕТРИТ",
+    page_retreat_tag: "СЛЕ��УЮЩИЙ РЕТРИТ",
     page_retreat_register: "Записаться на ретрит",
     page_retreat_program: "Программа",
     page_retreat_included: "Что включено",
@@ -403,7 +403,7 @@ const translations = {
     consult_feature_strengths: "Определение сильных и слабых сторон",
     consult_feature_periods: "Благоприятные периоды года",
     consult_feature_recommendations: "Рекомендации по развитию",
-    consult_feature_recording: "Запись консультации",
+    consult_feature_recording: "Запись консультац��и",
     consult_feature_both_charts: "Анализ карт обоих партнёров",
     consult_feature_compat_map: "Карта совместимости",
     consult_feature_karmic_links: "Кармические связи между партнёрами",
