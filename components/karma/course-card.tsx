@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Clock, BookOpen, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -39,13 +40,27 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
       transition={{ duration: 0.5 }}
     >
       {/* Image */}
-      <div className={cn("relative overflow-hidden rounded-lg mb-4", variant === "featured" ? "lg:mb-0 lg:w-1/2 aspect-video lg:aspect-auto" : "aspect-video")}>
-        <div className="absolute inset-0 bg-gradient-to-br from-violet/20 to-gold/20" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
-            <BookOpen className="w-8 h-8 text-gold" />
-          </div>
-        </div>
+      <div className={cn("relative overflow-hidden rounded-lg mb-4 bg-muted", variant === "featured" ? "lg:mb-0 lg:w-1/2 aspect-video lg:aspect-auto" : "aspect-video")}>
+        {course.coverImage ? (
+          <>
+            <Image
+              src={course.coverImage}
+              alt={course.title}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          </>
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-violet/20 to-gold/20" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
+                <BookOpen className="w-8 h-8 text-gold" />
+              </div>
+            </div>
+          </>
+        )}
         {course.status === "coming_soon" && (
           <Badge className="absolute top-3 right-3 bg-violet text-white">
             {t("card_coming_soon")}
@@ -55,6 +70,11 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
           <Badge className="absolute top-3 left-3 bg-gold/20 text-gold border-gold/30">
             {t("card_featured")}
           </Badge>
+        )}
+        {course.price && (
+          <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
+            <span className="text-gold font-bold text-sm">{course.price}€</span>
+          </div>
         )}
       </div>
 
