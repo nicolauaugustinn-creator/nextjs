@@ -346,6 +346,7 @@ const translations = {
     duration_label: "Продолжительность",
     level_label: "Уровень",
     category_label: "Категория",
+    watch_on_youtube: "Смотреть на YouTube",
 
     // Review media labels
     review_video: "Видео-отзыв",

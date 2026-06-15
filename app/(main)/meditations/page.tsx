@@ -2,18 +2,15 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Search, Play, Pause, Clock, Headphones, Volume2 } from "lucide-react"
+import { Search, ExternalLink, Clock, Headphones, Volume2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { meditations, type Meditation } from "@/data/meditations"
 import Link from "next/link"
 import { useT } from "@/lib/lang-context"
+import { YouTubePlayer } from "@/components/karma/youtube-player"
 
-function MeditationCard({ meditation, isPlaying, onPlay }: {
-  meditation: Meditation
-  isPlaying: boolean
-  onPlay: () => void
-}) {
+function MeditationItem({ meditation }: { meditation: Meditation }) {
   const { t } = useT()
 
   return (
@@ -21,50 +18,54 @@ function MeditationCard({ meditation, isPlaying, onPlay }: {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group"
+      className="space-y-6"
     >
-      <div className="glass-card overflow-hidden">
-        <div className="aspect-square relative overflow-hidden">
-          <img
-            src={meditation.coverImage}
-            alt={meditation.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/50 to-transparent" />
-
-          <button onClick={onPlay} className="absolute inset-0 flex items-center justify-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-all ${
-              isPlaying ? "bg-gold scale-110" : "bg-gold/80 group-hover:bg-gold group-hover:scale-110"
-            }`}>
-              {isPlaying
-                ? <Pause className="w-7 h-7 text-charcoal" />
-                : <Play className="w-7 h-7 text-charcoal ml-1" />
-              }
-            </div>
-          </button>
-
-          <div className="absolute bottom-4 left-4 right-4">
-            <div className="flex items-center justify-between text-cream/80 text-sm">
-              <span className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                {meditation.duration}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-5">
-          <span className="text-gold text-xs tracking-wider uppercase">
-            {meditation.category}
-          </span>
-          <h3 className="font-serif text-lg text-cream mt-2 mb-2 group-hover:text-gold transition-colors">
-            {meditation.title}
-          </h3>
-          <p className="text-cream/60 text-sm line-clamp-2">
-            {meditation.description}
-          </p>
-        </div>
+      {/* Header with category and title */}
+      <div className="space-y-3">
+        <span className="text-gold text-xs tracking-wider uppercase">
+          {meditation.category}
+        </span>
+        <h3 className="font-serif text-2xl md:text-3xl text-cream">
+          {meditation.title}
+        </h3>
+        <p className="text-cream/70 text-base">
+          {meditation.description}
+        </p>
       </div>
+
+      {/* YouTube Link Button */}
+      <a
+        href={meditation.youtubeLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block"
+      >
+        <Button
+          variant="outline"
+          className="border-gold/50 text-gold hover:bg-gold/10"
+        >
+          <ExternalLink className="w-4 h-4 mr-2" />
+          {t("watch_on_youtube")}
+        </Button>
+      </a>
+
+      {/* Embedded Video Player */}
+      {meditation.youtubeVideoId && (
+        <div className="rounded-lg overflow-hidden border border-gold/20">
+          <YouTubePlayer 
+            videoId={meditation.youtubeVideoId}
+            title={meditation.title}
+          />
+        </div>
+      )}
+
+      {/* Duration Info */}
+      <div className="flex items-center gap-2 text-cream/60 text-sm">
+        <Clock className="w-4 h-4 text-gold" />
+        <span>{meditation.duration}</span>
+      </div>
+
+      <div className="border-b border-white/5" />
     </motion.div>
   )
 }
@@ -73,7 +74,6 @@ export default function MeditationsPage() {
   const { t } = useT()
   const [search, setSearch] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
-  const [playingId, setPlayingId] = useState<string | null>(null)
 
   const allCategories = [
     { key: "all", label: t("common_all") },
@@ -85,10 +85,6 @@ export default function MeditationsPage() {
     const matchesCategory = selectedCategory === "all" || m.category === selectedCategory
     return matchesSearch && matchesCategory
   })
-
-  const handlePlay = (id: string) => {
-    setPlayingId(playingId === id ? null : id)
-  }
 
   return (
     <main className="pt-24 pb-20">
@@ -160,17 +156,15 @@ export default function MeditationsPage() {
         </div>
       </section>
 
-      {/* Grid */}
+      {/* Meditations List */}
       <section className="py-12 md:py-20">
         <div className="container mx-auto px-4">
           {filteredMeditations.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="max-w-4xl mx-auto space-y-12">
               {filteredMeditations.map((meditation) => (
-                <MeditationCard
+                <MeditationItem
                   key={meditation.id}
                   meditation={meditation}
-                  isPlaying={playingId === meditation.id}
-                  onPlay={() => handlePlay(meditation.id)}
                 />
               ))}
             </div>
