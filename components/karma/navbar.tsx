@@ -24,6 +24,7 @@ export function Navbar() {
 
   const navigation = [
     { labelKey: "nav_home", href: "/" },
+    { labelKey: "nav_about", href: "/about" },
     { labelKey: "nav_my_path", href: "/my-path" },
     {
       labelKey: "nav_learning",

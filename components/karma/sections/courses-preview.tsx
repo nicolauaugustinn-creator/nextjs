@@ -11,7 +11,7 @@ import { useT } from "@/lib/lang-context"
 export function CoursesPreview() {
   const { t } = useT()
   const featuredCourses = courses.filter(c => c.featured).slice(0, 2)
-  const featuredMiniCourses = miniCourses.filter(c => c.featured).slice(0, 4)
+  const featuredMiniCourses = miniCourses.filter(c => c.featured).slice(0, 6)
 
   return (
     <section className="py-20 md:py-32 relative bg-gradient-to-b from-transparent via-gold/5 to-transparent">

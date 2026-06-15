@@ -2,72 +2,13 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Search, Play, Pause, Clock, Headphones, Volume2 } from "lucide-react"
+import { Search, Headphones, Volume2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { meditations, type Meditation } from "@/data/meditations"
+import { meditations } from "@/data/meditations"
 import Link from "next/link"
 import { useT } from "@/lib/lang-context"
-
-function MeditationCard({ meditation, isPlaying, onPlay }: {
-  meditation: Meditation
-  isPlaying: boolean
-  onPlay: () => void
-}) {
-  const { t } = useT()
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="group"
-    >
-      <div className="glass-card overflow-hidden">
-        <div className="aspect-square relative overflow-hidden">
-          <img
-            src={meditation.coverImage}
-            alt={meditation.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/50 to-transparent" />
-
-          <button onClick={onPlay} className="absolute inset-0 flex items-center justify-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-all ${
-              isPlaying ? "bg-gold scale-110" : "bg-gold/80 group-hover:bg-gold group-hover:scale-110"
-            }`}>
-              {isPlaying
-                ? <Pause className="w-7 h-7 text-charcoal" />
-                : <Play className="w-7 h-7 text-charcoal ml-1" />
-              }
-            </div>
-          </button>
-
-          <div className="absolute bottom-4 left-4 right-4">
-            <div className="flex items-center justify-between text-cream/80 text-sm">
-              <span className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                {meditation.duration}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-5">
-          <span className="text-gold text-xs tracking-wider uppercase">
-            {meditation.category}
-          </span>
-          <h3 className="font-serif text-lg text-cream mt-2 mb-2 group-hover:text-gold transition-colors">
-            {meditation.title}
-          </h3>
-          <p className="text-cream/60 text-sm line-clamp-2">
-            {meditation.description}
-          </p>
-        </div>
-      </div>
-    </motion.div>
-  )
-}
+import { MeditationVideoCard } from "@/components/karma/meditation-video-card"
 
 export default function MeditationsPage() {
   const { t } = useT()
@@ -160,18 +101,24 @@ export default function MeditationsPage() {
         </div>
       </section>
 
-      {/* Grid */}
+      {/* Meditation Videos Grid */}
       <section className="py-12 md:py-20">
         <div className="container mx-auto px-4">
           {filteredMeditations.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredMeditations.map((meditation) => (
-                <MeditationCard
+                <motion.div
                   key={meditation.id}
-                  meditation={meditation}
-                  isPlaying={playingId === meditation.id}
-                  onPlay={() => handlePlay(meditation.id)}
-                />
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <MeditationVideoCard
+                    meditation={meditation}
+                    isPlaying={playingId === meditation.id}
+                    onPlay={handlePlay}
+                  />
+                </motion.div>
               ))}
             </div>
           ) : (

@@ -1,17 +1,23 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowRight, Headphones } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { MeditationCard } from "../meditation-card"
+import { MeditationVideoCard } from "@/components/karma/meditation-video-card"
 import { meditations } from "@/data/meditations"
 import { useT } from "@/lib/lang-context"
 
 export function MeditationsPreview() {
   const { t } = useT()
+  const [playingId, setPlayingId] = useState<string | null>(null)
   const featuredMeditations = meditations.filter(m => m.featured && m.status === "available").slice(0, 4)
   const blackWhiteMeditations = meditations.filter(m => m.isBlackWhite && m.status === "available").slice(0, 2)
+
+  const handlePlay = (id: string) => {
+    setPlayingId(playingId === id ? null : id)
+  }
 
   return (
     <section className="py-20 md:py-32 relative">
@@ -38,7 +44,18 @@ export function MeditationsPreview() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {featuredMeditations.map((meditation) => (
-            <MeditationCard key={meditation.id} meditation={meditation} />
+            <motion.div
+              key={meditation.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <MeditationVideoCard
+                meditation={meditation}
+                isPlaying={playingId === meditation.id}
+                onPlay={handlePlay}
+              />
+            </motion.div>
           ))}
         </div>
 
@@ -54,7 +71,18 @@ export function MeditationsPreview() {
             </div>
             <div className="grid sm:grid-cols-2 gap-6">
               {blackWhiteMeditations.map((meditation) => (
-                <MeditationCard key={meditation.id} meditation={meditation} />
+                <motion.div
+                  key={meditation.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <MeditationVideoCard
+                    meditation={meditation}
+                    isPlaying={playingId === meditation.id}
+                    onPlay={handlePlay}
+                  />
+                </motion.div>
               ))}
             </div>
           </motion.div>

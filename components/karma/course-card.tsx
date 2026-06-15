@@ -1,12 +1,13 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Clock, BookOpen, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { GlassCard } from "./glass-card"
 import { cn } from "@/lib/utils"
 import { useT } from "@/lib/lang-context"
+import { motion } from "framer-motion"
 import type { Course } from "@/data/courses"
 
 interface CourseCardProps {
@@ -30,22 +31,36 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
   } as const
 
   return (
-    <GlassCard
-      variant="gold"
-      className={cn("group overflow-hidden", variant === "featured" && "lg:flex lg:gap-6")}
+    <motion.div
+      className={cn("group glass-card-gold rounded-xl overflow-hidden flex flex-col h-full")}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      {/* Image */}
-      <div className={cn("relative overflow-hidden rounded-lg mb-4", variant === "featured" ? "lg:mb-0 lg:w-1/2 aspect-video lg:aspect-auto" : "aspect-video")}>
-        <div className="absolute inset-0 bg-gradient-to-br from-violet/20 to-gold/20" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
-            <BookOpen className="w-8 h-8 text-gold" />
-          </div>
-        </div>
+      {/* Image Container */}
+      <div className="relative w-full aspect-square overflow-hidden bg-muted">
+        {course.coverImage ? (
+          <>
+            <Image
+              src={course.coverImage}
+              alt={course.title}
+              fill
+              priority
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+          </>
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-violet/20 to-gold/20" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
+                <BookOpen className="w-8 h-8 text-gold" />
+              </div>
+            </div>
+          </>
+        )}
         {course.status === "coming_soon" && (
           <Badge className="absolute top-3 right-3 bg-violet text-white">
             {t("card_coming_soon")}
@@ -56,10 +71,15 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
             {t("card_featured")}
           </Badge>
         )}
+        {course.price && (
+          <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded-full">
+            <span className="text-gold font-bold text-sm">{course.price}€</span>
+          </div>
+        )}
       </div>
 
-      {/* Content */}
-      <div className={cn("flex flex-col", variant === "featured" && "lg:w-1/2 lg:py-2")}>
+      {/* Content - With padding */}
+      <div className="flex flex-col p-6 flex-1">
         <div className="flex flex-wrap gap-2 mb-3">
           <Badge variant="outline" className={levelColors[course.level]}>
             {t(levelLabelKeys[course.level])}
@@ -85,7 +105,7 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
           </div>
         </div>
 
-        {variant === "featured" && course.benefits.length > 0 && (
+        {course.benefits.length > 0 && (
           <ul className="mb-4 space-y-1">
             {course.benefits.slice(0, 3).map((benefit, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -110,6 +130,6 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
           </a>
         </div>
       </div>
-    </GlassCard>
+    </motion.div>
   )
 }
