@@ -3,6 +3,7 @@
 import { services } from "@/data/services"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import Image from "next/image"
 
 export function PricingSection() {
   return (
@@ -23,45 +24,58 @@ export function PricingSection() {
           {services.map((service) => (
             <div
               key={service.id}
-              className="group relative bg-card border border-border rounded-2xl p-6 hover:shadow-lg hover:border-gold/30 transition-all duration-300 flex flex-col h-full"
+              className="group relative bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:border-gold/30 transition-all duration-300 flex flex-col h-full"
             >
               {/* Premium Badge */}
               {service.isPremium && (
-                <div className="absolute -top-3 -right-3">
+                <div className="absolute top-3 right-3 z-10">
                   <Badge className="bg-gold text-black text-xs font-bold px-3 py-1">
                     Премиум
                   </Badge>
                 </div>
               )}
 
+              {/* Image */}
+              {service.image && (
+                <div className="relative w-full h-48 overflow-hidden bg-muted">
+                  <Image
+                    src={service.image}
+                    alt={service.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                </div>
+              )}
+
               {/* Content */}
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-gold transition-colors">
+              <div className="flex-1 flex flex-col p-6">
+                <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-gold transition-colors line-clamp-2">
                   {service.name}
                 </h3>
-                <p className="text-sm text-muted-foreground mb-6">
+                <p className="text-sm text-muted-foreground mb-4 flex-1 line-clamp-2">
                   {service.description}
                 </p>
-              </div>
 
-              {/* Price Section */}
-              <div className="mb-6 border-t border-border pt-6">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold text-gold">
-                    {service.price}
-                  </span>
-                  <span className="text-lg text-muted-foreground">
-                    €
-                  </span>
+                {/* Price Section */}
+                <div className="mb-4 pt-4 border-t border-border">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl font-bold text-gold">
+                      {service.price}
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      €
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              {/* CTA Button */}
-              <Button 
-                className="w-full bg-gold hover:bg-gold/90 text-black font-semibold rounded-lg transition-colors"
-              >
-                Записаться
-              </Button>
+                {/* CTA Button */}
+                <Button 
+                  className="w-full bg-gold hover:bg-gold/90 text-black font-semibold rounded-lg transition-colors"
+                >
+                  Записаться
+                </Button>
+              </div>
             </div>
           ))}
         </div>
