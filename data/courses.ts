@@ -414,7 +414,7 @@ export const miniCourses: Course[] = [
     benefits: ["Знания о прошлых жизнях", "Понимание кармы", "Исцеление"],
     forWhom: ["Для глубокой духовной работы"],
     status: "available",
-    featured: false,
+    featured: true,
     price: 59,
     originalPrice: 99
   },
