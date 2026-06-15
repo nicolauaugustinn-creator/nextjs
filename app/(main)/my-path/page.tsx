@@ -55,6 +55,18 @@ export default function MyPathPage() {
               <p className="text-cream/70 text-lg mb-8 leading-relaxed">
                 {t("about_p1")}
               </p>
+              <p className="text-cream/70 mb-8 leading-relaxed">
+                {t("about_p2")}
+              </p>
+              <p className="text-cream/70 mb-8 leading-relaxed">
+                {t("about_p3")}
+              </p>
+              <p className="text-cream/70 mb-8 leading-relaxed">
+                {t("about_p4")}
+              </p>
+              <p className="text-cream/70 mb-8 leading-relaxed">
+                {t("about_p5")}
+              </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/consultations">
                   <Button className="bg-gold text-charcoal hover:bg-gold-light">
@@ -87,7 +99,7 @@ export default function MyPathPage() {
                     <Award className="w-6 h-6 text-gold" />
                   </div>
                   <div>
-                    <p className="text-gold font-medium">5000+</p>
+                    <p className="text-gold font-medium">749+</p>
                     <p className="text-cream/60 text-sm">{t("about_stat_consult")}</p>
                   </div>
                 </div>

@@ -11,8 +11,8 @@ export function AboutPreview() {
 
   const stats = [
     { icon: Star, value: "749+", labelKey: "about_stat_consult" as const },
-    { icon: Award, value: "17+", labelKey: "about_stat_retreats" as const },
-    { icon: Users, value: "+100", labelKey: "about_stat_group" as const },
+    { icon: Award, value: "TOP-10", labelKey: "about_stat_retreats" as const },
+    { icon: Users, value: "2021", labelKey: "about_stat_crisis" as const },
   ]
 
   return (
@@ -61,8 +61,20 @@ export function AboutPreview() {
               {t("about_p1")}
             </p>
 
-            <p className="text-muted-foreground mb-8">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
               {t("about_p2")}
+            </p>
+
+            <p className="text-muted-foreground mb-6 leading-relaxed">
+              {t("about_p3")}
+            </p>
+
+            <p className="text-muted-foreground mb-6 leading-relaxed">
+              {t("about_p4")}
+            </p>
+
+            <p className="text-muted-foreground mb-8 leading-relaxed">
+              {t("about_p5")}
             </p>
 
             <div className="grid grid-cols-3 gap-4 mb-10">
