@@ -2,6 +2,7 @@ import { HeroSection } from "@/components/karma/hero-section"
 import { AboutPreview } from "@/components/karma/sections/about-preview"
 import { DirectionsSection } from "@/components/karma/sections/directions-section"
 import { CoursesPreview } from "@/components/karma/sections/courses-preview"
+import { PricingSection } from "@/components/karma/sections/pricing-section"
 import { MeditationsPreview } from "@/components/karma/sections/meditations-preview"
 import { RetreatPreview } from "@/components/karma/sections/retreat-preview"
 import { ReviewsPreview } from "@/components/karma/sections/reviews-preview"
@@ -18,6 +19,7 @@ export default function HomePage() {
         <AboutPreview />
         <DirectionsSection />
         <CoursesPreview />
+        <PricingSection />
         <MeditationsPreview />
         <RetreatPreview />
         <ReviewsPreview />
