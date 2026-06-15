@@ -5,9 +5,9 @@ import Image from "next/image"
 import { Clock, BookOpen, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { GlassCard } from "./glass-card"
 import { cn } from "@/lib/utils"
 import { useT } from "@/lib/lang-context"
+import { motion } from "framer-motion"
 import type { Course } from "@/data/courses"
 
 interface CourseCardProps {
@@ -31,16 +31,15 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
   } as const
 
   return (
-    <GlassCard
-      variant="gold"
-      className={cn("group overflow-hidden flex flex-col", variant === "featured" && "lg:flex-row lg:gap-6")}
+    <motion.div
+      className={cn("group glass-card-gold rounded-xl overflow-hidden flex flex-col h-full", variant === "featured" && "lg:flex-row lg:gap-6")}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      {/* Image */}
-      <div className={cn("relative overflow-hidden rounded-lg bg-muted", variant === "featured" ? "lg:mb-0 lg:w-1/2 aspect-video lg:aspect-auto mb-0" : "aspect-square w-full mb-4")}>
+      {/* Image Container - No padding constraint */}
+      <div className={cn("relative overflow-hidden bg-muted flex-shrink-0", variant === "featured" ? "lg:w-1/2 aspect-video" : "w-full aspect-square")}>
         {course.coverImage ? (
           <>
             <Image
@@ -48,6 +47,7 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
               alt={course.title}
               fill
               priority
+              sizes={variant === "featured" ? "50vw" : "100vw"}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
@@ -79,8 +79,8 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
         )}
       </div>
 
-      {/* Content */}
-      <div className={cn("flex flex-col", variant === "featured" && "lg:w-1/2 lg:py-2")}>
+      {/* Content - With padding */}
+      <div className={cn("flex flex-col p-6", variant === "featured" && "lg:w-1/2 lg:justify-center")}>
         <div className="flex flex-wrap gap-2 mb-3">
           <Badge variant="outline" className={levelColors[course.level]}>
             {t(levelLabelKeys[course.level])}
@@ -131,6 +131,6 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
           </a>
         </div>
       </div>
-    </GlassCard>
+    </motion.div>
   )
 }
