@@ -33,14 +33,14 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
   return (
     <GlassCard
       variant="gold"
-      className={cn("group overflow-hidden", variant === "featured" && "lg:flex lg:gap-6")}
+      className={cn("group overflow-hidden flex flex-col", variant === "featured" && "lg:flex-row lg:gap-6")}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
       {/* Image */}
-      <div className={cn("relative overflow-hidden rounded-lg mb-4 bg-muted", variant === "featured" ? "lg:mb-0 lg:w-1/2 aspect-video lg:aspect-auto" : "aspect-video")}>
+      <div className={cn("relative overflow-hidden rounded-lg bg-muted", variant === "featured" ? "lg:mb-0 lg:w-1/2 aspect-video lg:aspect-auto mb-0" : "aspect-square w-full mb-4")}>
         {course.coverImage ? (
           <>
             <Image
@@ -50,7 +50,7 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
               priority
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           </>
         ) : (
           <>
@@ -73,7 +73,7 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
           </Badge>
         )}
         {course.price && (
-          <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
+          <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded-full">
             <span className="text-gold font-bold text-sm">{course.price}€</span>
           </div>
         )}
