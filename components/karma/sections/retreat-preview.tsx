@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { ArrowRight, MapPin, Calendar, Users, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -62,14 +63,15 @@ export function RetreatPreview() {
             </div>
 
             <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-gold/20 via-violet/20 to-gold/20 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gold/20 flex items-center justify-center animate-pulse-glow">
-                      <Sparkles className="w-10 h-10 text-gold" />
-                    </div>
-                  </div>
-                </div>
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden relative bg-muted">
+                <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo_2026-06-16_02-04-41-Jvw0zgGHBmP7mmDsNLnNI7GRi6SfkU.jpg"
+                  alt="Valentina at retreat event"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
 
               <div className="absolute -bottom-4 -right-4 md:bottom-4 md:right-4">
