@@ -38,15 +38,15 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      {/* Image Container - Explicit dimensions for image fill */}
-      <div className={cn("relative overflow-hidden bg-muted flex-shrink-0", variant === "featured" ? "lg:w-1/2 aspect-video" : "w-full h-64 sm:h-72 md:h-80")}>
+      {/* Image Container - No padding constraint */}
+      <div className={cn("relative overflow-hidden bg-muted flex-shrink-0", variant === "featured" ? "lg:w-1/2 aspect-video" : "w-full aspect-square")}>
         {course.coverImage ? (
           <>
             <Image
               src={course.coverImage}
               alt={course.title}
               fill
-              priority={variant === "featured"}
+              priority
               sizes={variant === "featured" ? "50vw" : "100vw"}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
