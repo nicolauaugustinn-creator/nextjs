@@ -32,14 +32,14 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
 
   return (
     <motion.div
-      className={cn("group glass-card-gold rounded-xl overflow-hidden flex flex-col h-full", variant === "featured" && "lg:flex-row lg:gap-6")}
+      className={cn("group glass-card-gold rounded-xl overflow-hidden flex flex-col h-full")}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      {/* Image Container - No padding constraint */}
-      <div className={cn("relative overflow-hidden bg-muted flex-shrink-0", variant === "featured" ? "lg:w-1/2 aspect-video" : "w-full aspect-square")}>
+      {/* Image Container */}
+      <div className="relative w-full aspect-square overflow-hidden bg-muted">
         {course.coverImage ? (
           <>
             <Image
@@ -47,7 +47,6 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
               alt={course.title}
               fill
               priority
-              sizes={variant === "featured" ? "50vw" : "100vw"}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
@@ -80,7 +79,7 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
       </div>
 
       {/* Content - With padding */}
-      <div className={cn("flex flex-col p-6", variant === "featured" && "lg:w-1/2 lg:justify-center")}>
+      <div className="flex flex-col p-6 flex-1">
         <div className="flex flex-wrap gap-2 mb-3">
           <Badge variant="outline" className={levelColors[course.level]}>
             {t(levelLabelKeys[course.level])}
@@ -106,7 +105,7 @@ export function CourseCard({ course, variant = "default" }: CourseCardProps) {
           </div>
         </div>
 
-        {variant === "featured" && course.benefits.length > 0 && (
+        {course.benefits.length > 0 && (
           <ul className="mb-4 space-y-1">
             {course.benefits.slice(0, 3).map((benefit, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
