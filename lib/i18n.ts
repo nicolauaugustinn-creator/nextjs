@@ -15,6 +15,7 @@ const translations = {
   ru: {
     // Nav
     nav_home: "Главная",
+    nav_about: "О Валентине",
     nav_my_path: "Мой путь",
     nav_learning: "Обучение",
     nav_courses: "Курсы",
@@ -372,7 +373,7 @@ const translations = {
     consult_online_zoom: "Онлайн через Zoom",
     consult_telegram_support: "Поддержка в Telegram",
     consult_basic: "Базовая консультация",
-    consult_for_couples: "Консультация для двоих",
+    consult_for_couples: "Консультация для ��воих",
     consult_for_entrepreneurs: "Для предпринимателей",
     consult_detailed_analysis: "Детальный анализ",
     consult_extended: "Расширенная консультация",
@@ -560,6 +561,9 @@ const translations = {
     testimonials_cta_subtitle: "Присоединяйся к сотням людей, которые уже трансформировали свои жизни через нумерологию",
   },
   ro: {
+    // Nav
+    nav_home: "Acasă",
+    nav_about: "Despre Valentina",
     // ... (other translations)
     testimonials_cta_subtitle: "Alătură-te sutelor de oameni care și-au transformat deja viața prin numerologie",
 
@@ -607,6 +611,9 @@ const translations = {
     profile_available_rewards: "Recompense disponibile",
   },
   en: {
+    // Nav
+    nav_home: "Home",
+    nav_about: "About Valentina",
     // ... (other translations)
     testimonials_cta_subtitle: "Join hundreds of people who have already transformed their lives through numerology",
 
@@ -654,6 +661,9 @@ const translations = {
     profile_available_rewards: "Available Rewards",
   },
   ua: {
+    // Nav
+    nav_home: "Головна",
+    nav_about: "Про Валентину",
     // ... (other translations)
     testimonials_cta_subtitle: "Приєднайся до сотень людей, які вже трансформували своє життя через нумерологію",
 
