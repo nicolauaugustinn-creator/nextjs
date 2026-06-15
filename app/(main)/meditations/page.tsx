@@ -2,78 +2,19 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Search, ExternalLink, Clock, Headphones, Volume2 } from "lucide-react"
+import { Search, Headphones, Volume2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { meditations, type Meditation } from "@/data/meditations"
+import { meditations } from "@/data/meditations"
 import Link from "next/link"
 import { useT } from "@/lib/lang-context"
-import { YouTubePlayer } from "@/components/karma/youtube-player"
-
-function MeditationItem({ meditation }: { meditation: Meditation }) {
-  const { t } = useT()
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="space-y-6"
-    >
-      {/* Header with category and title */}
-      <div className="space-y-3">
-        <span className="text-gold text-xs tracking-wider uppercase">
-          {meditation.category}
-        </span>
-        <h3 className="font-serif text-2xl md:text-3xl text-cream">
-          {meditation.title}
-        </h3>
-        <p className="text-cream/70 text-base">
-          {meditation.description}
-        </p>
-      </div>
-
-      {/* YouTube Link Button */}
-      <a
-        href={meditation.youtubeLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-block"
-      >
-        <Button
-          variant="outline"
-          className="border-gold/50 text-gold hover:bg-gold/10"
-        >
-          <ExternalLink className="w-4 h-4 mr-2" />
-          {t("watch_on_youtube")}
-        </Button>
-      </a>
-
-      {/* Embedded Video Player */}
-      {meditation.youtubeVideoId && (
-        <div className="rounded-lg overflow-hidden border border-gold/20">
-          <YouTubePlayer 
-            videoId={meditation.youtubeVideoId}
-            title={meditation.title}
-          />
-        </div>
-      )}
-
-      {/* Duration Info */}
-      <div className="flex items-center gap-2 text-cream/60 text-sm">
-        <Clock className="w-4 h-4 text-gold" />
-        <span>{meditation.duration}</span>
-      </div>
-
-      <div className="border-b border-white/5" />
-    </motion.div>
-  )
-}
+import { MeditationVideoCard } from "@/components/karma/meditation-video-card"
 
 export default function MeditationsPage() {
   const { t } = useT()
   const [search, setSearch] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
+  const [playingId, setPlayingId] = useState<string | null>(null)
 
   const allCategories = [
     { key: "all", label: t("common_all") },
@@ -85,6 +26,10 @@ export default function MeditationsPage() {
     const matchesCategory = selectedCategory === "all" || m.category === selectedCategory
     return matchesSearch && matchesCategory
   })
+
+  const handlePlay = (id: string) => {
+    setPlayingId(playingId === id ? null : id)
+  }
 
   return (
     <main className="pt-24 pb-20">
@@ -156,16 +101,24 @@ export default function MeditationsPage() {
         </div>
       </section>
 
-      {/* Meditations List */}
+      {/* Meditation Videos Grid */}
       <section className="py-12 md:py-20">
         <div className="container mx-auto px-4">
           {filteredMeditations.length > 0 ? (
-            <div className="max-w-4xl mx-auto space-y-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredMeditations.map((meditation) => (
-                <MeditationItem
+                <motion.div
                   key={meditation.id}
-                  meditation={meditation}
-                />
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <MeditationVideoCard
+                    meditation={meditation}
+                    isPlaying={playingId === meditation.id}
+                    onPlay={handlePlay}
+                  />
+                </motion.div>
               ))}
             </div>
           ) : (
