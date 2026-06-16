@@ -1,17 +1,21 @@
-"use client"
-
-import { useParams, notFound } from "next/navigation"
+import { notFound } from "next/navigation"
 import { motion } from "framer-motion"
 import { Clock, BookOpen, Play, Check, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { courses } from "@/data/courses"
 import Link from "next/link"
-import { useState } from "react"
+import CourseModulesClient from "./course-modules-client"
 
-export default function CourseDetailPage() {
-  const params = useParams()
-  const course = courses.find((c) => c.slug === params.slug)
-  const [expandedModule, setExpandedModule] = useState<number | null>(0)
+interface CoursePageProps {
+  params: Promise<{
+    slug: string
+  }>
+}
+
+export default async function CourseDetailPage({ params }: CoursePageProps) {
+  const { slug } = await params
+  
+  const course = courses.find((c) => c.slug === slug)
 
   if (!course) {
     notFound()
@@ -74,12 +78,12 @@ export default function CourseDetailPage() {
               </div>
 
               <div className="space-y-3">
-                  {course.benefits?.map((benefit, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
-                      <span className="text-cream/80">{benefit}</span>
-                    </div>
-                  ))}
+                {course.benefits?.map((benefit: string, index: number) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
+                    <span className="text-cream/80">{benefit}</span>
+                  </div>
+                ))}
               </div>
             </motion.div>
 
@@ -146,77 +150,7 @@ export default function CourseDetailPage() {
 
       {/* Modules Section */}
       {course.modules && (
-        <section className="py-12 md:py-20 bg-charcoal-light/30">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="font-serif text-3xl md:text-4xl text-cream mb-4">
-                Программа курса
-              </h2>
-              <p className="text-cream/60">
-                {course.modules?.length || 0} модулей
-              </p>
-            </motion.div>
-
-            <div className="max-w-3xl mx-auto space-y-4">
-              {course.modules.map((module, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="glass-card overflow-hidden"
-                >
-                  <button
-                    onClick={() => setExpandedModule(expandedModule === index ? null : index)}
-                    className="w-full p-6 flex items-center justify-between text-left"
-                  >
-                    <div className="flex items-center gap-4">
-                      <span className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center text-gold font-medium">
-                        {index + 1}
-                      </span>
-                      <div>
-                        <h3 className="font-serif text-lg text-cream">{module.title}</h3>
-                        <p className="text-cream/50 text-sm">{module.lessons?.length || 0} уроков</p>
-                      </div>
-                    </div>
-                    <ChevronDown
-                      className={`w-5 h-5 text-gold transition-transform ${
-                        expandedModule === index ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-
-                  {expandedModule === index && module.lessons && (
-                    <div className="px-6 pb-6">
-                      <div className="space-y-3 pt-4 border-t border-white/10">
-                        {module.lessons.map((lesson, lessonIndex) => (
-                          <div
-                            key={lessonIndex}
-                            className="flex items-center justify-between py-2"
-                          >
-                            <div className="flex items-center gap-3">
-                              <Play className="w-4 h-4 text-gold" />
-                              <span className="text-cream">
-                                {lesson.title}
-                              </span>
-                            </div>
-                            <span className="text-cream/40 text-sm">{lesson.duration}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <CourseModulesClient modules={course.modules} />
       )}
 
       {/* CTA Section */}
